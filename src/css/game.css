@@ -1,0 +1,7 @@
+.game-item {
+  width: 248px;
+  height: 90px;
+  background-color: darkkhaki;
+  border: 2px solid gainsboro;
+  margin: 1px;
+}

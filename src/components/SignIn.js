@@ -1,8 +1,8 @@
-import { Button, Pane, TextInputField, Checkbox, Heading } from 'evergreen-ui';
+import { Button, Pane, TextInputField, Heading } from 'evergreen-ui';
 import React from 'react';
+import '../css/sign.css';
 
-function App() {
-  const [checked, setChecked] = React.useState(true);
+function SignIn() {
   const [value, setValue] = React.useState('');
   return (
     <Pane
@@ -11,20 +11,11 @@ function App() {
       justifyContent="center"
       paddingTop={32}
     >
-      <Pane minWidth={300} padding={16} elevation={2}>
+      <Pane minWidth={350} padding={32} elevation={2} className="sign">
         <Heading size={700} marginTop={16} marginBottom={16}>
           REGISTER
         </Heading>
 
-        <Pane>
-          <TextInputField
-            label="Username"
-            placeholder="Placeholder text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            marginBottom={8}
-          />
-        </Pane>
         <Pane>
           <TextInputField
             label="E-mail"
@@ -45,19 +36,14 @@ function App() {
           />
         </Pane>
         <Pane>
-          <Checkbox
-            label="I Agree to the Terms and Conditions"
-            checked={checked}
-            onChange={(e) => setChecked(e.target.checked)}
-          />
           <Pane>
             <Button marginRight={16} appearance="primary" width="100%">
-              Register
+              Login
             </Button>
           </Pane>
           <Pane display="flex" justifyContent="flex-end">
             <Button marginRight={16} marginTop={32} appearance="minimal">
-              I already have an account
+              I don't have an account
             </Button>
           </Pane>
         </Pane>
@@ -66,4 +52,4 @@ function App() {
   );
 }
 
-export default App;
+export default SignIn;
