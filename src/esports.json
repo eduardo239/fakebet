@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "team1": "Pain",
+    "team2": "Navi",
+    "createdAt": "2022-01-01T00:00:00.000Z",
+    "team1Result": 12,
+    "team2Result": 11,
+    "winner": null,
+    "type": "esports"
+  },
+  {
+    "id": "2",
+    "team1": "MIBR",
+    "team2": "Faze",
+    "createdAt": "2021-04-01T00:00:00.000Z",
+    "team1Result": 1,
+    "team2Result": 2,
+    "winner": null,
+    "type": "esports"
+  },
+  {
+    "id": "3",
+    "team1": "Nip",
+    "team2": "Cruzeiro",
+    "createdAt": "2020-02-01T00:00:00.000Z",
+    "team1Result": 0,
+    "team2Result": 0,
+    "winner": null,
+    "type": "esports"
+  },
+  {
+    "id": "4",
+    "team1": "Nip",
+    "team2": "Cruzeiro",
+    "createdAt": "2020-02-01T00:00:00.000Z",
+    "team1Result": 0,
+    "team2Result": 0,
+    "winner": null,
+    "type": "esports"
+  },
+  {
+    "id": "4",
+    "team1": "Nip",
+    "team2": "Cruzeiro",
+    "createdAt": "2020-02-01T00:00:00.000Z",
+    "team1Result": 0,
+    "team2Result": 0,
+    "winner": null,
+    "type": "esports"
+  }
+]

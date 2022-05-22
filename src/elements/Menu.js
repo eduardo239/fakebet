@@ -1,19 +1,11 @@
-import { Button, Pane, TextInputField, Heading } from 'evergreen-ui';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Pane } from 'evergreen-ui';
 import '../css/menu.css';
 
 function Menu() {
-  const [value, setValue] = React.useState('');
   return (
-    <Pane
-      display="block"
-      alignItems="center"
-      justifyContent="center"
-      paddingTop={0}
-      maxWidth={1000}
-      width="100%"
-    >
+    <Pane>
       <Pane
         display="flex"
         justifyContent="space-between"
@@ -31,12 +23,12 @@ function Menu() {
             <Button appearance="minimal">DEPÓSITO</Button>
           </Link>
         </Pane>
-        <Pane>
+        <Pane display="flex" gap={4}>
           <Link to="/signup">
-            <Button appearance="minimal">MINHAS APOSTAS</Button>
+            <Button appearance="minimal">REGISTRAR</Button>
           </Link>
           <Link to="/signin">
-            <Button appearance="minimal">LOGIN/REGISTER</Button>
+            <Button appearance="minimal">ENTRAR</Button>
           </Link>
         </Pane>
       </Pane>

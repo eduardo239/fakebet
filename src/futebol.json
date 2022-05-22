@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "team1": "Картофель",
+    "team2": "Botafogo",
+    "createdAt": "2022-01-01T00:00:00.000Z",
+    "team1Result": 0,
+    "team2Result": 0,
+    "winner": null,
+    "type": "futebol"
+  },
+  {
+    "id": "2",
+    "team1": "Chelsea",
+    "team2": "Dinamo",
+    "createdAt": "2021-04-01T00:00:00.000Z",
+    "team1Result": 1,
+    "team2Result": 2,
+    "winner": null,
+    "type": "futebol"
+  },
+  {
+    "id": "3",
+    "team1": "Juventus",
+    "team2": "Real Madrid",
+    "createdAt": "2020-02-01T00:00:00.000Z",
+    "team1Result": 0,
+    "team2Result": 0,
+    "winner": null,
+    "type": "futebol"
+  }
+]

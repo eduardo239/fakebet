@@ -11,7 +11,14 @@ import Menu from './elements/Menu';
 
 function App() {
   return (
-    <Pane display="flex" flexDirection="column" maxWidth={1000} width="100%">
+    <Pane
+      display="flex"
+      justifyContent="center"
+      flexDirection="column"
+      maxWidth={1000}
+      width="100%"
+      margin="auto"
+    >
       <Menu></Menu>
 
       <Routes>
@@ -20,7 +27,7 @@ function App() {
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/games" element={<Games />} />
         <Route exact path="/deposit" element={<Deposit />} />
-        <Route exact path="/games/123" element={<Game />} />
+        <Route exact path="/game/:type/1" element={<Game />} />
       </Routes>
     </Pane>
   );

@@ -1,52 +1,90 @@
-import { Button, Pane, TextInputField, Heading } from 'evergreen-ui';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Pane, TextInputField, Heading, Alert } from 'evergreen-ui';
 import '../css/sign.css';
 
 function SignIn() {
-  const [value, setValue] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const [error, setError] = React.useState({
+    title: '',
+    message: '',
+    status: false,
+    type: '',
+  });
+
+  const handleSignIn = () => {
+    setError({
+      title: '',
+      message: '',
+      status: false,
+      type: '',
+    });
+
+    if (password !== 'qqQQ11') {
+      setError({
+        title: 'Wrong password',
+        message: 'Please try again',
+        status: true,
+        type: 'danger',
+      });
+    }
+  };
+
   return (
     <Pane
       display="flex"
       alignItems="center"
       justifyContent="center"
-      paddingTop={32}
+      paddingTop={64}
     >
-      <Pane minWidth={350} padding={32} elevation={2} className="sign">
+      <Pane padding={32} elevation={2} className="sign">
         <Heading size={700} marginTop={16} marginBottom={16}>
-          REGISTER
+          LOGIN
         </Heading>
 
         <Pane>
           <TextInputField
+            type="email"
             label="E-mail"
             placeholder="Text input placeholder..."
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             marginBottom={8}
           />
         </Pane>
-        <Pane>
+
+        <Pane marginBottom={32}>
           <TextInputField
             type="password"
             label="Password"
             placeholder="Text input placeholder..."
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             marginBottom={8}
           />
         </Pane>
+
         <Pane>
-          <Pane>
-            <Button marginRight={16} appearance="primary" width="100%">
-              Login
-            </Button>
-          </Pane>
-          <Pane display="flex" justifyContent="flex-end">
-            <Button marginRight={16} marginTop={32} appearance="minimal">
+          <Button appearance="primary" width="100%" onClick={handleSignIn}>
+            Login
+          </Button>
+        </Pane>
+
+        <Pane display="flex" justifyContent="flex-end">
+          <Link to="/signup">
+            <Button marginTop={32} appearance="minimal">
               I don't have an account
             </Button>
-          </Pane>
+          </Link>
         </Pane>
+
+        {error.status && (
+          <Alert intent={error.type} title={error.title}>
+            {error.message}
+          </Alert>
+        )}
       </Pane>
     </Pane>
   );
