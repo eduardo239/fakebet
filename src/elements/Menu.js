@@ -24,6 +24,9 @@ function Menu() {
           </Link>
         </Pane>
         <Pane display="flex" gap={4}>
+          <Link to="/admin">
+            <Button appearance="minimal">ADMIN</Button>
+          </Link>
           <Link to="/signup">
             <Button appearance="minimal">REGISTRAR</Button>
           </Link>

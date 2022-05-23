@@ -1,0 +1,15 @@
+.admin-form {
+  background-color: beige;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 16px;
+  min-width: 470px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.admin-form-col {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}

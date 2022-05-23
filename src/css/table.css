@@ -1,0 +1,17 @@
+.table {
+  min-width: 100%;
+}
+
+.table-row {
+  padding: 0;
+  height: 40px;
+}
+
+.table-cell {
+  flex: 4;
+}
+
+.table-cell-icon {
+  text-align: center;
+  vertical-align: middle;
+}

@@ -5,10 +5,9 @@ import { useParams } from 'react-router-dom';
 function Game() {
   let { type } = useParams();
 
-  console.log(type);
   return (
     <Pane display="flex" justifyContent="center">
-      game
+      game {type}
     </Pane>
   );
 }

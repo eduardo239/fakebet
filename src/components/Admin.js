@@ -1,21 +1,18 @@
-import { Pane, Tablist, Tab } from 'evergreen-ui';
 import React from 'react';
+import Type from '../elements/Type';
 import Banner from '../elements/Banner';
-import Games from '../elements/Games';
 import Footer from '../elements/Footer';
-import '../css/game.css';
+import { Pane, Tablist, Tab } from 'evergreen-ui';
+import { FUTEBOL, BASQUETE, ESPORTS } from '../utils/constants';
 
-const FUTEBOL = 'Futebol';
-const BASQUETE = 'Basquete';
-const ESPORTS = 'E-sports';
-
-function Home() {
+function Admin() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [tabs] = React.useState([FUTEBOL, BASQUETE, ESPORTS]);
 
   return (
     <Pane display="flex" flexDirection="column" height="100vh">
       <Banner></Banner>
+
       <Pane className="games-container" flex={1}>
         <Tablist padding={8} flexBasis={240} className="tab-game-menu">
           {tabs.map((tab, index) => (
@@ -40,7 +37,7 @@ function Home() {
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
             >
-              <Games
+              <Type
                 type={
                   tab === FUTEBOL
                     ? FUTEBOL
@@ -50,7 +47,7 @@ function Home() {
                     ? ESPORTS
                     : ''
                 }
-              ></Games>
+              ></Type>
             </Pane>
           ))}
         </Pane>
@@ -60,4 +57,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Admin;

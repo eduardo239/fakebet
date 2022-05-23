@@ -1,8 +1,8 @@
 [
   {
     "id": "1",
-    "team1": "Картофель",
-    "team2": "Botafogo",
+    "team1": "Miame",
+    "team2": "Detroit",
     "createdAt": "2022-01-01T00:00:00.000Z",
     "team1Result": 0,
     "team2Result": 0,
@@ -11,8 +11,8 @@
   },
   {
     "id": "2",
-    "team1": "Chelsea",
-    "team2": "Dinamo",
+    "team1": "New York",
+    "team2": "Chicago",
     "createdAt": "2021-04-01T00:00:00.000Z",
     "team1Result": 1,
     "team2Result": 2,

@@ -17,20 +17,36 @@ import '../css/game.css';
 
 function HomeGamesItem({ game }) {
   const [showValue, setShowValue] = React.useState(false);
+  const [odd, setOdd] = React.useState(1);
+  const [pick, setPick] = React.useState(null);
 
   const betRef = React.useRef();
 
-  const handleShowInput = () => {
+  const showInput = (e, pick) => {
     setShowValue(true);
+    setOdd(e.target.innerText);
+    setPick(pick);
   };
 
-  const handleAddBet = () => {
+  const addBet = () => {
+    let profit = odd * betRef.current.value;
+
+    console.log({
+      game: game.id,
+      pick,
+      value: betRef.current.value,
+      odd,
+      profit,
+      createdAt: new Date(),
+      win: null,
+    });
+
     setTimeout(() => {
       setShowValue(false);
     }, 2000);
   };
 
-  const handleCloseBet = () => {
+  const closeBet = () => {
     setShowValue(false);
   };
 
@@ -49,7 +65,10 @@ function HomeGamesItem({ game }) {
           <Pane className="game-item-team">
             <TeamShield></TeamShield>
             <Small size={600}>{game.team1}</Small>
-            <Button appearance="minimal" onClick={handleShowInput}>
+            <Button
+              appearance="minimal"
+              onClick={(e) => showInput(e, game.team1)}
+            >
               1.34
             </Button>
           </Pane>
@@ -62,7 +81,7 @@ function HomeGamesItem({ game }) {
             >
               VS
             </Heading>
-            <Button appearance="minimal" onClick={handleShowInput}>
+            <Button appearance="minimal" onClick={(e) => showInput(e, 'draw')}>
               3.23
             </Button>
           </Pane>
@@ -70,7 +89,10 @@ function HomeGamesItem({ game }) {
           <Pane className="game-item-team">
             <TeamShield></TeamShield>
             <Small size={600}>{game.team2}</Small>
-            <Button appearance="minimal" onClick={handleShowInput}>
+            <Button
+              appearance="minimal"
+              onClick={(e) => showInput(e, game.team2)}
+            >
               7.46
             </Button>
           </Pane>
@@ -90,12 +112,12 @@ function HomeGamesItem({ game }) {
             <Pane className="icon">
               <IconButton
                 icon={SmallTickIcon}
-                onClick={handleAddBet}
+                onClick={addBet}
                 intent="success"
               />
             </Pane>
             <Pane className="icon">
-              <IconButton icon={SmallCrossIcon} onClick={handleCloseBet} />
+              <IconButton icon={SmallCrossIcon} onClick={closeBet} />
             </Pane>
           </Pane>
         </Pane>

@@ -8,6 +8,7 @@ import Deposit from './components/Deposit';
 import Game from './components/Game';
 import Games from './components/Games';
 import Menu from './elements/Menu';
+import Admin from './components/Admin';
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/games" element={<Games />} />
         <Route exact path="/deposit" element={<Deposit />} />
-        <Route exact path="/game/:type/1" element={<Game />} />
+        <Route exact path="/game/:type/:id" element={<Game />} />
+        <Route exact path="/admin" element={<Admin />} />
       </Routes>
     </Pane>
   );
