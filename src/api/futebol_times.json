@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "Brasil",
+    "type": "futebol",
+    "emblem": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png",
+    "shortName": "BRA"
+  },
+  {
+    "id": "2",
+    "name": "Holanda",
+    "type": "futebol",
+    "emblem": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Flag_of_the_Netherlands.svg/1200px-Flag_of_the_Netherlands.svg.png",
+    "shortName": "NED"
+  }
+]

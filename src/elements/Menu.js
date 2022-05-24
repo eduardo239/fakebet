@@ -1,40 +1,89 @@
 import React from 'react';
+import MyBets from './MyBets';
+import MyProfile from './MyProfile';
 import { Link } from 'react-router-dom';
-import { Button, Pane } from 'evergreen-ui';
+import { Avatar, Dialog, Pane } from 'evergreen-ui';
 import '../css/menu.css';
+import '../css/bet.css';
 
 function Menu() {
+  const [isMyBetsShown, setMyBetsIsShown] = React.useState(false);
+  const [isProfileShown, setIsProfileShown] = React.useState(false);
+
+  const closeModal = () => {
+    setMyBetsIsShown(false);
+  };
+  const closeProfileModal = () => {
+    setIsProfileShown(false);
+  };
+
   return (
-    <Pane>
-      <Pane
-        display="flex"
-        justifyContent="space-between"
-        className="menu"
-        padding={4}
-      >
-        <Pane display="flex" gap={4}>
-          <Link to="/">
-            <Button appearance="minimal">FAKEBET</Button>
+    <Pane position="relative">
+      <Pane className="menu">
+        <Pane display="flex" gap={4} alignItems="center">
+          <Link to="/" className="menu-link">
+            FAKEBET
           </Link>
-          <Link to="/games">
-            <Button appearance="minimal">JOGOS</Button>
+          <Link to="/games" className="menu-link">
+            JOGOS
           </Link>
-          <Link to="/deposit">
-            <Button appearance="minimal">DEPÓSITO</Button>
+          <Link to="/deposit" className="menu-link">
+            DEPÓSITO
           </Link>
         </Pane>
-        <Pane display="flex" gap={4}>
-          <Link to="/admin">
-            <Button appearance="minimal">ADMIN</Button>
+        <Pane display="flex" gap={4} alignItems="center">
+          {/* <Pane position="relative">
+            <Pane
+              className="my-bets-container"
+              display={isShown === true ? 'flex' : 'none'}
+            >
+              <MyBets closeModal={closeModal} />
+            </Pane>
+          </Pane> */}
+          <Link
+            className="menu-link"
+            to="#"
+            onClick={() => setMyBetsIsShown(!isMyBetsShown)}
+          >
+            MINHAS APOSTAS
           </Link>
-          <Link to="/signup">
-            <Button appearance="minimal">REGISTRAR</Button>
+
+          <Link to="/admin" className="menu-link">
+            ADMIN
           </Link>
-          <Link to="/signin">
-            <Button appearance="minimal">ENTRAR</Button>
+          <Link to="/signup" className="menu-link">
+            REGISTRAR
+          </Link>
+          <Link to="/signin" className="menu-link">
+            ENTRAR
+          </Link>
+          <Link to="#" onClick={() => setIsProfileShown(!isMyBetsShown)}>
+            <Avatar
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
+              name="Alan Turing"
+              size={34}
+            />
           </Link>
         </Pane>
       </Pane>
+      <Dialog
+        isShown={isMyBetsShown}
+        title="Apostas"
+        onCloseComplete={() => setMyBetsIsShown(false)}
+        confirmLabel="Fechar"
+        hasCancel={false}
+      >
+        <MyBets closeModal={closeModal} />
+      </Dialog>
+      <Dialog
+        isShown={isProfileShown}
+        title="Perfil"
+        onCloseComplete={() => setIsProfileShown(false)}
+        confirmLabel="Fechar"
+        hasCancel={false}
+      >
+        <MyProfile closeModal={closeProfileModal} />
+      </Dialog>
     </Pane>
   );
 }

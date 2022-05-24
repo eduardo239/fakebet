@@ -1,4 +1,17 @@
 .menu {
-  background-color: yellowgreen;
+  background-color: var(--primary-color);
   border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+  align-items: center;
+}
+
+.menu-link {
+  color: var(--light-color);
+  letter-spacing: 0.42px;
+  font-size: 0.8rem;
+  display: block;
+  padding: 4px;
+  font-weight: 500;
 }

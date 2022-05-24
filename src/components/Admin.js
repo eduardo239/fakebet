@@ -3,11 +3,11 @@ import Type from '../elements/Type';
 import Banner from '../elements/Banner';
 import Footer from '../elements/Footer';
 import { Pane, Tablist, Tab } from 'evergreen-ui';
-import { FUTEBOL, BASQUETE, ESPORTS } from '../utils/constants';
+import { TIMES, JOGOS } from '../utils/constants';
 
 function Admin() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [tabs] = React.useState([FUTEBOL, BASQUETE, ESPORTS]);
+  const [tabs] = React.useState([TIMES, JOGOS]);
 
   return (
     <Pane display="flex" flexDirection="column" height="100vh">
@@ -38,15 +38,7 @@ function Admin() {
               display={index === selectedIndex ? 'block' : 'none'}
             >
               <Type
-                type={
-                  tab === FUTEBOL
-                    ? FUTEBOL
-                    : tab === BASQUETE
-                    ? BASQUETE
-                    : tab === ESPORTS
-                    ? ESPORTS
-                    : ''
-                }
+                type={tab === TIMES ? TIMES : tab === JOGOS ? JOGOS : ''}
               ></Type>
             </Pane>
           ))}

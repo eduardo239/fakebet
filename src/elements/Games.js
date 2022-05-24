@@ -2,17 +2,16 @@ import React from 'react';
 import { Pane, Heading } from 'evergreen-ui';
 import { BASQUETE, ESPORTS, FUTEBOL } from '../utils/constants';
 import Game from './Game';
-import futebol from '../futebol.json';
-import basquete from '../basquete.json';
-import esports from '../esports.json';
+import futebol from '../api/futebol.json';
+import basquete from '../api/basquete.json';
+import esports from '../api/esports.json';
 import '../css/menu.css';
+import '../css/game.css';
 
-function HomeGames({ type }) {
+function ElGames({ type }) {
   return (
     <Pane>
-      <Heading size={700} marginTop={16} marginBottom={16} textAlign="center">
-        {type}
-      </Heading>
+      <Heading className="games-title">{type}</Heading>
       <Pane
         display="flex"
         alignItems="center"
@@ -31,4 +30,4 @@ function HomeGames({ type }) {
   );
 }
 
-export default HomeGames;
+export default ElGames;

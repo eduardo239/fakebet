@@ -1,15 +1,16 @@
+import React from 'react';
 import {
   IconButton,
   Pane,
   Table,
   SmallTickIcon,
   TrashIcon,
-  TextInputField,
-  Button,
 } from 'evergreen-ui';
-import React from 'react';
-import '../css/table.css';
+import { TIMES, JOGOS } from '../utils/constants';
+import Teams from './admin/Teams';
+import Games from './admin/Games';
 import '../css/admin.css';
+import '../css/table.css';
 
 const profiles = [
   {
@@ -27,11 +28,6 @@ const profiles = [
 ];
 
 function Type({ type, data }) {
-  const [name, setName] = React.useState('');
-  const [gameType, setGameType] = React.useState('');
-  const [emblem, setEmblem] = React.useState('');
-  const [shortName, setShortName] = React.useState('');
-
   return (
     <Pane
       display="flex"
@@ -39,37 +35,8 @@ function Type({ type, data }) {
       justifyContent="center"
       width="100%"
     >
-      <Pane padding={32} className="admin-form">
-        <Pane className="admin-form-col">
-          <TextInputField
-            label="Team name"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextInputField
-            label="Game type"
-            placeholder="Futebol, Basquete .."
-            value={gameType}
-            onChange={(e) => setGameType(e.target.value)}
-          />
-        </Pane>
-        <Pane className="admin-form-col">
-          <TextInputField
-            label="Emblem"
-            placeholder="URL from team emblem"
-            value={emblem}
-            onChange={(e) => setEmblem(e.target.value)}
-          />
-          <TextInputField
-            label="Short name"
-            placeholder="XTQ"
-            value={shortName}
-            onChange={(e) => setShortName(e.target.value)}
-          />
-          <Button appearance="primary">Save</Button>
-        </Pane>
-      </Pane>
+      {type === TIMES ? <Teams /> : type === JOGOS ? <Games /> : ''}
+
       <Table className="table">
         <Table.Head className="table-row">
           <Table.TextHeaderCell className="table-cell">

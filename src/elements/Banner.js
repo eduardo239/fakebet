@@ -1,17 +1,12 @@
 import { Pane } from 'evergreen-ui';
 import React from 'react';
 import '../css/banner.css';
+import banner from '../assets/banner/poster.jpg';
 
 function Banner() {
   return (
-    <Pane
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      className="banner"
-    >
-      {/* <SignIn /> */}
-      banner
+    <Pane className="banner-container">
+      <img src={banner} alt="Fakebet - BET" className="banner" />
     </Pane>
   );
 }

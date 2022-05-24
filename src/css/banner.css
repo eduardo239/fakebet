@@ -1,6 +1,4 @@
-.banner {
-  width: 100%;
+.banner-container {
   height: 200px;
   max-width: 1000px;
-  background-color: darkgreen;
 }

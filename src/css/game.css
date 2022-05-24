@@ -1,19 +1,20 @@
-.game-item {
+.game-card {
   width: 270px;
-  background-color: darkkhaki;
-  border: 2px solid gainsboro;
+  background-color: var(--dark-alternate-2);
+  border: 1px solid var(--primary-color);
   padding-left: 16px;
   padding-right: 16px;
   margin: 1px;
 }
 
-.game-item-team {
+.game-card--team {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
   justify-content: center;
   align-items: center;
+  flex: 1;
 }
 
 .game-bet-value {
@@ -24,9 +25,48 @@
 }
 
 .tab-game-menu {
-  background-color: gold;
+  background-color: var(--dark-alternate-2);
 }
 
 .games-container {
-  background-color: gray;
+  background-color: var(--dark-alternate);
+}
+
+/* Game element */
+.game {
+  background-color: var(--light-color);
+  width: 100%;
+}
+
+/*  */
+.game,
+.game-score {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Games element */
+.tab-menu-games {
+  color: var(--light-color);
+  display: inline-block;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.games-title {
+  color: var(--light-color);
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 16px;
+  margin-right: 16px;
+  margin-left: 16px;
+  margin-bottom: 32px;
+}
+
+.tab-menu-games.futebol-active,
+.tab-menu-games.basquete-active,
+.tab-menu-games.esports-active {
+  color: var(--primary-color);
 }
