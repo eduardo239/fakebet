@@ -1,4 +1,4 @@
 .sign {
-  background-color: #fff;
+  background-color: var(--light-color);
   width: 400px;
 }

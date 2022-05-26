@@ -1,5 +1,10 @@
-.game-card {
-  width: 270px;
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.game-card--container {
+  width: 320px;
   background-color: var(--dark-alternate-2);
   border: 1px solid var(--primary-color);
   padding-left: 16px;
@@ -11,10 +16,11 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   justify-content: center;
   align-items: center;
   flex: 1;
+  margin: 2px;
 }
 
 .game-bet-value {
@@ -47,14 +53,6 @@
   padding: 16px;
 }
 
-/* Games element */
-.tab-menu-games {
-  color: var(--light-color);
-  display: inline-block;
-  padding: 8px;
-  font-size: 1rem;
-}
-
 .games-title {
   color: var(--light-color);
   font-size: 2rem;
@@ -63,10 +61,4 @@
   margin-right: 16px;
   margin-left: 16px;
   margin-bottom: 32px;
-}
-
-.tab-menu-games.futebol-active,
-.tab-menu-games.basquete-active,
-.tab-menu-games.esports-active {
-  color: var(--primary-color);
 }

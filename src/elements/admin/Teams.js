@@ -1,11 +1,24 @@
-import { Button, Heading, Pane, TextInputField } from 'evergreen-ui';
+import { Button, Heading, Pane, Select, TextInputField } from 'evergreen-ui';
 import React from 'react';
+import FileUploaderSingleUpload from './FilleUploader';
 
 function Teams() {
   const [name, setName] = React.useState('');
-  const [gameType, setGameType] = React.useState('');
+  const [type, setType] = React.useState('');
   const [emblem, setEmblem] = React.useState('');
   const [shortName, setShortName] = React.useState('');
+
+  const submitTeam = () => {
+    const game = {
+      name,
+      type,
+      emblem,
+      shortName,
+    };
+
+    console.log(game);
+  };
+
   return (
     <Pane display="flex" justifyContent="center" flexDirection="column">
       <Heading size={600} padding={24} className="light">
@@ -18,12 +31,17 @@ function Teams() {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <TextInputField
-          label="Game type"
-          placeholder="Futebol, Basquete .."
-          value={gameType}
-          onChange={(e) => setGameType(e.target.value)}
-        />
+        <Pane marginBottom={24}>
+          <Select
+            width="100%"
+            className="select"
+            onChange={(event) => setType(event.target.value)}
+          >
+            <option value="futebol">Futebol</option>
+            <option value="basquete">Basquete</option>
+            <option value="esports">Esports</option>
+          </Select>
+        </Pane>
 
         <TextInputField
           label="Emblem"
@@ -35,10 +53,14 @@ function Teams() {
           label="Short name"
           placeholder="XTQ"
           value={shortName}
-          onChange={(e) => setShortName(e.target.value)}
+          onChange={(e) => setShortName(e.target.value.toUpperCase())}
         />
-        <Button appearance="primary">Add</Button>
+
+        <Button appearance="primary" width="100%" onClick={submitTeam}>
+          Add
+        </Button>
       </Pane>
+      <FileUploaderSingleUpload />
     </Pane>
   );
 }

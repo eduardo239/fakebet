@@ -48,6 +48,14 @@ img {
   color: var(--light-alternate);
 }
 
+.label {
+  color: #101840;
+  line-height: 18px;
+  letter-spacing: -0.05px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }

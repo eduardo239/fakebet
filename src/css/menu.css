@@ -15,3 +15,14 @@
   padding: 4px;
   font-weight: 500;
 }
+
+.tab-menu {
+  color: var(--light-color);
+  display: inline-block;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.tab-menu.active {
+  color: var(--primary-color);
+}

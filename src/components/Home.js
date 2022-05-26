@@ -3,10 +3,11 @@ import React from 'react';
 import Banner from '../elements/Banner';
 import Games from '../elements/Games';
 import Footer from '../elements/Footer';
-import '../css/game.css';
 import { FUTEBOL, BASQUETE, ESPORTS } from '../utils/constants';
+import '../css/game.css';
+import '../css/menu.css';
 
-function Home() {
+function HomeView() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [tabs] = React.useState([FUTEBOL, BASQUETE, ESPORTS]);
 
@@ -23,15 +24,7 @@ function Home() {
               isSelected={index === selectedIndex}
               aria-controls={`panel-${tab}`}
               appearance="minimal"
-              className={`tab-menu-games ${
-                selectedIndex === index
-                  ? `futebol-active`
-                  : selectedIndex === index
-                  ? `basquete-active`
-                  : selectedIndex === index
-                  ? `esports-active`
-                  : ''
-              }`}
+              className={`tab-menu ${selectedIndex === index ? `active` : ''}`}
             >
               {tab}
             </Tab>
@@ -67,4 +60,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeView;

@@ -1,7 +1,7 @@
 import { Pane } from 'evergreen-ui';
 import React from 'react';
 
-function Games() {
+function GamesView() {
   return (
     <Pane display="flex" justifyContent="center">
       games
@@ -9,4 +9,4 @@ function Games() {
   );
 }
 
-export default Games;
+export default GamesView;

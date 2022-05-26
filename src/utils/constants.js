@@ -8,3 +8,6 @@ export const ESPORTS = 'E-sports';
 
 export const TIMES = 'Times';
 export const JOGOS = 'Jogos';
+
+export const RETIRADA = 'Retirada';
+export const DEPOSITO = 'Depósito';

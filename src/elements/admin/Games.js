@@ -61,7 +61,7 @@ function Games() {
           required
         />
         <TextInputField
-          type="date"
+          type="datetime-local"
           label="Hora do jogo"
           placeholder="new Date()"
           value={createdAt}

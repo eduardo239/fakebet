@@ -37,7 +37,7 @@ function Type({ type, data }) {
     >
       {type === TIMES ? <Teams /> : type === JOGOS ? <Games /> : ''}
 
-      <Table className="table">
+      <Table className="table" marginTop={16}>
         <Table.Head className="table-row">
           <Table.TextHeaderCell className="table-cell">
             Name

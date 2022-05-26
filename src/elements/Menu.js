@@ -27,7 +27,7 @@ function Menu() {
           <Link to="/games" className="menu-link">
             JOGOS
           </Link>
-          <Link to="/deposit" className="menu-link">
+          <Link to="/transfer" className="menu-link">
             DEPÓSITO
           </Link>
         </Pane>
@@ -69,9 +69,8 @@ function Menu() {
       <Dialog
         isShown={isMyBetsShown}
         title="Apostas"
-        onCloseComplete={() => setMyBetsIsShown(false)}
-        confirmLabel="Fechar"
-        hasCancel={false}
+        onConfirm={() => alert('saved')}
+        confirmLabel="Salvar"
       >
         <MyBets closeModal={closeModal} />
       </Dialog>
@@ -80,7 +79,6 @@ function Menu() {
         title="Perfil"
         onCloseComplete={() => setIsProfileShown(false)}
         confirmLabel="Fechar"
-        hasCancel={false}
       >
         <MyProfile closeModal={closeProfileModal} />
       </Dialog>

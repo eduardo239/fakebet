@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Pane, TextInputField, Heading, Alert } from 'evergreen-ui';
 import '../css/sign.css';
 
-function SignIn() {
+function SignInView() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -90,4 +90,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignInView;

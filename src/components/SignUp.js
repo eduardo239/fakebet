@@ -13,7 +13,7 @@ import { validateEmail, validatePassword } from '../utils/regex';
 import { useNavigate } from 'react-router-dom';
 import { DANGER, SUCCESS, WARNING } from '../utils/constants';
 
-function SignUp() {
+function SignUpView() {
   const navigate = useNavigate();
 
   const [username, setUsername] = React.useState('');
@@ -192,4 +192,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default SignUpView;

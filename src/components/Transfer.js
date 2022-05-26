@@ -1,19 +1,18 @@
 import React from 'react';
-import Type from '../elements/Type';
-import Banner from '../elements/Banner';
-import Footer from '../elements/Footer';
-import { Pane, Tablist, Tab } from 'evergreen-ui';
-import { TIMES, JOGOS } from '../utils/constants';
+import { Pane, Tab, Tablist } from 'evergreen-ui';
+import BannerDeposit from '../elements/BannerDeposit';
+import DepositForm from '../elements/Deposit';
+import { DEPOSITO, RETIRADA } from '../utils/constants';
+import WithdrawalForm from '../elements/WithdrawalForm';
 import '../css/menu.css';
 
-function AdminView() {
+function TransferView() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [tabs] = React.useState([TIMES, JOGOS]);
+  const [tabs] = React.useState([DEPOSITO, RETIRADA]);
 
   return (
     <Pane display="flex" flexDirection="column" height="100vh">
-      <Banner></Banner>
-
+      <BannerDeposit />
       <Pane className="games-container" flex={1}>
         <Tablist padding={8} flexBasis={240} className="tab-game-menu">
           {tabs.map((tab, index) => (
@@ -30,7 +29,7 @@ function AdminView() {
             </Tab>
           ))}
         </Tablist>
-        <Pane paddingBottom={32}>
+        <Pane paddingBottom={32} paddingTop={32}>
           {tabs.map((tab, index) => (
             <Pane
               key={tab}
@@ -40,16 +39,13 @@ function AdminView() {
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
             >
-              <Type
-                type={tab === TIMES ? TIMES : tab === JOGOS ? JOGOS : ''}
-              ></Type>
+              {tab === DEPOSITO ? <DepositForm /> : <WithdrawalForm />}
             </Pane>
           ))}
         </Pane>
       </Pane>
-      <Footer></Footer>
     </Pane>
   );
 }
 
-export default AdminView;
+export default TransferView;
