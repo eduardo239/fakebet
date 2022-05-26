@@ -1,37 +1,18 @@
 import React from 'react';
-import { Heading, IconButton, Pane, TrashIcon } from 'evergreen-ui';
+import { Heading, Pane } from 'evergreen-ui';
 import '../css/bet.css';
+import MyBetItem from './Bet/MyBetItem';
 
-function MyBets({ closeModal }) {
+function MyBets() {
   return (
     <Pane>
-      <Heading size={400}>Minhas Apostas</Heading>
+      <Heading size={300}>Minhas Apostas</Heading>
       <hr />
-
-      <Pane>
-        <Pane display="flex" justifyContent="space-between" alignItems="center">
-          <Heading size={200}>Team1 x Team2</Heading>
-          <Heading size={200}>Valor: 4.30</Heading>
-        </Pane>
-        <Pane display="flex" justifyContent="space-between" alignItems="center">
-          <Heading size={200}>My BET:</Heading>
-          <Heading size={200}>Team1</Heading>
-        </Pane>
-        <IconButton icon={TrashIcon} intent="danger" />
-      </Pane>
+      <MyBetItem />
       <hr />
-
-      <Pane>
-        <Pane display="flex" justifyContent="space-between" alignItems="center">
-          <Heading size={200}>Team1 x Team2</Heading>
-          <Heading size={200}>Valor: 4.30</Heading>
-        </Pane>
-        <Pane display="flex" justifyContent="space-between" alignItems="center">
-          <Heading size={200}>My BET:</Heading>
-          <Heading size={200}>Team1</Heading>
-        </Pane>
-        <IconButton icon={TrashIcon} intent="danger" />
-      </Pane>
+      <MyBetItem />
+      <hr />
+      <MyBetItem />
       <hr />
 
       <Pane display="flex" justifyContent="space-between" marginBottom={36}>

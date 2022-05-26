@@ -1,12 +1,18 @@
-.money-container {
+.form-container {
   background-color: var(--light-color);
   padding: 32px 24px;
+  min-width: 400px;
 }
 
-.money-form {
+.form {
   background: var(--light-color);
   display: grid;
   grid-template-columns: 1fr;
-  min-width: 350px;
+  gap: 8px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }

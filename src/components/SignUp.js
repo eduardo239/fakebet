@@ -101,92 +101,77 @@ function SignUpView() {
   };
 
   return (
-    <Pane
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      paddingTop={64}
-    >
-      <Pane padding={32} elevation={2} className="sign">
-        <Heading size={700} marginTop={16} marginBottom={16}>
-          REGISTER
+    <Pane display="flex" justifyContent="center">
+      <Pane elevation={2} className="form-container">
+        <Heading size={700} marginBottom={24}>
+          Login
         </Heading>
 
-        <Pane>
+        <Pane className="form">
           <TextInputField
             label="Username"
             placeholder="Placeholder text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            marginBottom={8}
           />
-        </Pane>
 
-        <Pane>
           <TextInputField
             label="E-mail"
             placeholder="Text input placeholder..."
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            marginBottom={8}
           />
-        </Pane>
 
-        <Pane>
           <TextInputField
             type="password"
             label="Password"
             placeholder="Text input placeholder..."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            marginBottom={8}
           />
-        </Pane>
 
-        <Pane>
           <TextInputField
             type="password"
             label="Password Confirmation"
             placeholder="Text input placeholder..."
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
-            marginBottom={8}
           />
-        </Pane>
 
-        <Pane>
-          <Checkbox
-            marginBottom={32}
-            label="I Agree to the Terms and Conditions"
-            checked={checked}
-            onChange={(e) => setChecked(e.target.checked)}
-          />
-        </Pane>
+          <Pane>
+            <Checkbox
+              marginBottom={32}
+              label="I Agree to the Terms and Conditions"
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+            />
+          </Pane>
 
-        <Pane>
-          <Button
-            type="button"
-            appearance="primary"
-            width="100%"
-            onClick={handleSignUp}
-          >
-            Register
-          </Button>
-        </Pane>
-
-        <Pane display="flex" justifyContent="flex-end">
-          <Link to="/signin">
-            <Button marginTop={32} appearance="minimal">
-              I already have an account
+          <Pane marginTop={8}>
+            <Button
+              type="button"
+              appearance="primary"
+              width="100%"
+              onClick={handleSignUp}
+            >
+              Register
             </Button>
-          </Link>
-        </Pane>
+          </Pane>
 
-        {error.status && (
-          <Alert intent={error.type} title={error.title}>
-            {error.message}
-          </Alert>
-        )}
+          <Pane display="flex" justifyContent="flex-end">
+            <Link to="/signin">
+              <Button marginTop={32} appearance="minimal">
+                I already have an account
+              </Button>
+            </Link>
+          </Pane>
+
+          {error.status && (
+            <Alert intent={error.type} title={error.title}>
+              {error.message}
+            </Alert>
+          )}
+        </Pane>
       </Pane>
     </Pane>
   );

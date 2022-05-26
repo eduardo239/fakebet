@@ -1,4 +1,11 @@
-import { Button, Heading, Pane, Select, TextInputField } from 'evergreen-ui';
+import {
+  Button,
+  Heading,
+  Pane,
+  Select,
+  Small,
+  TextInputField,
+} from 'evergreen-ui';
 import React from 'react';
 import FileUploaderSingleUpload from './FilleUploader';
 
@@ -20,47 +27,55 @@ function Teams() {
   };
 
   return (
-    <Pane display="flex" justifyContent="center" flexDirection="column">
-      <Heading size={600} padding={24} className="light">
-        Editar os times
-      </Heading>
-      <Pane padding={32} className="admin-form">
-        <TextInputField
-          label="Team name"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Pane marginBottom={24}>
+    <Pane display="flex" justifyContent="center">
+      <Pane elevation={2} className="form-container">
+        <Heading size={700} marginBottom={24}>
+          Adicionar Times
+        </Heading>
+
+        <Pane className="form">
+          <TextInputField
+            label="Team name"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <Small className="label">Método de depósito</Small>
           <Select
             width="100%"
             className="select"
+            marginBottom={24}
             onChange={(event) => setType(event.target.value)}
           >
             <option value="futebol">Futebol</option>
             <option value="basquete">Basquete</option>
             <option value="esports">Esports</option>
           </Select>
+
+          <FileUploaderSingleUpload />
+
+          <TextInputField
+            label="Emblem"
+            placeholder="URL from team emblem"
+            value={emblem}
+            onChange={(e) => setEmblem(e.target.value)}
+          />
+
+          <TextInputField
+            label="Short name"
+            placeholder="XTQ"
+            value={shortName}
+            onChange={(e) => setShortName(e.target.value.toUpperCase())}
+          />
+
+          <Pane marginTop={8}>
+            <Button appearance="primary" width="100%" onClick={submitTeam}>
+              Adicionar
+            </Button>
+          </Pane>
         </Pane>
-
-        <TextInputField
-          label="Emblem"
-          placeholder="URL from team emblem"
-          value={emblem}
-          onChange={(e) => setEmblem(e.target.value)}
-        />
-        <TextInputField
-          label="Short name"
-          placeholder="XTQ"
-          value={shortName}
-          onChange={(e) => setShortName(e.target.value.toUpperCase())}
-        />
-
-        <Button appearance="primary" width="100%" onClick={submitTeam}>
-          Add
-        </Button>
       </Pane>
-      <FileUploaderSingleUpload />
     </Pane>
   );
 }

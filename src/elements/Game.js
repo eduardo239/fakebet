@@ -1,26 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { ReactComponent as MC } from '../assets/emblems/manchester-city-football-club.svg';
 import { ReactComponent as RB } from '../assets/emblems/red-bull-bragantino.svg';
 
-import {
-  Button,
-  Pane,
-  Heading,
-  Small,
-  TextInput,
-  Text,
-  IconButton,
-  SmallTickIcon,
-  SmallCrossIcon,
-  Alert,
-} from 'evergreen-ui';
+import { Pane, Alert } from 'evergreen-ui';
 import '../css/game.css';
 import '../css/message.css';
+import BetTeam from './Bet/Team';
+import BetDraw from './Bet/Draw';
+import BetValue from './Bet/Input';
 
 function ElGame({ game }) {
   const [showValue, setShowValue] = React.useState(false);
   const [odd, setOdd] = React.useState(1);
+  const [startAnimation, setStartAnimation] = React.useState(false);
   const [pick, setPick] = React.useState(null);
   const [message, setMessage] = React.useState({
     title: '',
@@ -32,33 +24,46 @@ function ElGame({ game }) {
   const betRef = React.useRef();
 
   const showInput = (e, pick) => {
-    setShowValue(true);
+    setStartAnimation(true);
+    setTimeout(() => {
+      setShowValue(true);
+    }, 250); // FIXME: .25 from animation.css
     setOdd(e.target.innerText);
     setPick(pick);
   };
 
   const addBet = () => {
-    let profit = odd * betRef.current.value;
+    let value = betRef.current.value;
+    let profit = odd * value;
 
-    // eslint-disable-next-line
     let bet = {
       game: game.id,
       pick,
-      value: betRef.current.value,
+      value,
       odd,
       profit,
       createdAt: new Date(),
       win: null,
     };
 
-    setMessage({
-      title: 'Bet added',
-      message: `You bet ${bet.value} on ${bet.pick}`,
-      status: true,
-      type: 'success',
-    });
+    if (!isNaN(value) && value > 0 && value !== '' && !value.includes('e')) {
+      setMessage({
+        title: 'Você apostou',
+        message: `Você apostou ${bet.value} no ${bet.pick}`,
+        status: true,
+        type: 'success',
+      });
+    } else {
+      setMessage({
+        title: 'Aviso',
+        message: 'Valor inválido, tente novamente',
+        status: true,
+        type: 'warning',
+      });
+    }
 
     setTimeout(() => {
+      setStartAnimation(false);
       setShowValue(false);
       setMessage({
         title: '',
@@ -66,6 +71,7 @@ function ElGame({ game }) {
         status: false,
         type: '',
       });
+      betRef.current.value = '';
     }, 2000);
   };
 
@@ -88,7 +94,12 @@ function ElGame({ game }) {
           </Alert>
         </Pane>
       )}
-      <Pane className="game-card--container">
+      <Pane
+        className={`game-card--container ${
+          startAnimation ? 'padding-bottom--54' : ''
+        }`}
+        paddingBottom={showValue ? '54px' : '0'}
+      >
         <Pane
           display="flex"
           alignItems="flex-end"
@@ -96,82 +107,31 @@ function ElGame({ game }) {
           paddingTop={16}
           paddingBottom={16}
         >
-          <Pane className="game-card--team">
-            <MC />
-            <Small size={600}>{game.team1}</Small>
-            <Button
-              appearance="minimal"
-              onClick={(e) => showInput(e, game.team1)}
-              className="bg-light"
-              width="100%"
-            >
-              1.34
-            </Button>
-          </Pane>
-          <Pane className="game-card--team">
-            <Heading
-              size={600}
-              marginBottom={16}
-              fontWeight="bold"
-              fontFamily="Courier"
-              className="light"
-            >
-              VS
-            </Heading>
-            <Button
-              appearance="minimal"
-              onClick={(e) => showInput(e, 'draw')}
-              className="bg-light"
-              width="100%"
-            >
-              3.23
-            </Button>
-          </Pane>
+          <BetTeam
+            teamName={game.team1}
+            gameId={game.id}
+            gameType={game.type}
+            showInput={showInput}
+            TeamEmblem={MC}
+          />
 
-          <Pane className="game-card--team">
-            <RB />
-            <Small size={600}>{game.team2}</Small>
-            <Button
-              appearance="minimal"
-              onClick={(e) => showInput(e, game.team2)}
-              className="bg-light"
-              width="100%"
-            >
-              7.46
-            </Button>
-          </Pane>
+          <BetDraw showInput={showInput} />
+
+          <BetTeam
+            teamName={game.team2}
+            gameId={game.id}
+            gameType={game.type}
+            showInput={showInput}
+            TeamEmblem={RB}
+          />
         </Pane>
 
-        <Pane position="relative">
-          <Pane
-            display={showValue ? 'flex' : 'none'}
-            className="game-bet-value"
-          >
-            <TextInput
-              name="text-input-name"
-              placeholder="Valor..."
-              type="number"
-              ref={betRef}
-            />
-            <Pane className="icon">
-              <IconButton
-                icon={SmallTickIcon}
-                onClick={addBet}
-                intent="success"
-              />
-            </Pane>
-            <Pane className="icon">
-              <IconButton icon={SmallCrossIcon} onClick={closeBet} />
-            </Pane>
-          </Pane>
-        </Pane>
-        <Pane paddingBottom={16} paddingTop={16}>
-          <Link to={`game/${game.type}/${game.id}`}>
-            <Text size={300} className="light-alternate">
-              Ver mais opções
-            </Text>
-          </Link>
-        </Pane>
+        <BetValue
+          betRef={betRef}
+          showValue={showValue}
+          addBet={addBet}
+          closeBet={closeBet}
+        />
       </Pane>
     </Pane>
   );

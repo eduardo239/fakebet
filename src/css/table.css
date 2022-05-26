@@ -1,10 +1,12 @@
 .table {
   min-width: 100%;
+  padding: 8px;
+  background: var(--light-color);
 }
 
 .table-row {
   padding: 0;
-  height: 40px;
+  height: 45px;
 }
 
 .table-cell {

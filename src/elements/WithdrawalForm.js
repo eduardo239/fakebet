@@ -7,7 +7,6 @@ import {
   Small,
   TextInputField,
 } from 'evergreen-ui';
-import '../css/money.css';
 
 function WithdrawalForm() {
   const [value, setValue] = React.useState(0);
@@ -32,22 +31,22 @@ function WithdrawalForm() {
 
   return (
     <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="money-container">
+      <Pane elevation={2} className="form-container">
         <Heading size={700} marginBottom={24}>
           Retirada
         </Heading>
-        <Pane className="money-form">
+        <Pane className="form">
           <TextInputField
             label="Valor"
             type="number"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            marginBottom={0}
           />
 
           <Small className="label">Método de Retirada</Small>
           <Select
             className="select"
+            marginBottom={24}
             onChange={(event) => setMethod(event.target.value)}
           >
             <option value="bradesco">Banco</option>
@@ -57,6 +56,7 @@ function WithdrawalForm() {
           <Small className="label">Agência Bancária</Small>
           <Select
             className="select"
+            marginBottom={24}
             onChange={(event) => setMethod(event.target.value)}
           >
             <option value="bradesco">Bradesco</option>
@@ -69,7 +69,6 @@ function WithdrawalForm() {
             type="number"
             value={agency}
             onChange={(e) => setAgency(e.target.value)}
-            marginBottom={0}
           />
 
           <TextInputField
@@ -77,19 +76,19 @@ function WithdrawalForm() {
             type="number"
             value={accountNumber}
             onChange={(e) => setAccountNumber(e.target.value)}
-            marginBottom={0}
           />
 
           <Small className="label">Tipo da Conta</Small>
           <Select
             className="select"
+            marginBottom={24}
             onChange={(event) => setAccountType(event.target.value)}
           >
             <option value="bradesco">Conta Corrente</option>
             <option value="santander">Conta Poupança</option>
           </Select>
         </Pane>
-        <Pane marginTop={24}>
+        <Pane marginTop={8}>
           <Button appearance="primary" width="100%" onClick={submitWithdrawal}>
             Continuar
           </Button>

@@ -14,7 +14,7 @@ function ElGames({ type }) {
       <Heading className="games-title">{type}</Heading>
       <Pane
         display="flex"
-        alignItems="center"
+        alignItems="flex-start"
         justifyContent="center"
         flexWrap="wrap"
       >

@@ -1,8 +1,0 @@
-.admin-form {
-  background-color: var(--light-color);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: flex-end;
-  gap: 16px;
-  width: 100%;
-}

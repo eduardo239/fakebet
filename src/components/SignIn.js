@@ -33,40 +33,31 @@ function SignInView() {
   };
 
   return (
-    <Pane
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      paddingTop={64}
-    >
-      <Pane padding={32} elevation={2} className="sign">
-        <Heading size={700} marginTop={16} marginBottom={16}>
-          LOGIN
+    <Pane display="flex" justifyContent="center">
+      <Pane elevation={2} className="form-container">
+        <Heading size={700} marginBottom={24}>
+          Login
         </Heading>
 
-        <Pane>
+        <Pane className="form">
           <TextInputField
             type="email"
             label="E-mail"
             placeholder="Text input placeholder..."
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            marginBottom={8}
           />
-        </Pane>
 
-        <Pane marginBottom={32}>
           <TextInputField
             type="password"
             label="Password"
             placeholder="Text input placeholder..."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            marginBottom={8}
           />
         </Pane>
 
-        <Pane>
+        <Pane marginTop={8}>
           <Button appearance="primary" width="100%" onClick={handleSignIn}>
             Login
           </Button>

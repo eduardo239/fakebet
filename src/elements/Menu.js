@@ -10,13 +10,6 @@ function Menu() {
   const [isMyBetsShown, setMyBetsIsShown] = React.useState(false);
   const [isProfileShown, setIsProfileShown] = React.useState(false);
 
-  const closeModal = () => {
-    setMyBetsIsShown(false);
-  };
-  const closeProfileModal = () => {
-    setIsProfileShown(false);
-  };
-
   return (
     <Pane position="relative">
       <Pane className="menu">
@@ -31,15 +24,8 @@ function Menu() {
             DEPÓSITO
           </Link>
         </Pane>
+
         <Pane display="flex" gap={4} alignItems="center">
-          {/* <Pane position="relative">
-            <Pane
-              className="my-bets-container"
-              display={isShown === true ? 'flex' : 'none'}
-            >
-              <MyBets closeModal={closeModal} />
-            </Pane>
-          </Pane> */}
           <Link
             className="menu-link"
             to="#"
@@ -57,7 +43,7 @@ function Menu() {
           <Link to="/signin" className="menu-link">
             ENTRAR
           </Link>
-          <Link to="#" onClick={() => setIsProfileShown(!isMyBetsShown)}>
+          <Link to="#" onClick={() => setIsProfileShown(!isProfileShown)}>
             <Avatar
               src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
               name="Alan Turing"
@@ -66,21 +52,23 @@ function Menu() {
           </Link>
         </Pane>
       </Pane>
+
       <Dialog
         isShown={isMyBetsShown}
-        title="Apostas"
+        title="Minhas Apostas"
         onConfirm={() => alert('saved')}
         confirmLabel="Salvar"
       >
-        <MyBets closeModal={closeModal} />
+        <MyBets />
       </Dialog>
+
       <Dialog
         isShown={isProfileShown}
         title="Perfil"
-        onCloseComplete={() => setIsProfileShown(false)}
-        confirmLabel="Fechar"
+        onConfirm={() => alert('saved')}
+        confirmLabel="Salvar"
       >
-        <MyProfile closeModal={closeProfileModal} />
+        <MyProfile />
       </Dialog>
     </Pane>
   );

@@ -62,9 +62,7 @@ function Type({ type, data }) {
               <Table.TextCell className="table-cell">
                 {x.lastActivity}
               </Table.TextCell>
-              <Table.TextCell className="table-cell" isNumber>
-                {x.ltv}
-              </Table.TextCell>
+              <Table.TextCell className="table-cell">{x.ltv}</Table.TextCell>
               <Table.TextCell className="table-cell-icon">
                 <IconButton icon={SmallTickIcon} intent="success" />
               </Table.TextCell>

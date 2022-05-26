@@ -7,7 +7,6 @@ import {
   Small,
   TextInputField,
 } from 'evergreen-ui';
-import '../css/money.css';
 
 function DepositForm() {
   const [value, setValue] = React.useState(0);
@@ -19,22 +18,22 @@ function DepositForm() {
 
   return (
     <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="money-container">
+      <Pane elevation={2} className="form-container">
         <Heading size={700} marginBottom={24}>
           Depositar
         </Heading>
-        <Pane className="money-form">
+        <Pane className="form">
           <TextInputField
             label="Valor"
             type="number"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            marginBottom={0}
           />
 
           <Small className="label">Método de depósito</Small>
           <Select
             className="select"
+            marginBottom={24}
             onChange={(event) => setMethod(event.target.value)}
           >
             <option value="pix">PIX</option>
@@ -44,7 +43,8 @@ function DepositForm() {
             <option value="paypal">Paypal</option>
           </Select>
         </Pane>
-        <Pane marginTop={24}>
+
+        <Pane marginTop={8}>
           <Button appearance="primary" width="100%" onClick={submitDeposit}>
             Continuar
           </Button>
