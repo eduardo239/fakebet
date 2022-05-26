@@ -9,9 +9,9 @@ import {
 } from 'evergreen-ui';
 import '../css/money.css';
 
-function MoneyForm() {
+function DepositForm() {
   const [value, setValue] = React.useState(0);
-  const [method, setMethod] = React.useState(0);
+  const [method, setMethod] = React.useState('');
 
   const submitDeposit = () => {
     console.log(value, method);
@@ -54,4 +54,4 @@ function MoneyForm() {
   );
 }
 
-export default MoneyForm;
+export default DepositForm;

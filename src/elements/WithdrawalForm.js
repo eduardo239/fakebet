@@ -12,9 +12,9 @@ import '../css/money.css';
 function WithdrawalForm() {
   const [value, setValue] = React.useState(0);
   const [method, setMethod] = React.useState('');
-  const [agency, setAgency] = React.useState(null);
-  const [accountNumber, setAccountNumber] = React.useState(null);
-  const [accountType, setAccountType] = React.useState(null);
+  const [agency, setAgency] = React.useState('');
+  const [accountNumber, setAccountNumber] = React.useState('');
+  const [accountType, setAccountType] = React.useState('');
 
   const submitWithdrawal = () => {
     console.log(

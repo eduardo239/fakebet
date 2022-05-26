@@ -1,9 +1,9 @@
 import React from 'react';
 import { Pane, Tab, Tablist } from 'evergreen-ui';
+import DepositForm from '../elements/DepositForm';
 import BannerDeposit from '../elements/BannerDeposit';
-import DepositForm from '../elements/Deposit';
-import { DEPOSITO, RETIRADA } from '../utils/constants';
 import WithdrawalForm from '../elements/WithdrawalForm';
+import { DEPOSITO, RETIRADA } from '../utils/constants';
 import '../css/menu.css';
 
 function TransferView() {
