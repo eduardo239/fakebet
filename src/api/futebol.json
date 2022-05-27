@@ -7,7 +7,12 @@
     "team1Result": 0,
     "team2Result": 0,
     "winner": null,
-    "type": "futebol"
+    "type": "futebol",
+    "odds": {
+      "team1": 2.1,
+      "draw": 1.9,
+      "team2": 1.003
+    }
   },
   {
     "id": "2",
@@ -17,7 +22,12 @@
     "team1Result": 1,
     "team2Result": 2,
     "winner": null,
-    "type": "futebol"
+    "type": "futebol",
+    "odds": {
+      "team1": 1.45,
+      "draw": 2.1,
+      "team2": 1.23
+    }
   },
   {
     "id": "3",
@@ -27,6 +37,11 @@
     "team1Result": 0,
     "team2Result": 0,
     "winner": null,
-    "type": "futebol"
+    "type": "futebol",
+    "odds": {
+      "team1": 1.15,
+      "draw": 2.1,
+      "team2": 3.83
+    }
   }
 ]

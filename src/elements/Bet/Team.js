@@ -1,8 +1,8 @@
-import React from 'react';
-import { Button, Pane, Small } from 'evergreen-ui';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Button, Pane, Small } from "evergreen-ui";
+import { Link } from "react-router-dom";
 
-function BetTeam({ teamName, gameId, gameType, showInput, TeamEmblem }) {
+function BetTeam({ teamName, gameId, gameType, showInput, TeamEmblem, odds }) {
   return (
     <Pane className="game-card--team">
       <Link to={`game/${gameType}/${gameId}`}>
@@ -15,7 +15,7 @@ function BetTeam({ teamName, gameId, gameType, showInput, TeamEmblem }) {
         className="bg-light"
         width="100%"
       >
-        7.46
+        {odds}
       </Button>
     </Pane>
   );

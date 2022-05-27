@@ -1,34 +1,67 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Pane, TextInputField, Heading, Alert } from 'evergreen-ui';
-import '../css/sign.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Button, Pane, TextInputField, Heading, Alert } from "evergreen-ui";
+import "../css/sign.css";
+import { validateEmail } from "../utils/regex";
+import { SUCCESS, WARNING } from "../utils/constants";
+import { browserDetect } from "../utils/utils";
 
 function SignInView() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const [error, setError] = React.useState({
-    title: '',
-    message: '',
+    title: "",
+    message: "",
     status: false,
-    type: '',
+    type: "",
   });
 
   const handleSignIn = () => {
     setError({
-      title: '',
-      message: '',
+      title: "",
+      message: "",
       status: false,
-      type: '',
+      type: "",
     });
 
-    if (password !== 'qqQQ11') {
+    const emailValidated = validateEmail(email);
+
+    if (email === "" || password === "") {
       setError({
-        title: 'Wrong password',
-        message: 'Please try again',
+        title: "Error",
+        message: "Please fill all the fields",
         status: true,
-        type: 'danger',
+        type: WARNING,
       });
+    } else if (!emailValidated) {
+      setError({
+        title: "Invalid email",
+        message: "Please enter a valid email",
+        status: true,
+        type: WARNING,
+      });
+    } else if (password !== "qqQQ11") {
+      setError({
+        title: "Wrong password",
+        message: "Please try again",
+        status: true,
+        type: WARNING,
+      });
+    } else {
+      setError({
+        title: "Sign in successful!",
+        message: "",
+        status: true,
+        type: SUCCESS,
+      });
+      let user = {
+        email,
+        password,
+        lastLogin: new Date(),
+        browser: browserDetect(),
+      };
+      console.log(user);
     }
   };
 

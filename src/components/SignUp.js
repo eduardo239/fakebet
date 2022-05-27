@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   Pane,
@@ -7,34 +7,35 @@ import {
   Checkbox,
   Heading,
   Alert,
-} from 'evergreen-ui';
-import '../css/sign.css';
-import { validateEmail, validatePassword } from '../utils/regex';
-import { useNavigate } from 'react-router-dom';
-import { DANGER, SUCCESS, WARNING } from '../utils/constants';
+} from "evergreen-ui";
+import "../css/sign.css";
+import { validateEmail, validatePassword } from "../utils/regex";
+import { useNavigate } from "react-router-dom";
+import { SUCCESS, WARNING } from "../utils/constants";
 
 function SignUpView() {
   const navigate = useNavigate();
 
-  const [username, setUsername] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [password2, setPassword2] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [password2, setPassword2] = React.useState("");
 
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
+  const [ageVerification, setAgeVerification] = React.useState(false);
   const [error, setError] = React.useState({
-    title: '',
-    message: '',
+    title: "",
+    message: "",
     status: false,
-    type: '',
+    type: "",
   });
 
   const handleSignUp = () => {
     setError({
-      title: '',
-      message: '',
+      title: "",
+      message: "",
       status: false,
-      type: '',
+      type: "",
     });
 
     const emailValidated = validateEmail(email);
@@ -49,55 +50,67 @@ function SignUpView() {
       passwordMatch &&
       checked
     ) {
-      alert('Sign up successful!');
+      setError({
+        title: "Sign up successful!",
+        message: "Redirecting to home page, in 3 seconds...",
+        status: true,
+        type: SUCCESS,
+      });
+
+      const user = {
+        username,
+        email,
+        password,
+        bets: [],
+        balance: {
+          amount: 0,
+          currency: "EUR",
+          lastDeposit: null,
+        },
+      };
+
+      console.log(user);
+
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } else if (!usernameValidated) {
       setError({
-        title: 'Username is too short',
-        message: 'Username must be at least 4 characters long',
+        title: "Username is too short",
+        message: "Username must be at least 4 characters long",
         status: true,
         type: WARNING,
       });
     } else if (!emailValidated) {
       setError({
-        title: 'Invalid email',
-        message: 'Please enter a valid email',
+        title: "Invalid email",
+        message: "Please enter a valid email",
         status: true,
         type: WARNING,
       });
     } else if (!passwordValidated) {
       setError({
-        title: 'Password',
+        title: "Password",
         message:
-          'Invalid password, must be at least 6 characters long, and contain at least one uppercase letter, one lowercase letter and one number',
+          "Invalid password, must be at least 6 characters long, and contain at least one uppercase letter, one lowercase letter and one number",
         status: true,
         type: WARNING,
       });
     } else if (!checked) {
       setError({
-        title: 'Terms and conditions',
-        message: 'Please accept the terms and conditions',
+        title: "Terms and conditions",
+        message: "Please accept the terms and conditions",
         status: true,
         type: WARNING,
       });
     } else if (password !== password2) {
       setError({
-        title: 'Password',
-        message: 'Passwords do not match',
+        title: "Password",
+        message: "Passwords do not match",
         status: true,
-        type: DANGER,
+        type: WARNING,
       });
     }
-
-    setError({
-      title: 'Sign up successful!',
-      message: 'Redirecting to login page, in 3 seconds...',
-      status: true,
-      type: SUCCESS,
-    });
-
-    setTimeout(() => {
-      navigate('/');
-    }, 3000);
   };
 
   return (
@@ -140,14 +153,19 @@ function SignUpView() {
 
           <Pane>
             <Checkbox
-              marginBottom={32}
               label="I Agree to the Terms and Conditions"
               checked={checked}
               onChange={(e) => setChecked(e.target.checked)}
             />
+            <Checkbox
+              marginBottom={32}
+              label="I am at least 18 years old"
+              checked={ageVerification}
+              onChange={(e) => setAgeVerification(e.target.checked)}
+            />
           </Pane>
 
-          <Pane marginTop={8}>
+          <Pane marginTop={0}>
             <Button
               type="button"
               appearance="primary"

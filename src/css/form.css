@@ -1,7 +1,7 @@
 .form-container {
   background-color: var(--light-color);
   padding: 32px 24px;
-  min-width: 400px;
+  width: 400px;
 }
 
 .form {

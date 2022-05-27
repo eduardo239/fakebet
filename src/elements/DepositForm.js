@@ -1,19 +1,68 @@
-import React from 'react';
+import React from "react";
 import {
+  Alert,
   Button,
   Heading,
   Pane,
   Select,
   Small,
   TextInputField,
-} from 'evergreen-ui';
+} from "evergreen-ui";
+import { SUCCESS, WARNING } from "../utils/constants";
+
+const user = {
+  username: "joe1",
+  email: "email@email.com",
+  bets: [],
+  balance: {
+    amount: 0,
+    currency: "BRL",
+    lastDeposit: null,
+    lastWithdraw: null,
+  },
+};
 
 function DepositForm() {
   const [value, setValue] = React.useState(0);
-  const [method, setMethod] = React.useState('');
+  const [method, setMethod] = React.useState("");
 
-  const submitDeposit = () => {
+  const [error, setError] = React.useState({
+    title: "",
+    message: "",
+    status: false,
+    type: "",
+  });
+
+  const nextPayment = () => {
+    setError({
+      title: "",
+      message: "",
+      status: false,
+      type: "",
+    });
+
     console.log(value, method);
+
+    if (value === 0 || method === "") {
+      setError({
+        title: "Error",
+        message: "Please fill all the fields",
+        status: true,
+        type: WARNING,
+      });
+    } else {
+      setError({
+        title: "Success",
+        message: "Payment successful",
+        status: true,
+        type: SUCCESS,
+      });
+
+      user.balance.amount += parseFloat(value);
+      user.balance.lastDeposit = new Date();
+
+      console.log(user);
+    }
   };
 
   return (
@@ -45,9 +94,17 @@ function DepositForm() {
         </Pane>
 
         <Pane marginTop={8}>
-          <Button appearance="primary" width="100%" onClick={submitDeposit}>
+          <Button appearance="primary" width="100%" onClick={nextPayment}>
             Continuar
           </Button>
+        </Pane>
+
+        <Pane marginTop={16}>
+          {error.status && (
+            <Alert intent={error.type} title={error.title}>
+              {error.message}
+            </Alert>
+          )}
         </Pane>
       </Pane>
     </Pane>

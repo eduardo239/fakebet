@@ -60,10 +60,10 @@ img {
   width: 12px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--dark-alternate-3);
+  background: var(--dark-color);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--dark-color);
+  background: var(--dark-alternate-3);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
