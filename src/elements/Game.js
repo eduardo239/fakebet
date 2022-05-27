@@ -1,13 +1,13 @@
-import React from 'react';
-import { ReactComponent as MC } from '../assets/emblems/manchester-city-football-club.svg';
-import { ReactComponent as RB } from '../assets/emblems/red-bull-bragantino.svg';
+import React from "react";
+import { ReactComponent as MC } from "../assets/emblems/manchester-city-football-club.svg";
+import { ReactComponent as RB } from "../assets/emblems/red-bull-bragantino.svg";
 
-import { Pane, Alert } from 'evergreen-ui';
-import '../css/game.css';
-import '../css/message.css';
-import BetTeam from './Bet/Team';
-import BetDraw from './Bet/Draw';
-import BetValue from './Bet/Input';
+import { Pane, Alert } from "evergreen-ui";
+import "../css/game.css";
+import "../css/message.css";
+import BetTeam from "./Bet/Team";
+import BetDraw from "./Bet/Draw";
+import BetValue from "./Bet/Input";
 
 function ElGame({ game }) {
   const [showValue, setShowValue] = React.useState(false);
@@ -15,10 +15,10 @@ function ElGame({ game }) {
   const [startAnimation, setStartAnimation] = React.useState(false);
   const [pick, setPick] = React.useState(null);
   const [message, setMessage] = React.useState({
-    title: '',
-    message: '',
+    title: "",
+    message: "",
     status: false,
-    type: '',
+    type: "",
   });
 
   const betRef = React.useRef();
@@ -46,19 +46,19 @@ function ElGame({ game }) {
       win: null,
     };
 
-    if (!isNaN(value) && value > 0 && value !== '' && !value.includes('e')) {
+    if (!isNaN(value) && value > 0 && value !== "" && !value.includes("e")) {
       setMessage({
-        title: 'Você apostou',
+        title: "Você apostou",
         message: `Você apostou ${bet.value} no ${bet.pick}`,
         status: true,
-        type: 'success',
+        type: "success",
       });
     } else {
       setMessage({
-        title: 'Aviso',
-        message: 'Valor inválido, tente novamente',
+        title: "Aviso",
+        message: "Valor inválido, tente novamente",
         status: true,
-        type: 'warning',
+        type: "warning",
       });
     }
 
@@ -66,29 +66,29 @@ function ElGame({ game }) {
       setStartAnimation(false);
       setShowValue(false);
       setMessage({
-        title: '',
-        message: '',
+        title: "",
+        message: "",
         status: false,
-        type: '',
+        type: "",
       });
-      betRef.current.value = '';
+      betRef.current.value = "";
     }, 2000);
   };
 
   const closeBet = () => {
     setShowValue(false);
     setMessage({
-      title: '',
-      message: '',
+      title: "",
+      message: "",
       status: false,
-      type: '',
+      type: "",
     });
   };
 
   return (
     <Pane className="games-grid">
       {message.status && (
-        <Pane className={`message-top ${!!message.status ? 'fixed' : 'none'}`}>
+        <Pane className={`message-top ${!!message.status ? "fixed" : "none"}`}>
           <Alert intent={message.type} title={message.title} marginBottom={32}>
             {message.message}
           </Alert>
@@ -96,9 +96,9 @@ function ElGame({ game }) {
       )}
       <Pane
         className={`game-card--container ${
-          startAnimation ? 'padding-bottom--54' : ''
+          startAnimation ? "padding-bottom--54" : ""
         }`}
-        paddingBottom={showValue ? '54px' : '0'}
+        paddingBottom={showValue ? "54px" : "0"}
       >
         <Pane
           display="flex"
@@ -113,9 +113,10 @@ function ElGame({ game }) {
             gameType={game.type}
             showInput={showInput}
             TeamEmblem={MC}
+            odds={game.odds.team1}
           />
 
-          <BetDraw showInput={showInput} />
+          <BetDraw showInput={showInput} odds={game.odds.draw} />
 
           <BetTeam
             teamName={game.team2}
@@ -123,6 +124,7 @@ function ElGame({ game }) {
             gameType={game.type}
             showInput={showInput}
             TeamEmblem={RB}
+            odds={game.odds.team2}
           />
         </Pane>
 

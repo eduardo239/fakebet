@@ -7,7 +7,12 @@
     "team1Result": 0,
     "team2Result": 0,
     "winner": null,
-    "type": "basquete"
+    "type": "basquete",
+    "odds": {
+      "team1": 1.2,
+      "draw": 2.1,
+      "team2": 1.83
+    }
   },
   {
     "id": "2",
@@ -17,7 +22,12 @@
     "team1Result": 1,
     "team2Result": 2,
     "winner": null,
-    "type": "basquete"
+    "type": "basquete",
+    "odds": {
+      "team1": 1.2,
+      "draw": 2.1,
+      "team2": 1.83
+    }
   },
   {
     "id": "3",
@@ -27,6 +37,11 @@
     "team1Result": 0,
     "team2Result": 0,
     "winner": null,
-    "type": "basquete"
+    "type": "basquete",
+    "odds": {
+      "team1": 1.2,
+      "draw": 2.1,
+      "team2": 1.83
+    }
   }
 ]

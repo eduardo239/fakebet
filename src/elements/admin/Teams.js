@@ -1,29 +1,73 @@
 import {
+  Alert,
   Button,
   Heading,
   Pane,
   Select,
   Small,
   TextInputField,
-} from 'evergreen-ui';
-import React from 'react';
-import FileUploaderSingleUpload from './FilleUploader';
+} from "evergreen-ui";
+import React from "react";
+import { WARNING } from "../../utils/constants";
+import FileUploaderSingleUpload from "./FilleUploader";
 
 function Teams() {
-  const [name, setName] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [emblem, setEmblem] = React.useState('');
-  const [shortName, setShortName] = React.useState('');
+  const [name, setName] = React.useState("");
+  const [type, setType] = React.useState("");
+  const [files, setFiles] = React.useState([]);
+  const [shortName, setShortName] = React.useState("");
+
+  const [error, setError] = React.useState({
+    title: "",
+    message: "",
+    status: false,
+    type: "",
+  });
 
   const submitTeam = () => {
-    const game = {
-      name,
-      type,
-      emblem,
-      shortName,
-    };
-
-    console.log(game);
+    setError({
+      title: "",
+      message: "",
+      status: false,
+      type: "",
+    });
+    if (files.length === 0) {
+      setError({
+        title: "Error",
+        message: "Please upload a file",
+        status: true,
+        type: WARNING,
+      });
+    } else if (name === "") {
+      setError({
+        title: "Error",
+        message: "Please enter a name",
+        status: true,
+        type: WARNING,
+      });
+    } else if (shortName === "") {
+      setError({
+        title: "Error",
+        message: "Please enter a short name",
+        status: true,
+        type: WARNING,
+      });
+    } else if (type === "") {
+      setError({
+        title: "Error",
+        message: "Please select a type",
+        status: true,
+        type: WARNING,
+      });
+    } else {
+      const team = {
+        name,
+        type,
+        emblem: files[0],
+        shortName,
+      };
+      console.log(team);
+    }
   };
 
   return (
@@ -48,19 +92,15 @@ function Teams() {
             marginBottom={24}
             onChange={(event) => setType(event.target.value)}
           >
+            <option value="" defaultChecked>
+              ---
+            </option>
             <option value="futebol">Futebol</option>
             <option value="basquete">Basquete</option>
             <option value="esports">Esports</option>
           </Select>
 
-          <FileUploaderSingleUpload />
-
-          <TextInputField
-            label="Emblem"
-            placeholder="URL from team emblem"
-            value={emblem}
-            onChange={(e) => setEmblem(e.target.value)}
-          />
+          <FileUploaderSingleUpload setFiles={setFiles} files={files} />
 
           <TextInputField
             label="Short name"
@@ -74,6 +114,12 @@ function Teams() {
               Adicionar
             </Button>
           </Pane>
+
+          {error.status && (
+            <Alert intent={error.type} title={error.title}>
+              {error.message}
+            </Alert>
+          )}
         </Pane>
       </Pane>
     </Pane>

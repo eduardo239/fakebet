@@ -1,11 +1,11 @@
-import { Pane, Tablist, Tab } from 'evergreen-ui';
-import React from 'react';
-import Banner from '../elements/Banner';
-import Games from '../elements/Games';
-import Footer from '../elements/Footer';
-import { FUTEBOL, BASQUETE, ESPORTS } from '../utils/constants';
-import '../css/game.css';
-import '../css/menu.css';
+import { Pane, Tablist, Tab, Pagination } from "evergreen-ui";
+import React from "react";
+import Banner from "../elements/Banner";
+import Games from "../elements/Games";
+import Footer from "../elements/Footer";
+import { FUTEBOL, BASQUETE, ESPORTS } from "../utils/constants";
+import "../css/game.css";
+import "../css/menu.css";
 
 function HomeView() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -24,7 +24,7 @@ function HomeView() {
               isSelected={index === selectedIndex}
               aria-controls={`panel-${tab}`}
               appearance="minimal"
-              className={`tab-menu ${selectedIndex === index ? `active` : ''}`}
+              className={`tab-menu ${selectedIndex === index ? `active` : ""}`}
             >
               {tab}
             </Tab>
@@ -38,7 +38,7 @@ function HomeView() {
               role="tabpanel"
               aria-labelledby={tab}
               aria-hidden={index !== selectedIndex}
-              display={index === selectedIndex ? 'block' : 'none'}
+              display={index === selectedIndex ? "block" : "none"}
             >
               <Games
                 type={
@@ -48,13 +48,23 @@ function HomeView() {
                     ? BASQUETE
                     : tab === ESPORTS
                     ? ESPORTS
-                    : ''
+                    : ""
                 }
               ></Games>
             </Pane>
           ))}
         </Pane>
       </Pane>
+
+      <Pane
+        marginTop={16}
+        marginBottom={16}
+        display="flex"
+        justifyContent="center"
+      >
+        <Pagination page={1} totalPages={5}></Pagination>
+      </Pane>
+
       <Footer></Footer>
     </Pane>
   );

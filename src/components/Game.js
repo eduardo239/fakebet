@@ -1,55 +1,46 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Alert, Heading, Pane } from 'evergreen-ui';
-import Game from '../elements/Game';
-import Banner from '../elements/Banner';
-import esports from '../api/esports.json';
-import '../css/game.css';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { Alert, Heading, Pane } from "evergreen-ui";
+import Banner from "../elements/Banner";
+import esports from "../api/esports.json";
+import "../css/game.css";
 
 function GameView() {
   let { type, id } = useParams();
 
   const [data, setData] = React.useState([]);
-  const [dataNotFound, setDataNotFound] = React.useState(false);
+  const getGameById = (id) => {
+    let game = esports.filter((game) => game.id === id);
+    setData(game);
+  };
 
   React.useEffect(() => {
-    let mounted = true;
-    let result = esports.filter((obj) => obj.id === id);
-
-    if (mounted) {
-      if (result.length > 0) {
-        setData(result[0]);
-      } else {
-        setDataNotFound(true);
-      }
-    }
-    return () => (mounted = false);
-  }, [type, id]);
+    getGameById(id);
+  }, [id]);
+  console.log(data);
 
   return (
     <Pane display="flex" justifyContent="center" flexDirection="column">
       <Banner></Banner>
-      {!dataNotFound ? (
-        <>
-          <Pane className="game">
-            <Pane className="game-score">
-              <Heading size={600}>{data.team1}</Heading>
-              <Heading size={600}>VS</Heading>
-              <Heading size={600}>{data.team2}</Heading>
-            </Pane>
-          </Pane>
-
-          <Pane display="flex" alignItems="center" justifyContent="center">
-            <Game game={data}></Game>
-          </Pane>
-        </>
-      ) : (
-        <Pane>
-          <Alert intent="none" title="No Data" marginBottom={32}>
-            No Data Found
-          </Alert>
+      <Pane className="game-container">
+        <Pane textAlign="center" paddingTop={8}>
+          <Heading size={400}>{type && type.toUpperCase()}</Heading>
         </Pane>
-      )}
+
+        <Pane>
+          {data.length > 0 && (
+            <Pane className="game-heading">
+              <Heading size={900}>{data[0].team1}</Heading>
+              <Heading size={900}>VS</Heading>
+              <Heading size={900}>{data[0].team2}</Heading>
+            </Pane>
+          )}
+        </Pane>
+
+        <Pane>
+          <Heading size={400}>--</Heading>
+        </Pane>
+      </Pane>
     </Pane>
   );
 }

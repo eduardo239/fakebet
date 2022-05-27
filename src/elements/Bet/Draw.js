@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button, Heading, Pane, Small } from 'evergreen-ui';
+import React from "react";
+import { Button, Heading, Pane, Small } from "evergreen-ui";
 
-function BetTeam({ showInput }) {
+function BetTeam({ showInput, odds }) {
   return (
     <Pane className="game-card--team">
       <Heading fontWeight="bold" size={800} className="light">
@@ -10,11 +10,11 @@ function BetTeam({ showInput }) {
       <Small>Empate</Small>
       <Button
         appearance="minimal"
-        onClick={(e) => showInput(e, 'draw')}
+        onClick={(e) => showInput(e, "draw")}
         className="bg-light"
         width="100%"
       >
-        3.23
+        {odds}
       </Button>
     </Pane>
   );

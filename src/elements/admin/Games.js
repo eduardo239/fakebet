@@ -5,17 +5,17 @@ import {
   Select,
   Small,
   TextInputField,
-} from 'evergreen-ui';
-import React from 'react';
+} from "evergreen-ui";
+import React from "react";
 
 function Games() {
-  const [name1, setName1] = React.useState('');
-  const [name2, setName2] = React.useState('');
-  const [createdAt, setCreatedAt] = React.useState('');
-  const [type, setType] = React.useState('');
+  const [name1, setName1] = React.useState("");
+  const [name2, setName2] = React.useState("");
+  const [createdAt, setCreatedAt] = React.useState("");
+  const [type, setType] = React.useState("");
   const [team1Result, setTeam1Result] = React.useState(0);
   const [team2Result, setTeam2Result] = React.useState(0);
-  const [winner, setWinner] = React.useState('');
+  const [winner, setWinner] = React.useState("");
 
   const submitGame = () => {
     const game = {
@@ -67,6 +67,9 @@ function Games() {
             marginBottom={24}
             onChange={(event) => setType(event.target.value)}
           >
+            <option value="" defaultChecked>
+              ---
+            </option>
             <option value="futebol">Futebol</option>
             <option value="basquete">Basquete</option>
             <option value="esports">Esports</option>

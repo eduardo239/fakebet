@@ -1,8 +1,7 @@
-import { FileCard, FileUploader, Pane } from 'evergreen-ui';
-import React from 'react';
+import { FileCard, FileUploader, Pane } from "evergreen-ui";
+import React from "react";
 
-function FileUploaderSingleUpload() {
-  const [files, setFiles] = React.useState([]);
+function FileUploaderSingleUpload({ setFiles, files }) {
   const [fileRejections, setFileRejections] = React.useState([]);
   const handleChange = React.useCallback((files) => setFiles([files[0]]), []);
   const handleRejected = React.useCallback(
