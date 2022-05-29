@@ -1,6 +1,6 @@
-import React from "react";
-import { Button, Pane, Small } from "evergreen-ui";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Button, Pane, Small } from 'evergreen-ui';
+import { Link } from 'react-router-dom';
 
 function BetTeam({ teamName, gameId, gameType, showInput, TeamEmblem, odds }) {
   return (
@@ -14,6 +14,8 @@ function BetTeam({ teamName, gameId, gameType, showInput, TeamEmblem, odds }) {
         onClick={(e) => showInput(e, teamName)}
         className="bg-light"
         width="100%"
+        fontFamily="monospace"
+        fontWeight={600}
       >
         {odds}
       </Button>

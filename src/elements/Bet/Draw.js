@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Heading, Pane, Small } from "evergreen-ui";
+import React from 'react';
+import { Button, Heading, Pane, Small } from 'evergreen-ui';
 
 function BetTeam({ showInput, odds }) {
   return (
@@ -10,9 +10,11 @@ function BetTeam({ showInput, odds }) {
       <Small>Empate</Small>
       <Button
         appearance="minimal"
-        onClick={(e) => showInput(e, "draw")}
+        onClick={(e) => showInput(e, 'draw')}
         className="bg-light"
         width="100%"
+        fontFamily="monospace"
+        fontWeight={600}
       >
         {odds}
       </Button>

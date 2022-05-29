@@ -6,7 +6,6 @@ import SignUp from './components/SignUp';
 import Home from './components/Home';
 import Transfer from './components/Transfer';
 import Game from './components/Game';
-import Games from './components/Games';
 import Menu from './elements/Menu';
 import Admin from './components/Admin';
 
@@ -26,7 +25,6 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/signin" element={<SignIn />} />
         <Route exact path="/signup" element={<SignUp />} />
-        <Route exact path="/games" element={<Games />} />
         <Route exact path="/transfer" element={<Transfer />} />
         <Route exact path="/game/:type/:id" element={<Game />} />
         <Route exact path="/admin" element={<Admin />} />

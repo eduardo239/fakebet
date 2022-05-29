@@ -17,9 +17,6 @@ function Menu() {
           <Link to="/" className="menu-link">
             FAKEBET
           </Link>
-          <Link to="/games" className="menu-link">
-            JOGOS
-          </Link>
           <Link to="/transfer" className="menu-link">
             DEPÓSITO
           </Link>

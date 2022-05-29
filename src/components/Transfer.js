@@ -4,7 +4,6 @@ import DepositForm from '../elements/DepositForm';
 import BannerDeposit from '../elements/BannerDeposit';
 import WithdrawalForm from '../elements/WithdrawalForm';
 import { DEPOSITO, RETIRADA } from '../utils/constants';
-import '../css/menu.css';
 
 function TransferView() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);

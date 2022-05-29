@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Pane,
@@ -7,35 +7,35 @@ import {
   Checkbox,
   Heading,
   Alert,
-} from "evergreen-ui";
-import "../css/sign.css";
-import { validateEmail, validatePassword } from "../utils/regex";
-import { useNavigate } from "react-router-dom";
-import { SUCCESS, WARNING } from "../utils/constants";
+} from 'evergreen-ui';
+import '../css/sign.css';
+import { validateEmail, validatePassword } from '../utils/regex';
+import { useNavigate } from 'react-router-dom';
+import { SUCCESS, WARNING } from '../utils/constants';
 
 function SignUpView() {
   const navigate = useNavigate();
 
-  const [username, setUsername] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [password2, setPassword2] = React.useState("");
+  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [password2, setPassword2] = React.useState('');
 
-  const [checked, setChecked] = React.useState(false);
-  const [ageVerification, setAgeVerification] = React.useState(false);
+  const [checkTerms, setCheckTerms] = React.useState(false);
+  const [checkAge, setCheckAge] = React.useState(false);
   const [error, setError] = React.useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     status: false,
-    type: "",
+    type: '',
   });
 
   const handleSignUp = () => {
     setError({
-      title: "",
-      message: "",
+      title: '',
+      message: '',
       status: false,
-      type: "",
+      type: '',
     });
 
     const emailValidated = validateEmail(email);
@@ -48,11 +48,11 @@ function SignUpView() {
       emailValidated &&
       passwordValidated &&
       passwordMatch &&
-      checked
+      checkTerms
     ) {
       setError({
-        title: "Sign up successful!",
-        message: "Redirecting to home page, in 3 seconds...",
+        title: 'Sign up successful!',
+        message: 'Redirecting to home page, in 3 seconds...',
         status: true,
         type: SUCCESS,
       });
@@ -64,7 +64,7 @@ function SignUpView() {
         bets: [],
         balance: {
           amount: 0,
-          currency: "EUR",
+          currency: 'EUR',
           lastDeposit: null,
         },
       };
@@ -72,41 +72,41 @@ function SignUpView() {
       console.log(user);
 
       setTimeout(() => {
-        navigate("/");
+        navigate('/');
       }, 3000);
     } else if (!usernameValidated) {
       setError({
-        title: "Username is too short",
-        message: "Username must be at least 4 characters long",
+        title: 'Username is too short',
+        message: 'Username must be at least 4 characters long',
         status: true,
         type: WARNING,
       });
     } else if (!emailValidated) {
       setError({
-        title: "Invalid email",
-        message: "Please enter a valid email",
+        title: 'Invalid email',
+        message: 'Please enter a valid email',
         status: true,
         type: WARNING,
       });
     } else if (!passwordValidated) {
       setError({
-        title: "Password",
+        title: 'Password',
         message:
-          "Invalid password, must be at least 6 characters long, and contain at least one uppercase letter, one lowercase letter and one number",
+          'Invalid password, must be at least 6 characters long, and contain at least one uppercase letter, one lowercase letter and one number',
         status: true,
         type: WARNING,
       });
-    } else if (!checked) {
+    } else if (!checkTerms) {
       setError({
-        title: "Terms and conditions",
-        message: "Please accept the terms and conditions",
+        title: 'Terms and conditions',
+        message: 'Please accept the terms and conditions',
         status: true,
         type: WARNING,
       });
     } else if (password !== password2) {
       setError({
-        title: "Password",
-        message: "Passwords do not match",
+        title: 'Password',
+        message: 'Passwords do not match',
         status: true,
         type: WARNING,
       });
@@ -154,14 +154,14 @@ function SignUpView() {
           <Pane>
             <Checkbox
               label="I Agree to the Terms and Conditions"
-              checked={checked}
-              onChange={(e) => setChecked(e.target.checked)}
+              checked={checkTerms}
+              onChange={(e) => setCheckTerms(e.target.checked)}
             />
             <Checkbox
               marginBottom={32}
               label="I am at least 18 years old"
-              checked={ageVerification}
-              onChange={(e) => setAgeVerification(e.target.checked)}
+              checked={checkAge}
+              onChange={(e) => setCheckAge(e.target.checked)}
             />
           </Pane>
 
