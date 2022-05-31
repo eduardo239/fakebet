@@ -27,6 +27,25 @@ const userSchema = new mongoose.Schema(
         ref: 'Bet',
       },
     ],
+    lastLogin: {
+      type: Date,
+      default: Date.now,
+    },
+    balance: {
+      amount: {
+        type: Number,
+        default: 0,
+      },
+      currency: {
+        type: String,
+        default: 'BRL',
+      },
+      lastDeposit: {
+        type: Date,
+        default: Date.now,
+      },
+      browser: String,
+    },
   },
   {
     timestamps: true,

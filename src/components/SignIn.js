@@ -1,67 +1,74 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Pane, TextInputField, Heading, Alert } from "evergreen-ui";
-import "../css/sign.css";
-import { validateEmail } from "../utils/regex";
-import { SUCCESS, WARNING } from "../utils/constants";
-import { browserDetect } from "../utils/utils";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Pane, TextInputField, Heading, Alert } from 'evergreen-ui';
+import '../css/sign.css';
+import { WARNING } from '../utils/constants';
+import { browserDetect } from '../utils/utils';
+import { signIn } from '../api/game';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { UserContext } from '../context/UserContext';
 
 function SignInView() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const { setUser } = React.useContext(UserContext);
+  const [, setUserLocalStorage] = useLocalStorage('user', null);
+
+  const navigate = useNavigate();
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   const [error, setError] = React.useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     status: false,
-    type: "",
+    type: '',
   });
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     setError({
-      title: "",
-      message: "",
+      title: '',
+      message: '',
       status: false,
-      type: "",
+      type: '',
     });
 
-    const emailValidated = validateEmail(email);
-
-    if (email === "" || password === "") {
+    if (password === '') {
       setError({
-        title: "Error",
-        message: "Please fill all the fields",
+        title: 'Erro',
+        message: 'Por favor, preencha o campo de senha.',
         status: true,
         type: WARNING,
       });
-    } else if (!emailValidated) {
+    } else if (!username) {
       setError({
-        title: "Invalid email",
-        message: "Please enter a valid email",
-        status: true,
-        type: WARNING,
-      });
-    } else if (password !== "qqQQ11") {
-      setError({
-        title: "Wrong password",
-        message: "Please try again",
+        title: 'Erro',
+        message: 'Por favor, preencha o campo de email.',
         status: true,
         type: WARNING,
       });
     } else {
-      setError({
-        title: "Sign in successful!",
-        message: "",
-        status: true,
-        type: SUCCESS,
-      });
       let user = {
-        email,
+        username,
         password,
         lastLogin: new Date(),
         browser: browserDetect(),
       };
-      console.log(user);
+
+      let { data: response } = await signIn(user);
+
+      if (response.success) {
+        setUserLocalStorage(response.user);
+        setUser(response.user);
+        setTimeout(() => {
+          navigate('/');
+        }, 0);
+      } else {
+        setError({
+          title: 'Error',
+          message: 'Algo deu errado, tente novamente',
+          status: true,
+          type: WARNING,
+        });
+      }
     }
   };
 
@@ -77,8 +84,8 @@ function SignInView() {
             type="email"
             label="E-mail"
             placeholder="Text input placeholder..."
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
 
           <TextInputField

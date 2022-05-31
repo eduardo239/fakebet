@@ -79,8 +79,12 @@ router.post('/logout', (req, res, next) => {
   });
 });
 
-router.get('/', (req, res, next) => {
-  res.send(req.user);
+router.get('/info', (req, res, next) => {
+  if (req.user) {
+    res.json({ success: true, message: SUCCESS, user: req.user });
+  } else {
+    res.json({ success: false, message: ERROR_MESSAGE });
+  }
 });
 
 router.delete('/remove/:id', (req, res, next) => {

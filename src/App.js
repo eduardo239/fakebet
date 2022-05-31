@@ -9,8 +9,24 @@ import Game from './components/Game';
 import Menu from './elements/Menu';
 import Admin from './components/Admin';
 import Api from './components/API';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import { UserContext } from './context/UserContext';
 
 function App() {
+  const { setUser } = React.useContext(UserContext);
+
+  const [, setUserLocalStorage] = useLocalStorage('user', null);
+
+  React.useEffect(() => {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUserLocalStorage(foundUser);
+      setUser(foundUser);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Pane
       display="flex"

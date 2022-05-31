@@ -12,6 +12,8 @@ import '../css/sign.css';
 import { validateEmail, validatePassword } from '../utils/regex';
 import { useNavigate } from 'react-router-dom';
 import { SUCCESS, WARNING } from '../utils/constants';
+import { signUp } from '../api/game';
+import { browserDetect } from '../utils/utils';
 
 function SignUpView() {
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ function SignUpView() {
     type: '',
   });
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     setError({
       title: '',
       message: '',
@@ -48,7 +50,8 @@ function SignUpView() {
       emailValidated &&
       passwordValidated &&
       passwordMatch &&
-      checkTerms
+      checkTerms &&
+      checkAge
     ) {
       setError({
         title: 'Sign up successful!',
@@ -57,7 +60,7 @@ function SignUpView() {
         type: SUCCESS,
       });
 
-      const user = {
+      let user = {
         username,
         email,
         password,
@@ -68,40 +71,53 @@ function SignUpView() {
           lastDeposit: null,
         },
         lastLogin: new Date(),
-        browser: '',
+        browser: browserDetect(),
       };
 
-      console.log(user);
+      let { data: response } = await signUp(user);
 
-      setTimeout(() => {
-        navigate('/');
-      }, 3000);
+      if (response.success) {
+        user = response.data;
+        localStorage.setItem('user', JSON.stringify(user));
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      } else {
+        setError({
+          title: 'Erro',
+          message: 'Algo deu errado, tente novamente',
+          status: true,
+          type: WARNING,
+        });
+      }
+
+      console.log(response);
     } else if (!usernameValidated) {
       setError({
-        title: 'Username is too short',
-        message: 'Username must be at least 4 characters long',
+        title: 'Erro',
+        message: 'O nome de usuário deve ter mais de 3 caracteres',
         status: true,
         type: WARNING,
       });
     } else if (!emailValidated) {
       setError({
-        title: 'Invalid email',
-        message: 'Please enter a valid email',
+        title: 'Erro - Email inválido',
+        message: 'Por favor, preencha um email válido',
         status: true,
         type: WARNING,
       });
     } else if (!passwordValidated) {
       setError({
-        title: 'Password',
+        title: 'Erro - Senha inválida',
         message:
-          'Invalid password, must be at least 6 characters long, and contain at least one uppercase letter, one lowercase letter and one number',
+          'Senha deve conter pelo menos 6 caracteres, uma letra maiúscula e um número',
         status: true,
         type: WARNING,
       });
-    } else if (!checkTerms) {
+    } else if (!checkTerms || !checkAge) {
       setError({
-        title: 'Terms and conditions',
-        message: 'Please accept the terms and conditions',
+        title: 'Erro - Termos e condições',
+        message: 'É necessário aceitar os termos e condições',
         status: true,
         type: WARNING,
       });
