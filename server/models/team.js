@@ -8,6 +8,15 @@ const teamSchema = new mongoose.Schema(
     },
     type: {
       type: String,
+      enum: [
+        'futebol',
+        'basquete',
+        'volei',
+        'handebol',
+        'futsal',
+        'esports',
+        'outros',
+      ],
       required: true,
     },
     emblem: {

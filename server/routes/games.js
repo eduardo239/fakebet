@@ -16,7 +16,7 @@ router.post('/add', (req, res, next) => {
     teamAScore: req.body.teamAScore,
     teamBScore: req.body.teamBScore,
     createdAt: req.body.createdAt,
-    winner: '',
+    winner: req.body.winner,
   });
 
   // FIXME: error 11000
@@ -24,7 +24,7 @@ router.post('/add', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else {
-      res.json({ success: true, message: SUCCESS, team: newGame });
+      res.json({ success: true, message: SUCCESS, game: newGame });
     }
   });
 });
@@ -34,7 +34,8 @@ router.put('/edit', (req, res, next) => {
     req.body.id,
     { $set: req.body },
     { new: true },
-    (err) => {
+    (err, x) => {
+      console.log(x);
       if (err) {
         res.json({ success: false, message: ERROR_MESSAGE, err });
       } else {

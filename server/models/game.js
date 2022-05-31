@@ -23,7 +23,7 @@ const gameSchema = new mongoose.Schema(
     winner: {
       type: String,
       required: false,
-      default: '',
+      default: null,
     },
   },
   { timestamps: true }

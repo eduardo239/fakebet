@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    role: {
+      type: String,
+      enum: ['admin', 'user', 'guest', 'support', 'moderator'],
+      default: 'user',
+    },
     bets: [
       {
         type: mongoose.Schema.Types.ObjectId,
