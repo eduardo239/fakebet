@@ -67,6 +67,8 @@ function SignUpView() {
           currency: 'EUR',
           lastDeposit: null,
         },
+        lastLogin: new Date(),
+        browser: '',
       };
 
       console.log(user);

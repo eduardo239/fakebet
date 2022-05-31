@@ -4,15 +4,25 @@ const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
+// eslint-disable-next-line no-unused-vars
 const passportLocal = require('passport-local');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 
+// eslint-disable-next-line no-unused-vars
+const User = require('./models/user');
+// eslint-disable-next-line no-unused-vars
+const Bet = require('./models/bet');
+// eslint-disable-next-line no-unused-vars
+const Team = require('./models/team');
 // - - - - - - ROUTES - - - - - - //
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const betsRouter = require('./routes/bets');
+const teamsRouter = require('./routes/teams');
+const gamesRouter = require('./routes/games');
 
 const app = express();
 const URL =
@@ -50,6 +60,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/bets', betsRouter);
+app.use('/teams', teamsRouter);
+app.use('/games', gamesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

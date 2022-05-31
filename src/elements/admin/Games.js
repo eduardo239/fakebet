@@ -5,26 +5,32 @@ import {
   Select,
   Small,
   TextInputField,
-} from "evergreen-ui";
-import React from "react";
+} from 'evergreen-ui';
+import React from 'react';
 
 function Games() {
-  const [name1, setName1] = React.useState("");
-  const [name2, setName2] = React.useState("");
-  const [createdAt, setCreatedAt] = React.useState("");
-  const [type, setType] = React.useState("");
+  const [name1, setName1] = React.useState('');
+  const [name2, setName2] = React.useState('');
+  const [createdAt, setCreatedAt] = React.useState('');
+  const [type, setType] = React.useState('');
   const [team1Result, setTeam1Result] = React.useState(0);
   const [team2Result, setTeam2Result] = React.useState(0);
-  const [winner, setWinner] = React.useState("");
+  const [winner, setWinner] = React.useState('');
 
   const submitGame = () => {
     const game = {
-      name1,
-      name2,
+      teams: {
+        A: {
+          id: name1,
+          score: parseInt(team1Result),
+        },
+        B: {
+          id: name2,
+          score: parseInt(team2Result),
+        },
+      },
       createdAt,
       type,
-      team1Result,
-      team2Result,
       winner,
     };
 

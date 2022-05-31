@@ -8,6 +8,7 @@ import Transfer from './components/Transfer';
 import Game from './components/Game';
 import Menu from './elements/Menu';
 import Admin from './components/Admin';
+import Api from './components/API';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/transfer" element={<Transfer />} />
         <Route exact path="/game/:type/:id" element={<Game />} />
         <Route exact path="/admin" element={<Admin />} />
+        <Route exact path="/api" element={<Api />} />
       </Routes>
     </Pane>
   );

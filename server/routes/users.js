@@ -3,19 +3,19 @@ const router = express.Router();
 const bcryptjs = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/user');
-
-const ERROR_MESSAGE = 'Algo aconteceu de errado';
-const USER_NOT_FOUND = 'Usuário não encontrado';
-const USER_REMOVED = 'Usuário removido com sucesso';
-const USER_UPDATED = 'Usuário atualizado com sucesso';
-const SUCCESS = 'Sucesso';
-const ERROR_EMAIL_USER =
-  'Email e/ou nome de usuário inválidos ou já cadastrados';
+const {
+  ERROR_MESSAGE,
+  ERROR_EMAIL_USER,
+  SUCCESS,
+  USER_NOT_FOUND,
+  USER_UPDATED,
+  USER_REMOVED,
+} = require('../utils/constants');
 
 router.post('/sign-up', (req, res, next) => {
   User.findOne({ email: req.body.email }, async (err, user) => {
     if (err) {
-      res.json({ success: false, message: ERROR_MESSAGE });
+      res.json({ success: false, message: ERROR_MESSAGE, err });
     } else {
       if (!user) {
         const hashedPassword = await bcryptjs.hash(req.body.password, 10);
@@ -41,7 +41,8 @@ router.post('/sign-up', (req, res, next) => {
 router.post('/sign-in', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err);
-    if (!user) return res.json({ success: false, message: USER_NOT_FOUND });
+    if (!user)
+      return res.json({ success: false, message: USER_NOT_FOUND, err });
 
     req.logIn(user, (err) => {
       if (err) return next(err);
@@ -64,7 +65,7 @@ router.put('/edit', async (req, res, next) => {
       if (err) {
         res.json({ success: false, message: ERROR_MESSAGE });
       } else {
-        if (!user) res.json({ success: false, message: USER_NOT_FOUND });
+        if (!user) res.json({ success: false, message: USER_NOT_FOUND, err });
         else res.json({ success: true, message: USER_UPDATED, user });
       }
     }
@@ -85,7 +86,7 @@ router.get('/', (req, res, next) => {
 router.delete('/remove/:id', (req, res, next) => {
   User.findByIdAndDelete(req.params.id, (err, user) => {
     if (err) {
-      res.json({ success: false, message: ERROR_MESSAGE });
+      res.json({ success: false, message: ERROR_MESSAGE, err });
     } else {
       if (!user) res.json({ success: false, message: USER_NOT_FOUND });
       else res.json({ success: true, message: USER_REMOVED });
@@ -93,4 +94,27 @@ router.delete('/remove/:id', (req, res, next) => {
   });
 });
 
+router.get('/all', (req, res, next) => {
+  User.find({}, (err, users) => {
+    if (err) {
+      res.json({ success: false, message: ERROR_MESSAGE, err });
+    } else if (users.length === 0) {
+      res.json({ success: false, message: USER_NOT_FOUND });
+    } else {
+      res.json({ success: true, message: SUCCESS, users });
+    }
+  });
+});
+
+router.get('/:id', (req, res, next) => {
+  User.findById(req.params.id, (err, user) => {
+    if (err) {
+      res.json({ success: false, message: ERROR_MESSAGE, err });
+    } else if (!user) {
+      res.json({ success: false, message: USER_NOT_FOUND });
+    } else {
+      res.json({ success: true, message: SUCCESS, user });
+    }
+  });
+});
 module.exports = router;

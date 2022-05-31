@@ -11,7 +11,9 @@
   --light-alternate: #cacbce;
 
   --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-code: Consolas, 'Courier New', Courier, monospace;
 }
+
 *,
 *::after,
 *::before {
@@ -29,11 +31,37 @@ a {
   text-decoration: none;
 }
 
+h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 1rem 0;
+}
+
 img {
   max-width: 100%;
   display: block;
 }
 
+code {
+  font-family: var(--font-code);
+}
+
+pre {
+  font-size: 0.8rem;
+}
+.code-grid {
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  font-family: var(--font-code);
+  background-color: var(--dark-alternate-3);
+  padding: 0.2rem 0.4rem;
+  border: 1px solid var(--dark-alternate-2);
+}
+
+.done {
+  background-color: var(--secondary-color);
+}
+/*  */
 .select {
   background-color: var(--light-color);
 }

@@ -34,6 +34,9 @@ function Menu() {
           <Link to="/admin" className="menu-link">
             ADMIN
           </Link>
+          <Link to="/api" className="menu-link">
+            API
+          </Link>
           <Link to="/signup" className="menu-link">
             REGISTRAR
           </Link>

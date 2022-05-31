@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    bets: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bet',
+      },
+    ],
   },
   {
     timestamps: true,
