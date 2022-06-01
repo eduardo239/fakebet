@@ -1,5 +1,5 @@
-import { FileCard, FileUploader, Pane } from "evergreen-ui";
-import React from "react";
+import { FileCard, FileUploader, Pane } from 'evergreen-ui';
+import React from 'react';
 
 function FileUploaderSingleUpload({ setFiles, files }) {
   const [fileRejections, setFileRejections] = React.useState([]);
@@ -13,7 +13,7 @@ function FileUploaderSingleUpload({ setFiles, files }) {
     setFileRejections([]);
   }, []);
   return (
-    <Pane maxWidth={654}>
+    <Pane maxWidth={400}>
       <FileUploader
         label="Upload File"
         description="You can upload 1 file. File can be up to 50 MB."

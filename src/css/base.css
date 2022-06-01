@@ -58,6 +58,11 @@ pre {
   border: 1px solid var(--dark-alternate-2);
 }
 
+.small,
+small {
+  font-size: 0.75rem;
+}
+
 .done {
   background-color: var(--secondary-color);
 }
@@ -74,6 +79,12 @@ pre {
 }
 .light-alternate {
   color: var(--light-alternate);
+}
+.dark {
+  color: var(--dark-color);
+}
+.dark-alternative {
+  color: var(--dark-alternate);
 }
 
 .label {

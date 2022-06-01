@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Team = require('../models/team');
+
 const {
   ERROR_MESSAGE,
   SUCCESS,
@@ -9,12 +10,23 @@ const {
 } = require('../utils/constants');
 
 router.post('/add', (req, res, next) => {
-  const newTeam = new Team({
-    name: req.body.name,
-    type: req.body.type,
-    emblem: req.body.emblem,
-    shortName: req.body.shortName,
-  });
+  const { name, type, emblem, shortName } = req.files;
+  const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+  console.log(req.files.emblem);
+  console.log(req.files.type);
+  console.log(req.files.name);
+  console.log(req.files.shortName);
+  let fileType = req.files.file.name.split('.')[1];
+  let fileName = req.files.emblem.fieldname;
+  const path = fileName + '-' + uniqueSuffix + fileType;
+  console.log(path);
+
+  const newTeam = {
+    name,
+    type,
+    emblem,
+    shortName,
+  };
 
   newTeam.save((err) => {
     if (err) {

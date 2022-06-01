@@ -10,6 +10,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const fileUpload = require('express-fileupload');
 
 // eslint-disable-next-line no-unused-vars
 const User = require('./models/user');
@@ -28,11 +29,15 @@ const app = express();
 const URL =
   'mongodb+srv://passport:kesg6oYxdXuYSiho@cluster0.89non.mongodb.net/?retryWrites=true&w=majority';
 // - - - - - - - - - MONGO - - - - - - - - //
-mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 // - - - - - - view engine setup - - - - - - //
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 // - - - - - - - MIDDLEWARE - - - - - - - //
+app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(

@@ -4,7 +4,7 @@ import { Button, Pane, TextInputField, Heading, Alert } from 'evergreen-ui';
 import '../css/sign.css';
 import { WARNING } from '../utils/constants';
 import { browserDetect } from '../utils/utils';
-import { signIn } from '../api/game';
+import { signIn } from '../api/user';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { UserContext } from '../context/UserContext';
 
@@ -64,7 +64,7 @@ function SignInView() {
       } else {
         setError({
           title: 'Error',
-          message: 'Algo deu errado, tente novamente',
+          message: response.message || 'Erro ao realizar login.',
           status: true,
           type: WARNING,
         });

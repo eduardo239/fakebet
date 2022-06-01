@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { userLogout } from '../api/game';
+import { userLogout } from '../api/user';
 
 const UserContext = React.createContext();
 

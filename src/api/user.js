@@ -5,10 +5,6 @@ const instance = axios.create({
   timeout: 2000,
 });
 
-export function getList() {
-  return fetch('http://localhost:3333/list').then((data) => data.json());
-}
-
 // sign up new user
 export function signUp(user) {
   return instance.post('/users/sign-up', user);
@@ -27,4 +23,9 @@ export function getUserInfo() {
 // logout
 export function userLogout() {
   return instance.post('/users/logout');
+}
+
+// user edit
+export function userEdit(user) {
+  return instance.put('/users/edit', user);
 }

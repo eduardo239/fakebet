@@ -22,7 +22,7 @@ const teamSchema = new mongoose.Schema(
     emblem: {
       type: String,
       required: false,
-      default: '---',
+      default: '',
     },
     shortName: {
       type: String,

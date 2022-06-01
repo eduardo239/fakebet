@@ -6,70 +6,96 @@ import {
   Select,
   Small,
   TextInputField,
-} from "evergreen-ui";
-import React from "react";
-import { WARNING } from "../../utils/constants";
-import FileUploaderSingleUpload from "./FilleUploader";
+} from 'evergreen-ui';
+import React from 'react';
+import { postTeam } from '../../api/team';
+import { WARNING } from '../../utils/constants';
+import FileUploaderSingleUpload from './FilleUploader';
 
 function Teams() {
-  const [name, setName] = React.useState("");
-  const [type, setType] = React.useState("");
+  const [name, setName] = React.useState('');
+  const [type, setType] = React.useState('');
   const [files, setFiles] = React.useState([]);
-  const [shortName, setShortName] = React.useState("");
+  const [shortName, setShortName] = React.useState('');
 
   const [error, setError] = React.useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     status: false,
-    type: "",
+    type: '',
   });
 
-  const submitTeam = () => {
+  const submitTeam = async (e) => {
+    e.preventDefault();
     setError({
-      title: "",
-      message: "",
+      title: '',
+      message: '',
       status: false,
-      type: "",
+      type: '',
     });
+
     if (files.length === 0) {
       setError({
-        title: "Error",
-        message: "Please upload a file",
+        title: 'Error',
+        message: 'É necessário enviar uma imagem',
         status: true,
         type: WARNING,
       });
-    } else if (name === "") {
+    } else if (name === '') {
       setError({
-        title: "Error",
-        message: "Please enter a name",
+        title: 'Error',
+        message: 'O time precisa ter um nome',
         status: true,
         type: WARNING,
       });
-    } else if (shortName === "") {
+    } else if (shortName === '') {
       setError({
-        title: "Error",
-        message: "Please enter a short name",
+        title: 'Error',
+        message: 'O time precisa ter um nome curto',
         status: true,
         type: WARNING,
       });
-    } else if (type === "") {
+    } else if (type === '') {
       setError({
-        title: "Error",
-        message: "Please select a type",
+        title: 'Error',
+        message: 'O time precisa ter um tipo de esporte',
         status: true,
         type: WARNING,
       });
     } else {
-      const team = {
-        name,
-        type,
-        emblem: files[0],
-        shortName,
-      };
-      console.log(team);
+      const newTeam = new FormData();
+
+      newTeam.append('name', name);
+      newTeam.append('shortName', shortName);
+      newTeam.append('type', type);
+      newTeam.append('emblem', files[0]);
+      // FIXME:
+
+      let { data: response } = await postTeam(newTeam);
+      if (response.success) {
+        resetFields();
+        setError({
+          title: 'Sucesso',
+          message: 'Time cadastrado com sucesso',
+          status: true,
+          type: 'success',
+        });
+      } else {
+        setError({
+          title: 'Error',
+          message: 'Erro ao cadastrar time',
+          status: true,
+          type: WARNING,
+        });
+      }
     }
   };
 
+  const resetFields = () => {
+    setName('');
+    setShortName('');
+    setFiles([]);
+  };
   return (
     <Pane display="flex" justifyContent="center">
       <Pane elevation={2} className="form-container">
@@ -77,50 +103,52 @@ function Teams() {
           Adicionar Times
         </Heading>
 
-        <Pane className="form">
-          <TextInputField
-            label="Team name"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+        <form enctype="multipart/form-data" onSubmit={submitTeam}>
+          <Pane className="form">
+            <TextInputField
+              label="Team name"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-          <Small className="label">Método de depósito</Small>
-          <Select
-            width="100%"
-            className="select"
-            marginBottom={24}
-            onChange={(event) => setType(event.target.value)}
-          >
-            <option value="" defaultChecked>
-              ---
-            </option>
-            <option value="futebol">Futebol</option>
-            <option value="basquete">Basquete</option>
-            <option value="esports">Esports</option>
-          </Select>
+            <Small className="label">Método de depósito</Small>
+            <Select
+              width="100%"
+              className="select"
+              marginBottom={24}
+              onChange={(event) => setType(event.target.value)}
+            >
+              <option value="" defaultChecked>
+                ---
+              </option>
+              <option value="futebol">Futebol</option>
+              <option value="basquete">Basquete</option>
+              <option value="esports">Esports</option>
+            </Select>
 
-          <FileUploaderSingleUpload setFiles={setFiles} files={files} />
+            <FileUploaderSingleUpload setFiles={setFiles} files={files} />
 
-          <TextInputField
-            label="Short name"
-            placeholder="XTQ"
-            value={shortName}
-            onChange={(e) => setShortName(e.target.value.toUpperCase())}
-          />
+            <TextInputField
+              label="Short name"
+              placeholder="XTQ"
+              value={shortName}
+              onChange={(e) => setShortName(e.target.value.toUpperCase())}
+            />
 
-          <Pane marginTop={8}>
-            <Button appearance="primary" width="100%" onClick={submitTeam}>
-              Adicionar
-            </Button>
+            <Pane marginTop={8}>
+              <Button appearance="primary" width="100%" onClick={submitTeam}>
+                Adicionar
+              </Button>
+            </Pane>
+
+            {error.status && (
+              <Alert intent={error.type} title={error.title}>
+                {error.message}
+              </Alert>
+            )}
           </Pane>
-
-          {error.status && (
-            <Alert intent={error.type} title={error.title}>
-              {error.message}
-            </Alert>
-          )}
-        </Pane>
+        </form>
       </Pane>
     </Pane>
   );

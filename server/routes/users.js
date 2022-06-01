@@ -18,16 +18,33 @@ router.post('/sign-up', (req, res, next) => {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else {
       if (!user) {
-        const hashedPassword = await bcryptjs.hash(req.body.password, 10);
+        User.findOne({ username: req.body.username }, async (err, user) => {
+          if (err) {
+            res.json({ success: false, message: ERROR_MESSAGE, err });
+          } else {
+            if (!user) {
+              const newUser = new User({
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password,
+              });
 
-        const newUser = new User({
-          username: req.body.username,
-          email: req.body.email,
-          password: hashedPassword,
+              bcryptjs.genSalt(10, (err, salt) => {
+                bcryptjs.hash(newUser.password, salt, async (err, hash) => {
+                  if (err) {
+                    res.json({ success: false, message: ERROR_MESSAGE, err });
+                  } else {
+                    newUser.password = hash;
+                    await newUser.save();
+                    res.json({ success: true, message: SUCCESS });
+                  }
+                });
+              });
+            } else {
+              res.json({ success: false, message: ERROR_EMAIL_USER });
+            }
+          }
         });
-
-        await newUser.save();
-        res.json({ success: true, message: SUCCESS, user: newUser });
       } else {
         res.json({
           success: false,

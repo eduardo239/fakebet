@@ -12,7 +12,7 @@ import '../css/sign.css';
 import { validateEmail, validatePassword } from '../utils/regex';
 import { useNavigate } from 'react-router-dom';
 import { SUCCESS, WARNING } from '../utils/constants';
-import { signUp } from '../api/game';
+import { signUp } from '../api/user';
 import { browserDetect } from '../utils/utils';
 
 function SignUpView() {
@@ -85,13 +85,11 @@ function SignUpView() {
       } else {
         setError({
           title: 'Erro',
-          message: 'Algo deu errado, tente novamente',
+          message: response.message || 'Erro ao realizar o registro.',
           status: true,
           type: WARNING,
         });
       }
-
-      console.log(response);
     } else if (!usernameValidated) {
       setError({
         title: 'Erro',

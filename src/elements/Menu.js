@@ -4,6 +4,7 @@ import MyProfile from './MyProfile';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { Avatar, Dialog, Pane } from 'evergreen-ui';
+import { getUserInfo } from '../api/user';
 import '../css/menu.css';
 import '../css/bet.css';
 
@@ -25,7 +26,7 @@ function Menu() {
             </Link>
           )}
           {user && (
-            <Link to="#" className="menu-link">
+            <Link to="#" onClick={() => getUserInfo()} className="menu-link">
               {user && user.username}
             </Link>
           )}
@@ -77,19 +78,19 @@ function Menu() {
       <Dialog
         isShown={isMyBetsShown}
         title="Minhas Apostas"
-        onConfirm={() => alert('saved')}
-        confirmLabel="Salvar"
+        hasCancel={false}
+        hasFooter={false}
       >
-        <MyBets />
+        <MyBets data={user} setMyBetsIsShown={setMyBetsIsShown} />
       </Dialog>
 
       <Dialog
         isShown={isProfileShown}
         title="Perfil"
-        onConfirm={() => alert('saved')}
-        confirmLabel="Salvar"
+        hasCancel={false}
+        hasFooter={false}
       >
-        <MyProfile />
+        <MyProfile data={user} setIsProfileShown={setIsProfileShown} />
       </Dialog>
     </Pane>
   );

@@ -1,18 +1,30 @@
 .form-container {
+  padding: 32px;
   background-color: var(--light-color);
-  padding: 32px 24px;
-  width: 400px;
+  border-radius: 3px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  max-width: 464px;
 }
-
 .form {
   background: var(--light-color);
   display: grid;
   grid-template-columns: 1fr;
   gap: 8px;
+  min-width: 400px;
 }
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 8px;
+  width: 100%;
+}
+
+.form-grid--field {
+  margin-bottom: 8px;
+}
+
+.form-grid--field > input {
+  width: 100%;
 }
