@@ -12,29 +12,33 @@ const {
 router.post('/upload/:id', (req, res) => {
   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
 
-  let { emblem } = req.files;
-  let fileType = emblem.name.split('.')[1];
-  let fileName = emblem.name.split('.')[0];
-  const path = fileName.toUpperCase() + '-' + uniqueSuffix + '.' + fileType;
+  if (req.files) {
+    let { emblem } = req.files;
+    let fileType = emblem.name.split('.')[1];
+    let fileName = emblem.name.split('.')[0];
+    const path = fileName.toUpperCase() + '-' + uniqueSuffix + '.' + fileType;
 
-  req.files.emblem.mv(`./public/images/emblems/${path}`, (err) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-  });
-
-  Team.findByIdAndUpdate(
-    req.params.id,
-    { $set: { emblem: path } },
-    { new: true },
-    (err) => {
+    req.files.emblem.mv(`./public/images/emblems/${path}`, (err) => {
       if (err) {
-        res.json({ success: false, message: ERROR_MESSAGE, err });
-      } else {
-        res.json({ success: true, message: SUCCESS });
+        return res.status(500).send(err);
       }
-    }
-  );
+    });
+
+    Team.findByIdAndUpdate(
+      req.params.id,
+      { $set: { emblem: path } },
+      { new: true },
+      (err) => {
+        if (err) {
+          res.json({ success: false, message: ERROR_MESSAGE, err });
+        } else {
+          res.json({ success: true, message: SUCCESS });
+        }
+      }
+    );
+  } else {
+    res.json({ success: true, message: ERROR_MESSAGE });
+  }
 });
 
 router.post('/add', (req, res, next) => {

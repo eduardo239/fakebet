@@ -1,15 +1,16 @@
 import React from 'react';
-import Teams from './admin/Teams';
-import Games from './admin/Games';
+import Teams from './admin/TeamsForm';
+import Games from './admin/GamesForm';
 import TeamsTable from './admin/TeamsTable';
 import { Pane } from 'evergreen-ui';
 import { TIMES, JOGOS } from '../utils/constants';
 import '../css/admin.css';
 import '../css/table.css';
 import { getTeams } from '../api/team';
+import { TeamContext } from '../context/TeamContext';
 
 function Type({ type, data }) {
-  const [teams, setTeams] = React.useState([]);
+  const { team, teams, setTeams } = React.useContext(TeamContext);
 
   React.useEffect(() => {
     let mounted = true;
@@ -35,8 +36,9 @@ function Type({ type, data }) {
       width="100%"
     >
       {type === TIMES ? <Teams /> : type === JOGOS ? <Games /> : ''}
-      {type === TIMES ? (
-        <TeamsTable data={teams} />
+
+      {type === TIMES && teams && teams.length > 0 ? (
+        <TeamsTable team={team} />
       ) : type === JOGOS ? (
         <Games />
       ) : (

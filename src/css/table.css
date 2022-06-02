@@ -9,6 +9,10 @@
   height: 45px;
 }
 
+.table-row:hover {
+  background: var(--light-alternate);
+  cursor: pointer;
+}
 .table-cell {
   flex: 4;
 }

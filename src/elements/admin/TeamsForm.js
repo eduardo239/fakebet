@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Alert,
   Button,
@@ -7,12 +8,13 @@ import {
   Small,
   TextInputField,
 } from 'evergreen-ui';
-import React from 'react';
-import { postTeam, uploadImage } from '../../api/team';
-import { WARNING } from '../../utils/constants';
 import FileUploaderSingleUpload from './FilleUploader';
+import { getTeams, postTeam, uploadImage } from '../../api/team';
+import { WARNING } from '../../utils/constants';
+import { TeamContext } from '../../context/TeamContext';
 
 function Teams() {
+  const { team, setTeams } = React.useContext(TeamContext);
   const [name, setName] = React.useState('');
   const [type, setType] = React.useState('');
   const [files, setFiles] = React.useState([]);
@@ -69,7 +71,6 @@ function Teams() {
         newTeamFile.append('emblem', files[0]);
 
         let { team } = teamResponse;
-
         let { data: emblemResponse } = await uploadImage(newTeamFile, team._id);
 
         if (emblemResponse.success) {
@@ -80,6 +81,10 @@ function Teams() {
             status: true,
             type: 'success',
           });
+
+          let { data: teamsResponse } = await getTeams();
+
+          setTeams(teamsResponse.teams);
         } else {
           setError({
             title: 'Error',
@@ -104,6 +109,16 @@ function Teams() {
     setShortName('');
     setFiles([]);
   };
+
+  React.useEffect(() => {
+    let mounted = true;
+    if (mounted && team) {
+      setName(team.name);
+      setShortName(team.shortName);
+      setType(team.type);
+    }
+  }, [team]);
+
   return (
     <Pane display="flex" justifyContent="center">
       <Pane elevation={2} className="form-container">
@@ -120,7 +135,7 @@ function Teams() {
               onChange={(e) => setName(e.target.value)}
             />
 
-            <Small className="label">Método de depósito</Small>
+            <Small className="label">Gênero do Esporte</Small>
             <Select
               width="100%"
               className="select"

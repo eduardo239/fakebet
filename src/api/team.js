@@ -28,3 +28,8 @@ export function userEdit(team) {
 export function uploadImage(image, id) {
   return instance.post(`teams/upload/${id}`, image);
 }
+
+// delete team
+export function removeTeam(id) {
+  return instance.delete(`/teams/remove/${id}`);
+}
