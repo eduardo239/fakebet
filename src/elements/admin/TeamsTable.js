@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  IconButton,
-  Pane,
-  Table,
-  SmallTickIcon,
-  TrashIcon,
-  Dialog,
-} from 'evergreen-ui';
+import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
 import { TeamContext } from '../../context/TeamContext';
 import { removeTeam } from '../../api/team';
 
@@ -44,58 +37,41 @@ function TeamsTable() {
       justifyContent="center"
       width="100%"
     >
-      <Table className="table" marginTop={16}>
-        <Table.Head className="table-row">
-          <Table.TextHeaderCell className="table-cell">
-            Name
-          </Table.TextHeaderCell>
-          <Table.TextHeaderCell className="table-cell">
-            Last Activity
-          </Table.TextHeaderCell>
-          <Table.TextHeaderCell className="table-cell">
-            ltv
-          </Table.TextHeaderCell>
-          <Table.TextHeaderCell className="table-cell-icon">
-            Save
-          </Table.TextHeaderCell>
-          <Table.TextHeaderCell className="table-cell-icon">
-            Remove
-          </Table.TextHeaderCell>
+      <Table className="table">
+        <Table.Head>
+          <Table.TextHeaderCell>Emblema</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Nome</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Gênero</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Abreviação</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Remover</Table.TextHeaderCell>
         </Table.Head>
-        <Table.Body>
-          {teams.map((x) => (
+        <Table.Body height={240}>
+          {teams.map((item) => (
             <Table.Row
-              key={x._id}
-              className="table-row"
-              onClick={() => handleSelect(x)}
+              className={`${item._id === team._id ? 'selected' : ''} table-row`}
+              key={item.id}
+              isSelectable
+              onSelect={() => handleSelect(item)}
+              height={40}
             >
-              <Table.TextCell className="table-cell">
+              <Table.TextCell>
                 <img
                   className="image-small"
-                  src={URL_IMAGE + (x.emblem || 'default.png')}
-                  alt={x.name}
+                  src={URL_IMAGE + (item.emblem || 'default.png')}
+                  alt={item.name}
                 />
               </Table.TextCell>
-              <Table.TextCell className="table-cell">{x.name}</Table.TextCell>
-              <Table.TextCell className="table-cell">{x.type}</Table.TextCell>
-              <Table.TextCell className="table-cell">
-                {x.shortName}
-              </Table.TextCell>
-              <Table.TextCell className="table-cell-icon">
-                <IconButton
-                  disabled={team && team._id !== x._id}
-                  onClick={() => handleEdit(x)}
-                  icon={SmallTickIcon}
-                  intent="success"
-                />
-              </Table.TextCell>
-              <Table.TextCell className="table-cell-icon">
-                <IconButton
-                  disabled={team && team._id !== x._id}
-                  onClick={() => iShownDeleteDialog(x)}
-                  icon={TrashIcon}
+              <Table.TextCell>{item.name}</Table.TextCell>
+              <Table.TextCell>{item.type}</Table.TextCell>
+              <Table.TextCell>{item.shortName}</Table.TextCell>
+              <Table.TextCell>
+                <Button
+                  appearance="primary"
                   intent="danger"
-                />
+                  onClick={iShownDeleteDialog}
+                >
+                  Remover
+                </Button>
               </Table.TextCell>
             </Table.Row>
           ))}
@@ -104,13 +80,16 @@ function TeamsTable() {
 
       <Dialog
         isShown={isShown}
-        title="Dialog title"
+        title="Remover Time"
         intent="danger"
+        cancelLabel="Cancelar"
         onCloseComplete={() => setIsShown(false)}
-        confirmLabel="Delete"
+        confirmLabel="Remover"
         onConfirm={() => handleDelete()}
       >
-        Are you sure you want to delete this item?
+        <Paragraph size={300} marginTop={12}>
+          Você tem certeza que deseja remover o time {team.name}?
+        </Paragraph>
       </Dialog>
     </Pane>
   );

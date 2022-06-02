@@ -85,6 +85,15 @@ function Teams() {
           let { data: teamsResponse } = await getTeams();
 
           setTeams(teamsResponse.teams);
+
+          setTimeout(() => {
+            setError({
+              title: '',
+              message: '',
+              status: false,
+              type: '',
+            });
+          }, 3000);
         } else {
           setError({
             title: 'Error',
@@ -126,51 +135,49 @@ function Teams() {
           Adicionar Times
         </Heading>
 
-        <form onSubmit={submitTeam}>
-          <Pane className="form">
-            <TextInputField
-              label="Team name"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+        <form onSubmit={submitTeam} className="form">
+          <TextInputField
+            label="Team name"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-            <Small className="label">Gênero do Esporte</Small>
-            <Select
-              width="100%"
-              className="select"
-              marginBottom={24}
-              onChange={(event) => setType(event.target.value)}
-            >
-              <option value="" defaultChecked>
-                ---
-              </option>
-              <option value="futebol">Futebol</option>
-              <option value="basquete">Basquete</option>
-              <option value="esports">Esports</option>
-            </Select>
+          <Small className="label">Gênero do Esporte</Small>
+          <Select
+            width="100%"
+            className="select"
+            marginBottom={24}
+            onChange={(event) => setType(event.target.value)}
+          >
+            <option value="" defaultChecked>
+              ---
+            </option>
+            <option value="futebol">Futebol</option>
+            <option value="basquete">Basquete</option>
+            <option value="esports">Esports</option>
+          </Select>
 
-            <FileUploaderSingleUpload setFiles={setFiles} files={files} />
+          <FileUploaderSingleUpload setFiles={setFiles} files={files} />
 
-            <TextInputField
-              label="Short name"
-              placeholder="XTQ"
-              value={shortName}
-              onChange={(e) => setShortName(e.target.value.toUpperCase())}
-            />
+          <TextInputField
+            label="Short name"
+            placeholder="XTQ"
+            value={shortName}
+            onChange={(e) => setShortName(e.target.value.toUpperCase())}
+          />
 
-            <Pane marginTop={8}>
-              <Button appearance="primary" width="100%" onClick={submitTeam}>
-                Adicionar
-              </Button>
-            </Pane>
-
-            {error.status && (
-              <Alert intent={error.type} title={error.title}>
-                {error.message}
-              </Alert>
-            )}
+          <Pane marginTop={8}>
+            <Button appearance="primary" width="100%" onClick={submitTeam}>
+              Adicionar
+            </Button>
           </Pane>
+
+          {error.status && (
+            <Alert intent={error.type} title={error.title}>
+              {error.message}
+            </Alert>
+          )}
         </form>
       </Pane>
     </Pane>

@@ -1,23 +1,17 @@
 .table {
-  min-width: 100%;
-  padding: 8px;
   background: var(--light-color);
 }
 
 .table-row {
   padding: 0;
-  height: 45px;
+  align-items: center;
 }
 
 .table-row:hover {
-  background: var(--light-alternate);
+  background: var(--light-alternate) !important;
   cursor: pointer;
 }
-.table-cell {
-  flex: 4;
-}
 
-.table-cell-icon {
-  text-align: center;
-  vertical-align: middle;
+.table-row.selected {
+  background-color: var(--light-alternate-2) !important;
 }

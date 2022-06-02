@@ -8,7 +8,8 @@
   --dark-alternate-3: #3b3b3d;
 
   --light-color: #f4f7f5;
-  --light-alternate: #cacbce;
+  --light-alternate: #e9e9ec;
+  --light-alternate-2: #d7d7df;
 
   --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-code: Consolas, 'Courier New', Courier, monospace;
@@ -43,8 +44,8 @@ img {
 }
 
 .image-small {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
 }
 
 code {
