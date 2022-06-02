@@ -4,6 +4,10 @@ const instance = axios.create({
   baseURL: 'http://localhost:3003/',
   timeout: 2000,
 });
+// get all teams
+export const getTeams = () => {
+  return instance.get('/teams/all');
+};
 
 // post new team
 export function postTeam(team) {

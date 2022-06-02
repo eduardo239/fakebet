@@ -34,14 +34,7 @@ function Teams() {
       type: '',
     });
 
-    if (files.length === 0) {
-      setError({
-        title: 'Error',
-        message: 'É necessário enviar uma imagem',
-        status: true,
-        type: WARNING,
-      });
-    } else if (name === '') {
+    if (name === '') {
       setError({
         title: 'Error',
         message: 'O time precisa ter um nome',
