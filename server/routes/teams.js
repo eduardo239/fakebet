@@ -9,30 +9,46 @@ const {
   USER_REMOVED,
 } = require('../utils/constants');
 
-router.post('/add', (req, res, next) => {
-  const { name, type, emblem, shortName } = req.files;
+router.post('/upload/:id', (req, res) => {
   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-  console.log(req.files.emblem);
-  console.log(req.files.type);
-  console.log(req.files.name);
-  console.log(req.files.shortName);
-  let fileType = req.files.file.name.split('.')[1];
-  let fileName = req.files.emblem.fieldname;
-  const path = fileName + '-' + uniqueSuffix + fileType;
-  console.log(path);
 
-  const newTeam = {
-    name,
-    type,
-    emblem,
-    shortName,
-  };
+  let { emblem } = req.files;
+  let fileType = emblem.name.split('.')[1];
+  let fileName = emblem.name.split('.')[0];
+  const path = fileName.toUpperCase() + '-' + uniqueSuffix + '.' + fileType;
 
-  newTeam.save((err) => {
+  req.files.emblem.mv(`./public/images/emblems/${path}`, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+  });
+
+  Team.findByIdAndUpdate(
+    req.params.id,
+    { $set: { emblem: path } },
+    { new: true },
+    (err) => {
+      if (err) {
+        res.json({ success: false, message: ERROR_MESSAGE, err });
+      } else {
+        res.json({ success: true, message: SUCCESS });
+      }
+    }
+  );
+});
+
+router.post('/add', (req, res, next) => {
+  const newTeam = new Team({
+    name: req.body.name,
+    shortName: req.body.shortName,
+    type: req.body.type,
+  });
+
+  newTeam.save((err, team) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else {
-      res.json({ success: true, message: SUCCESS, team: newTeam });
+      res.json({ success: true, message: SUCCESS, team });
     }
   });
 });

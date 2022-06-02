@@ -8,7 +8,7 @@ import {
   TextInputField,
 } from 'evergreen-ui';
 import React from 'react';
-import { postTeam } from '../../api/team';
+import { postTeam, uploadImage } from '../../api/team';
 import { WARNING } from '../../utils/constants';
 import FileUploaderSingleUpload from './FilleUploader';
 
@@ -63,23 +63,38 @@ function Teams() {
         type: WARNING,
       });
     } else {
-      const newTeam = new FormData();
+      const newTeamData = {
+        name,
+        shortName,
+        type,
+      };
 
-      newTeam.append('name', name);
-      newTeam.append('shortName', shortName);
-      newTeam.append('type', type);
-      newTeam.append('emblem', files[0]);
-      // FIXME:
+      let { data: teamResponse } = await postTeam(newTeamData);
 
-      let { data: response } = await postTeam(newTeam);
-      if (response.success) {
-        resetFields();
-        setError({
-          title: 'Sucesso',
-          message: 'Time cadastrado com sucesso',
-          status: true,
-          type: 'success',
-        });
+      if (teamResponse.success) {
+        const newTeamFile = new FormData();
+        newTeamFile.append('emblem', files[0]);
+
+        let { team } = teamResponse;
+
+        let { data: emblemResponse } = await uploadImage(newTeamFile, team._id);
+
+        if (emblemResponse.success) {
+          resetFields();
+          setError({
+            title: 'Sucesso',
+            message: 'Time cadastrado com sucesso',
+            status: true,
+            type: 'success',
+          });
+        } else {
+          setError({
+            title: 'Error',
+            message: 'Erro ao cadastrar time',
+            status: true,
+            type: WARNING,
+          });
+        }
       } else {
         setError({
           title: 'Error',
@@ -103,7 +118,7 @@ function Teams() {
           Adicionar Times
         </Heading>
 
-        <form enctype="multipart/form-data" onSubmit={submitTeam}>
+        <form onSubmit={submitTeam}>
           <Pane className="form">
             <TextInputField
               label="Team name"

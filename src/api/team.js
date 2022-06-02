@@ -19,3 +19,8 @@ export function getTeam(team) {
 export function userEdit(team) {
   return instance.put('/teams/edit', team);
 }
+
+// upload image
+export function uploadImage(image, id) {
+  return instance.post(`teams/upload/${id}`, image);
+}

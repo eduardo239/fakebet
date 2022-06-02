@@ -37,7 +37,13 @@ mongoose.connect(URL, {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 // - - - - - - - MIDDLEWARE - - - - - - - //
-app.use(fileUpload());
+app.use(
+  fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+    useTempFiles: true,
+    tempFileDir: 'uploads/',
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
