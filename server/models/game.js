@@ -21,9 +21,22 @@ const gameSchema = new mongoose.Schema(
       required: true,
     },
     winner: {
-      type: String,
+      type: Number,
       required: false,
       default: null,
+    },
+    type: {
+      type: String,
+      enum: [
+        'futebol',
+        'basquete',
+        'volei',
+        'handebol',
+        'futsal',
+        'esports',
+        'outros',
+      ],
+      required: true,
     },
   },
   { timestamps: true }

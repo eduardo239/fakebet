@@ -1,25 +1,33 @@
 import React from 'react';
-import Teams from './admin/TeamsForm';
-import Games from './admin/GamesForm';
+import GamesForm from './admin/GamesForm';
+import TeamsForm from './admin/TeamsForm';
 import TeamsTable from './admin/TeamsTable';
+import GamesTable from './admin/GamesTable';
 import { Pane } from 'evergreen-ui';
-import { TIMES, JOGOS } from '../utils/constants';
-import '../css/admin.css';
-import '../css/table.css';
 import { getTeams } from '../api/team';
+import { getGames } from '../api/game';
 import { TeamContext } from '../context/TeamContext';
+import { GameContext } from '../context/GameContext';
+import { TIMES, JOGOS } from '../utils/constants';
+import '../css/table.css';
 
 function Type({ type, data }) {
   const { team, teams, setTeams } = React.useContext(TeamContext);
+  const { game, games, setGames } = React.useContext(GameContext);
 
   React.useEffect(() => {
     let mounted = true;
     if (mounted) {
       (async () => {
-        let { data: response } = await getTeams();
+        let { data: responseTeams } = await getTeams();
+        let { data: responseGames } = await getGames();
 
-        if (response.success) {
-          setTeams(response.teams);
+        if (responseTeams.success) {
+          setTeams(responseTeams.teams);
+        }
+
+        if (responseGames.success) {
+          setGames(responseGames.games);
         }
       })();
     }
@@ -35,12 +43,12 @@ function Type({ type, data }) {
       justifyContent="center"
       width="100%"
     >
-      {type === TIMES ? <Teams /> : type === JOGOS ? <Games /> : ''}
+      {type === TIMES ? <TeamsForm /> : type === JOGOS ? <GamesForm /> : ''}
 
       {type === TIMES && teams && teams.length > 0 ? (
         <TeamsTable team={team} />
-      ) : type === JOGOS ? (
-        <Games />
+      ) : type === JOGOS && games && games.length > 0 ? (
+        <GamesTable game={game} />
       ) : (
         ''
       )}

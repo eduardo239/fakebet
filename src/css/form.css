@@ -1,17 +1,31 @@
-.form-container {
+.form-container,
+.form-container-sign {
   padding: 32px;
   background-color: var(--light-color);
   border-radius: 3px;
   margin-top: 16px;
   margin-bottom: 16px;
-  max-width: 464px;
+  width: 90%;
 }
-.form {
+
+.form-container-sign {
+  max-width: 380px;
+}
+
+.form,
+.form-sign {
   background: var(--light-color);
+  gap: 8px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.form-sign {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px;
-  min-width: 400px;
 }
 
 .form-grid {
@@ -27,4 +41,8 @@
 
 .form-grid--field > input {
   width: 100%;
+}
+
+.form--span-3 {
+  grid-column: 1 / span 3;
 }

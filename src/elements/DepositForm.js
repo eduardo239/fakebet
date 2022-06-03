@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Alert,
   Button,
@@ -7,16 +7,16 @@ import {
   Select,
   Small,
   TextInputField,
-} from "evergreen-ui";
-import { SUCCESS, WARNING } from "../utils/constants";
+} from 'evergreen-ui';
+import { SUCCESS, WARNING } from '../utils/constants';
 
 const user = {
-  username: "joe1",
-  email: "email@email.com",
+  username: 'joe1',
+  email: 'email@email.com',
   bets: [],
   balance: {
     amount: 0,
-    currency: "BRL",
+    currency: 'BRL',
     lastDeposit: null,
     lastWithdraw: null,
   },
@@ -24,36 +24,36 @@ const user = {
 
 function DepositForm() {
   const [value, setValue] = React.useState(0);
-  const [method, setMethod] = React.useState("");
+  const [method, setMethod] = React.useState('');
 
   const [error, setError] = React.useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     status: false,
-    type: "",
+    type: '',
   });
 
   const nextPayment = () => {
     setError({
-      title: "",
-      message: "",
+      title: '',
+      message: '',
       status: false,
-      type: "",
+      type: '',
     });
 
     console.log(value, method);
 
-    if (value === 0 || method === "") {
+    if (value === 0 || method === '') {
       setError({
-        title: "Error",
-        message: "Please fill all the fields",
+        title: 'Error',
+        message: 'Please fill all the fields',
         status: true,
         type: WARNING,
       });
     } else {
       setError({
-        title: "Success",
-        message: "Payment successful",
+        title: 'Success',
+        message: 'Payment successful',
         status: true,
         type: SUCCESS,
       });
@@ -71,6 +71,7 @@ function DepositForm() {
         <Heading size={700} marginBottom={24}>
           Depositar
         </Heading>
+
         <Pane className="form">
           <TextInputField
             label="Valor"
@@ -79,22 +80,24 @@ function DepositForm() {
             onChange={(e) => setValue(e.target.value)}
           />
 
-          <Small className="label">Método de depósito</Small>
-          <Select
-            className="select"
-            marginBottom={24}
-            onChange={(event) => setMethod(event.target.value)}
-          >
-            <option value="pix">PIX</option>
-            <option value="transferencia-bancaria">
-              Transferência Bancária
-            </option>
-            <option value="paypal">Paypal</option>
-          </Select>
+          <Pane>
+            <Small className="label">Método de depósito</Small>
+            <Select
+              marginTop={8}
+              className="select"
+              onChange={(event) => setMethod(event.target.value)}
+            >
+              <option value="pix">PIX</option>
+              <option value="transferencia-bancaria">
+                Transferência Bancária
+              </option>
+              <option value="paypal">Paypal</option>
+            </Select>
+          </Pane>
         </Pane>
 
         <Pane marginTop={8}>
-          <Button appearance="primary" width="100%" onClick={nextPayment}>
+          <Button appearance="primary" onClick={nextPayment}>
             Continuar
           </Button>
         </Pane>

@@ -17,6 +17,7 @@ router.post('/add', (req, res, next) => {
     teamBScore: req.body.teamBScore,
     createdAt: req.body.createdAt,
     winner: req.body.winner,
+    type: req.body.type,
   });
 
   // FIXME: error 11000
@@ -57,15 +58,17 @@ router.delete('/remove/:id', (req, res, next) => {
 });
 
 router.get('/all', (req, res, next) => {
-  Game.find({}, (err, teams) => {
+  Game.find({}, (err, games) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
-    } else if (teams.length === 0) {
-      res.json({ success: false, message: USER_NOT_FOUND, teams });
+    } else if (games.length === 0) {
+      res.json({ success: false, message: USER_NOT_FOUND, games });
     } else {
-      res.json({ success: true, message: SUCCESS, teams });
+      res.json({ success: true, message: SUCCESS, games });
     }
-  });
+  })
+    .populate('teamAId')
+    .populate('teamBId');
 });
 
 router.get('/:id', (req, res, next) => {

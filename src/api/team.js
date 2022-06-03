@@ -16,11 +16,11 @@ export function postTeam(team) {
 
 // get team info
 export function getTeam(team) {
-  return instance.get(`/teams/${team.id}`);
+  return instance.get(`/teams/${team._id}`);
 }
 
 // team edit
-export function userEdit(team) {
+export function updateTeam(team) {
   return instance.put('/teams/edit', team);
 }
 

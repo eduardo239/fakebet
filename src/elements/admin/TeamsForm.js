@@ -2,23 +2,31 @@ import React from 'react';
 import {
   Alert,
   Button,
+  Dialog,
   Heading,
   Pane,
+  Paragraph,
   Select,
   Small,
   TextInputField,
 } from 'evergreen-ui';
 import FileUploaderSingleUpload from './FilleUploader';
-import { getTeams, postTeam, uploadImage } from '../../api/team';
-import { WARNING } from '../../utils/constants';
+import { getTeams, postTeam, updateTeam, uploadImage } from '../../api/team';
 import { TeamContext } from '../../context/TeamContext';
+import { WARNING } from '../../utils/constants';
 
-function Teams() {
-  const { team, setTeams } = React.useContext(TeamContext);
-  const [name, setName] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [files, setFiles] = React.useState([]);
-  const [shortName, setShortName] = React.useState('');
+function TeamsForm() {
+  const {
+    team,
+    setTeams,
+    setTeam,
+    resetTeam,
+    files,
+    setFiles,
+    setIsUpdating,
+    isUpdating,
+  } = React.useContext(TeamContext);
+  const [isShownUpdateModal, setIsShownUpdateModal] = React.useState(false);
 
   const [error, setError] = React.useState({
     title: '',
@@ -26,6 +34,16 @@ function Teams() {
     status: false,
     type: '',
   });
+
+  const handleEdit = async () => {
+    await updateTeam(team);
+    setIsUpdating(false);
+    setIsShownUpdateModal(false);
+    let { data: response } = await getTeams();
+    if (response.success) {
+      setTeams(response.teams);
+    }
+  };
 
   const submitTeam = async (e) => {
     e.preventDefault();
@@ -36,21 +54,21 @@ function Teams() {
       type: '',
     });
 
-    if (name === '') {
+    if (team.name === '') {
       setError({
         title: 'Error',
         message: 'O time precisa ter um nome',
         status: true,
         type: WARNING,
       });
-    } else if (shortName === '') {
+    } else if (team.shortName === '') {
       setError({
         title: 'Error',
         message: 'O time precisa ter um nome curto',
         status: true,
         type: WARNING,
       });
-    } else if (type === '') {
+    } else if (team.type === '') {
       setError({
         title: 'Error',
         message: 'O time precisa ter um tipo de esporte',
@@ -58,13 +76,7 @@ function Teams() {
         type: WARNING,
       });
     } else {
-      const newTeamData = {
-        name,
-        shortName,
-        type,
-      };
-
-      let { data: teamResponse } = await postTeam(newTeamData);
+      let { data: teamResponse } = await postTeam(team);
 
       if (teamResponse.success) {
         const newTeamFile = new FormData();
@@ -74,7 +86,7 @@ function Teams() {
         let { data: emblemResponse } = await uploadImage(newTeamFile, team._id);
 
         if (emblemResponse.success) {
-          resetFields();
+          resetTeam();
           setError({
             title: 'Sucesso',
             message: 'Time cadastrado com sucesso',
@@ -113,21 +125,6 @@ function Teams() {
     }
   };
 
-  const resetFields = () => {
-    setName('');
-    setShortName('');
-    setFiles([]);
-  };
-
-  React.useEffect(() => {
-    let mounted = true;
-    if (mounted && team) {
-      setName(team.name);
-      setShortName(team.shortName);
-      setType(team.type);
-    }
-  }, [team]);
-
   return (
     <Pane display="flex" justifyContent="center">
       <Pane elevation={2} className="form-container">
@@ -135,53 +132,83 @@ function Teams() {
           Adicionar Times
         </Heading>
 
-        <form onSubmit={submitTeam} className="form">
+        <Pane className="form">
           <TextInputField
-            label="Team name"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            label="Nome do Time"
+            placeholder="O nome do time"
+            value={team.name}
+            onChange={(e) => setTeam({ ...team, name: e.target.value })}
           />
 
-          <Small className="label">Gênero do Esporte</Small>
-          <Select
-            width="100%"
-            className="select"
-            marginBottom={24}
-            onChange={(event) => setType(event.target.value)}
-          >
-            <option value="" defaultChecked>
-              ---
-            </option>
-            <option value="futebol">Futebol</option>
-            <option value="basquete">Basquete</option>
-            <option value="esports">Esports</option>
-          </Select>
-
-          <FileUploaderSingleUpload setFiles={setFiles} files={files} />
-
-          <TextInputField
-            label="Short name"
-            placeholder="XTQ"
-            value={shortName}
-            onChange={(e) => setShortName(e.target.value.toUpperCase())}
-          />
-
-          <Pane marginTop={8}>
-            <Button appearance="primary" width="100%" onClick={submitTeam}>
-              Adicionar
-            </Button>
+          <Pane>
+            <Small className="label">Gênero do Esporte</Small>
+            <Select
+              marginTop={8}
+              width="100%"
+              className="select"
+              marginBottom={24}
+              onChange={(event) =>
+                setTeam({ ...team, type: event.target.value })
+              }
+            >
+              <option value="" defaultChecked>
+                ---
+              </option>
+              <option value="futebol">Futebol</option>
+              <option value="basquete">Basquete</option>
+              <option value="esports">Esports</option>
+            </Select>
           </Pane>
 
-          {error.status && (
-            <Alert intent={error.type} title={error.title}>
-              {error.message}
-            </Alert>
-          )}
-        </form>
+          <TextInputField
+            label="Nome Abreviado"
+            placeholder="Um nome curto com até 3 caracteres"
+            value={team.shortName}
+            onChange={(e) =>
+              setTeam({ ...team, shortName: e.target.value.toUpperCase() })
+            }
+            maxLength={3}
+          />
+
+          <Pane className="form--span-3">
+            <FileUploaderSingleUpload setFiles={setFiles} files={files} />
+          </Pane>
+        </Pane>
+        <Pane marginTop={8}>
+          <Button marginRight={16} appearance="primary" onClick={submitTeam}>
+            Adicionar
+          </Button>
+          <Button
+            disabled={!isUpdating}
+            appearance="minimal"
+            onClick={setIsShownUpdateModal}
+          >
+            Atualizar
+          </Button>
+        </Pane>
+
+        {error.status && (
+          <Alert intent={error.type} title={error.title}>
+            {error.message}
+          </Alert>
+        )}
       </Pane>
+
+      <Dialog
+        isShown={isShownUpdateModal}
+        title="Remover Time"
+        intent="primary"
+        cancelLabel="Cancelar"
+        onCloseComplete={() => setIsShownUpdateModal(false)}
+        confirmLabel="Atualizar"
+        onConfirm={() => handleEdit(team)}
+      >
+        <Paragraph size={300} marginTop={12}>
+          Você tem certeza que deseja atualizar ?
+        </Paragraph>
+      </Dialog>
     </Pane>
   );
 }
 
-export default Teams;
+export default TeamsForm;

@@ -11,11 +11,12 @@ function FileUploaderSingleUpload({ setFiles, files }) {
   const handleRemove = React.useCallback(() => {
     setFiles([]);
     setFileRejections([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Pane maxWidth={400}>
+    <Pane>
       <FileUploader
-        label="Upload File"
+        label="Enviar arquivo"
         description="You can upload 1 file. File can be up to 50 MB."
         maxSizeInBytes={50 * 1024 ** 2}
         maxFiles={1}

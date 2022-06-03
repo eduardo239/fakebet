@@ -59,7 +59,7 @@ router.post('/add', (req, res, next) => {
 
 router.put('/edit', (req, res, next) => {
   Team.findByIdAndUpdate(
-    req.body.id,
+    req.body._id,
     { $set: req.body },
     { new: true },
     (err) => {

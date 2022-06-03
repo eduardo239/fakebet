@@ -75,6 +75,7 @@ small {
 /*  */
 .select {
   background-color: var(--light-color);
+  width: 100%;
 }
 
 .bg-light {

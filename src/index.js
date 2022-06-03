@@ -10,15 +10,18 @@ import './css/animation.css';
 
 import { TeamContextContent } from './context/TeamContext';
 import { UserContextContent } from './context/UserContext';
+import { GameContextContent } from './context/GameContext';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
   <Router>
-    <UserContextContent>
+    <GameContextContent>
       <TeamContextContent>
-        <App />
+        <UserContextContent>
+          <App />
+        </UserContextContent>
       </TeamContextContent>
-    </UserContextContent>
+    </GameContextContent>
   </Router>
 );

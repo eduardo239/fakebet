@@ -9,11 +9,11 @@ import {
   Alert,
 } from 'evergreen-ui';
 import '../css/sign.css';
-import { validateEmail, validatePassword } from '../utils/regex';
-import { useNavigate } from 'react-router-dom';
-import { SUCCESS, WARNING } from '../utils/constants';
 import { signUp } from '../api/user';
+import { useNavigate } from 'react-router-dom';
 import { browserDetect } from '../utils/utils';
+import { validateEmail, validatePassword } from '../utils/regex';
+import { SUCCESS, WARNING } from '../utils/constants';
 
 function SignUpView() {
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ function SignUpView() {
         user = response.data;
         localStorage.setItem('user', JSON.stringify(user));
         setTimeout(() => {
-          navigate('/');
+          navigate('/signin');
         }, 3000);
       } else {
         setError({
@@ -131,12 +131,12 @@ function SignUpView() {
 
   return (
     <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="form-container">
+      <Pane elevation={2} className="form-container-sign">
         <Heading size={700} marginBottom={24}>
           Login
         </Heading>
 
-        <Pane className="form">
+        <Pane className="form-sign">
           <TextInputField
             label="Username"
             placeholder="Placeholder text"

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Heading,
@@ -7,16 +7,16 @@ import {
   Small,
   TextInputField,
   Alert,
-} from "evergreen-ui";
-import { SUCCESS, WARNING } from "../utils/constants";
+} from 'evergreen-ui';
+import { SUCCESS, WARNING } from '../utils/constants';
 
 const user = {
-  username: "joe1",
-  email: "email@email.com",
+  username: 'joe1',
+  email: 'email@email.com',
   bets: [],
   balance: {
     amount: 2304.5,
-    currency: "BRL",
+    currency: 'BRL',
     lastDeposit: null,
     lastWithdraw: null,
   },
@@ -24,57 +24,57 @@ const user = {
 
 function WithdrawalForm() {
   const [value, setValue] = React.useState(0);
-  const [method, setMethod] = React.useState("");
-  const [agency, setAgency] = React.useState("");
-  const [accountNumber, setAccountNumber] = React.useState("");
-  const [accountType, setAccountType] = React.useState("");
+  const [method, setMethod] = React.useState('');
+  const [agency, setAgency] = React.useState('');
+  const [accountNumber, setAccountNumber] = React.useState('');
+  const [accountType, setAccountType] = React.useState('');
 
   const [error, setError] = React.useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     status: false,
-    type: "",
+    type: '',
   });
 
   const submitWithdrawal = () => {
     setError({
-      title: "",
-      message: "",
+      title: '',
+      message: '',
       status: false,
-      type: "",
+      type: '',
     });
 
     if (
       value === 0 ||
-      method === "" ||
-      agency === "" ||
-      accountNumber === "" ||
-      accountType === ""
+      method === '' ||
+      agency === '' ||
+      accountNumber === '' ||
+      accountType === ''
     ) {
       setError({
-        title: "Error",
-        message: "Please fill all the fields",
+        title: 'Error',
+        message: 'Please fill all the fields',
         status: true,
         type: WARNING,
       });
     } else if (value < 0) {
       setError({
-        title: "Error",
-        message: "Please enter a valid value",
+        title: 'Error',
+        message: 'Please enter a valid value',
         status: true,
         type: WARNING,
       });
     } else if (value > user.balance.amount) {
       setError({
-        title: "Error",
+        title: 'Error',
         message: "You don't have enough money to withdraw",
         status: true,
         type: WARNING,
       });
     } else {
       setError({
-        title: "Success",
-        message: "Withdrawal successful",
+        title: 'Success',
+        message: 'Withdrawal successful',
         status: true,
         type: SUCCESS,
       });
@@ -107,32 +107,37 @@ function WithdrawalForm() {
             onChange={(e) => setValue(e.target.value)}
           />
 
-          <Small className="label">Método de Retirada</Small>
-          <Select
-            className="select"
-            marginBottom={24}
-            onChange={(event) => setMethod(event.target.value)}
-          >
-            <option value="" defaultChecked>
-              ---
-            </option>
-            <option value="bradesco">Banco</option>
-            <option value="santander">Paypal</option>
-          </Select>
+          <Pane>
+            <Small className="label">Método de Retirada</Small>
+            <Select
+              marginTop={8}
+              className="select"
+              onChange={(event) => setMethod(event.target.value)}
+            >
+              <option value="" defaultChecked>
+                ---
+              </option>
+              <option value="bradesco">Banco</option>
+              <option value="santander">Paypal</option>
+            </Select>
+          </Pane>
 
-          <Small className="label">Agência Bancária</Small>
-          <Select
-            className="select"
-            marginBottom={24}
-            onChange={(event) => setMethod(event.target.value)}
-          >
-            <option value="" defaultChecked>
-              ---
-            </option>
-            <option value="bradesco">Bradesco</option>
-            <option value="santander">Santander</option>
-            <option value="nubank">Nubank</option>
-          </Select>
+          <Pane>
+            <Small className="label">Agência Bancária</Small>
+            <Select
+              marginTop={8}
+              className="select"
+              marginBottom={24}
+              onChange={(event) => setMethod(event.target.value)}
+            >
+              <option value="" defaultChecked>
+                ---
+              </option>
+              <option value="bradesco">Bradesco</option>
+              <option value="santander">Santander</option>
+              <option value="nubank">Nubank</option>
+            </Select>
+          </Pane>
 
           <TextInputField
             label="Número da Agência"
@@ -147,22 +152,24 @@ function WithdrawalForm() {
             value={accountNumber}
             onChange={(e) => setAccountNumber(e.target.value)}
           />
-
-          <Small className="label">Tipo da Conta</Small>
-          <Select
-            className="select"
-            marginBottom={24}
-            onChange={(event) => setAccountType(event.target.value)}
-          >
-            <option value="" defaultChecked>
-              ---
-            </option>
-            <option value="bradesco">Conta Corrente</option>
-            <option value="santander">Conta Poupança</option>
-          </Select>
+          <Pane>
+            <Small className="label">Tipo da Conta</Small>
+            <Select
+              marginTop={8}
+              className="select"
+              onChange={(event) => setAccountType(event.target.value)}
+            >
+              <option value="" defaultChecked>
+                ---
+              </option>
+              <option value="bradesco">Conta Corrente</option>
+              <option value="santander">Conta Poupança</option>
+            </Select>
+          </Pane>
         </Pane>
+
         <Pane marginTop={8}>
-          <Button appearance="primary" width="100%" onClick={submitWithdrawal}>
+          <Button appearance="primary" onClick={submitWithdrawal}>
             Continuar
           </Button>
         </Pane>

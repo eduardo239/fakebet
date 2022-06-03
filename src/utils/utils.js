@@ -10,17 +10,33 @@ export function browserDetect() {
   let browserName;
 
   if (userAgent.match(/chrome|chromium|crios/i)) {
-    browserName = "chrome";
+    browserName = 'chrome';
   } else if (userAgent.match(/firefox|fxios/i)) {
-    browserName = "firefox";
+    browserName = 'firefox';
   } else if (userAgent.match(/safari/i)) {
-    browserName = "safari";
+    browserName = 'safari';
   } else if (userAgent.match(/opr\//i)) {
-    browserName = "opera";
+    browserName = 'opera';
   } else if (userAgent.match(/edg/i)) {
-    browserName = "edge";
+    browserName = 'edge';
   } else {
-    browserName = "No browser detection";
+    browserName = 'No browser detection';
   }
   return browserName;
+}
+
+// convert mongoose date to format dd/mm/yyyy 00:00
+
+export function convertDate(date) {
+  let d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear(),
+    hours = d.getHours(),
+    minutes = d.getMinutes();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+
+  return [day, month, year].join('/') + ' ' + [hours, minutes].join(':');
 }

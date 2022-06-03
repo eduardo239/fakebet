@@ -7,108 +7,128 @@ import {
   TextInputField,
 } from 'evergreen-ui';
 import React from 'react';
+import { postGame } from '../../api/game';
+import { GameContext } from '../../context/GameContext';
+import { TeamContext } from '../../context/TeamContext';
 
 function Games() {
-  const [name1, setName1] = React.useState('');
-  const [name2, setName2] = React.useState('');
-  const [createdAt, setCreatedAt] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [team1Result, setTeam1Result] = React.useState(0);
-  const [team2Result, setTeam2Result] = React.useState(0);
-  const [winner, setWinner] = React.useState('');
+  const { game, setGame } = React.useContext(GameContext);
+  const { teams } = React.useContext(TeamContext);
 
-  const submitGame = () => {
-    const game = {
-      teams: {
-        A: {
-          id: name1,
-          score: parseInt(team1Result),
-        },
-        B: {
-          id: name2,
-          score: parseInt(team2Result),
-        },
-      },
-      createdAt,
-      type,
-      winner,
-    };
-
+  const handleSubmit = async () => {
     console.log(game);
+    await postGame(game);
+  };
+
+  const handleUpdate = () => {
+    console.log('update');
   };
 
   return (
     <Pane display="flex" justifyContent="center">
       <Pane elevation={2} className="form-container">
-        <Heading ize={700} marginBottom={24}>
-          Adicionar Jogos
+        <Heading size={700} marginBottom={24}>
+          Adicionar Jogo
         </Heading>
+
         <Pane className="form">
-          <TextInputField
-            label="Team 1"
-            placeholder="Name of the team 1"
-            value={name1}
-            onChange={(e) => setName1(e.target.value)}
-            required
-          />
-          <TextInputField
-            label="Team 2"
-            placeholder="Name of the team 2"
-            value={name2}
-            onChange={(e) => setName2(e.target.value)}
-            required
-          />
+          <Pane>
+            <Small className="label">Time A</Small>
+            <Select
+              marginTop={8}
+              width="100%"
+              className="select"
+              marginBottom={24}
+              onChange={(event) =>
+                setGame({ ...game, teamAId: event.target.value })
+              }
+            >
+              {teams &&
+                teams.length > 0 &&
+                teams.map((team) => (
+                  <option key={team._id} value={team._id}>
+                    {team.name}
+                  </option>
+                ))}
+            </Select>
+          </Pane>
+
+          <Pane>
+            <Small className="label">Time B</Small>
+            <Select
+              marginTop={8}
+              width="100%"
+              className="select"
+              marginBottom={24}
+              onChange={(event) =>
+                setGame({ ...game, teamBId: event.target.value })
+              }
+            >
+              {teams &&
+                teams.length > 0 &&
+                teams.map((team) => (
+                  <option key={team._id} value={team._id}>
+                    {team.name}
+                  </option>
+                ))}
+            </Select>
+          </Pane>
+
           <TextInputField
             type="datetime-local"
-            label="Hora do jogo"
-            placeholder="new Date()"
-            value={createdAt}
-            onChange={(e) => setCreatedAt(e.target.value)}
+            label="Data e Hora do Jogo"
+            value={game.createdAt}
+            onChange={(e) => setGame({ ...game, createdAt: e.target.value })}
           />
 
-          <Small className="label">Tipo de esporte</Small>
-          <Select
-            width="100%"
-            className="select"
-            marginBottom={24}
-            onChange={(event) => setType(event.target.value)}
-          >
-            <option value="" defaultChecked>
-              ---
-            </option>
-            <option value="futebol">Futebol</option>
-            <option value="basquete">Basquete</option>
-            <option value="esports">Esports</option>
-          </Select>
-
-          <TextInputField
-            type="number"
-            label="Team 1 Result"
-            placeholder="0, 1, ..., 10"
-            value={team1Result}
-            onChange={(e) => setTeam1Result(e.target.value)}
-          />
-
-          <TextInputField
-            type="number"
-            label="Team 2 Result"
-            placeholder="0, 1, ..., 10"
-            value={team2Result}
-            onChange={(e) => setTeam2Result(e.target.value)}
-          />
-
-          <TextInputField
-            label="Winner"
-            placeholder="winner of the game"
-            value={winner}
-            onChange={(e) => setWinner(e.target.value)}
-          />
-
-          <Pane marginTop={8}>
-            <Button appearance="primary" width="100%" onClick={submitGame}>
-              Adicionar
-            </Button>
+          <Pane>
+            <Small className="label">Esporte</Small>
+            <Select
+              marginTop={8}
+              width="100%"
+              className="select"
+              marginBottom={24}
+              onChange={(event) =>
+                setGame({ ...game, type: event.target.value })
+              }
+            >
+              <option value="" defaultChecked>
+                ---
+              </option>
+              <option value="futebol">Futebol</option>
+              <option value="basquete">Basquete</option>
+              <option value="esports">Esports</option>
+            </Select>
           </Pane>
+
+          <TextInputField
+            type="number"
+            label="Pontuação Time 1"
+            value={game.team1Result}
+            onChange={(e) => setGame({ ...game, teamAScore: e.target.value })}
+          />
+
+          <TextInputField
+            type="number"
+            label="Pontuação Time 2"
+            value={game.team2Result}
+            onChange={(e) => setGame({ ...game, teamBScore: e.target.value })}
+          />
+
+          <TextInputField
+            label="Vencedor"
+            placeholder="Vencedor do Jogo"
+            value={game.winner}
+            onChange={(e) => setGame({ ...game, winner: e.target.value })}
+          />
+        </Pane>
+        <Pane marginTop={8}>
+          <Button marginRight={16} appearance="primary" onClick={handleSubmit}>
+            Adicionar
+          </Button>
+          <Button appearance="minimal" onClick={handleUpdate}>
+            Atualizar
+          </Button>
         </Pane>
       </Pane>
     </Pane>

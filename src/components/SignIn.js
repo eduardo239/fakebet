@@ -74,12 +74,12 @@ function SignInView() {
 
   return (
     <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="form-container">
+      <Pane elevation={2} className="form-container-sign">
         <Heading size={700} marginBottom={24}>
           Login
         </Heading>
 
-        <Pane className="form">
+        <Pane className="form-sign">
           <TextInputField
             type="email"
             label="E-mail"
@@ -98,7 +98,7 @@ function SignInView() {
         </Pane>
 
         <Pane marginTop={8}>
-          <Button appearance="primary" width="100%" onClick={handleSignIn}>
+          <Button appearance="primary" onClick={handleSignIn}>
             Login
           </Button>
         </Pane>
