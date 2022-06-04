@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Alert,
   Button,
@@ -9,30 +9,36 @@ import {
   Select,
   Small,
   TextInputField,
-} from 'evergreen-ui';
-import FileUploaderSingleUpload from './FilleUploader';
-import { getTeams, postTeam, updateTeam, uploadImage } from '../../api/team';
-import { TeamContext } from '../../context/TeamContext';
-import { WARNING } from '../../utils/constants';
+} from "evergreen-ui";
+import FileUploaderSingleUpload from "./FilleUploader";
+import { TeamContext } from "../../context/TeamContext";
+import { getTeams, postTeam, updateTeam, uploadImage } from "../../api/team";
+import {
+  ERROR_ABBREVIATED_NAME,
+  ERROR_EMPTY_TEAM_NAME,
+  ERROR_RESET,
+  ERROR_TEAM_TYPE,
+  SUCCESS_TEAM_REGISTER,
+} from "../../utils/constants";
+import { errorHandler } from "../../utils/error";
 
 function TeamsForm() {
   const {
     team,
     setTeams,
     setTeam,
-    resetTeam,
     files,
     setFiles,
     setIsUpdating,
     isUpdating,
+    resetTeam,
   } = React.useContext(TeamContext);
   const [isShownUpdateModal, setIsShownUpdateModal] = React.useState(false);
-
   const [error, setError] = React.useState({
-    title: '',
-    message: '',
+    title: "",
+    message: "",
     status: false,
-    type: '',
+    type: "",
   });
 
   const handleEdit = async () => {
@@ -47,81 +53,44 @@ function TeamsForm() {
 
   const submitTeam = async (e) => {
     e.preventDefault();
-    setError({
-      title: '',
-      message: '',
-      status: false,
-      type: '',
-    });
 
-    if (team.name === '') {
-      setError({
-        title: 'Error',
-        message: 'O time precisa ter um nome',
-        status: true,
-        type: WARNING,
-      });
-    } else if (team.shortName === '') {
-      setError({
-        title: 'Error',
-        message: 'O time precisa ter um nome curto',
-        status: true,
-        type: WARNING,
-      });
-    } else if (team.type === '') {
-      setError({
-        title: 'Error',
-        message: 'O time precisa ter um tipo de esporte',
-        status: true,
-        type: WARNING,
-      });
-    } else {
+    let validateEmptyTeamName = team.name.trim() !== "";
+    let validateEmptyAbbreviation = team.shortName.trim() !== "";
+    let validateEmptyType = team.type.trim() !== "";
+
+    if (
+      validateEmptyTeamName &&
+      validateEmptyAbbreviation &&
+      validateEmptyType
+    ) {
       let { data: teamResponse } = await postTeam(team);
 
+      // upload team
       if (teamResponse.success) {
         const newTeamFile = new FormData();
-        newTeamFile.append('emblem', files[0]);
+        newTeamFile.append("emblem", files[0]);
 
         let { team } = teamResponse;
         let { data: emblemResponse } = await uploadImage(newTeamFile, team._id);
-
+        // upload image
         if (emblemResponse.success) {
-          resetTeam();
-          setError({
-            title: 'Sucesso',
-            message: 'Time cadastrado com sucesso',
-            status: true,
-            type: 'success',
-          });
-
           let { data: teamsResponse } = await getTeams();
-
-          setTeams(teamsResponse.teams);
-
-          setTimeout(() => {
-            setError({
-              title: '',
-              message: '',
-              status: false,
-              type: '',
-            });
-          }, 3000);
-        } else {
-          setError({
-            title: 'Error',
-            message: 'Erro ao cadastrar time',
-            status: true,
-            type: WARNING,
-          });
+          if (teamsResponse.success) {
+            setTeams(teamsResponse.teams);
+            errorHandler(SUCCESS_TEAM_REGISTER, setError);
+            resetTeam();
+            setTimeout(() => {
+              errorHandler(ERROR_RESET, setError);
+            }, 3000);
+          }
         }
-      } else {
-        setError({
-          title: 'Error',
-          message: 'Erro ao cadastrar time',
-          status: true,
-          type: WARNING,
-        });
       }
+    } else if (!validateEmptyTeamName) {
+      errorHandler(ERROR_EMPTY_TEAM_NAME, setError);
+    } else if (!validateEmptyAbbreviation) {
+      errorHandler(ERROR_ABBREVIATED_NAME, setError);
+    } else if (!validateEmptyType) {
+      errorHandler(ERROR_TEAM_TYPE, setError);
     }
   };
 
@@ -147,11 +116,11 @@ function TeamsForm() {
               width="100%"
               className="select"
               marginBottom={24}
-              onChange={(event) =>
-                setTeam({ ...team, type: event.target.value })
-              }
+              name="type"
+              value={team.type}
+              onChange={(e) => setTeam({ ...team, type: e.target.value })}
             >
-              <option value="" defaultChecked>
+              <option value="" defaultChecked disabled>
                 ---
               </option>
               <option value="futebol">Futebol</option>
@@ -174,6 +143,7 @@ function TeamsForm() {
             <FileUploaderSingleUpload setFiles={setFiles} files={files} />
           </Pane>
         </Pane>
+
         <Pane marginTop={8}>
           <Button marginRight={16} appearance="primary" onClick={submitTeam}>
             Adicionar
@@ -181,17 +151,19 @@ function TeamsForm() {
           <Button
             disabled={!isUpdating}
             appearance="minimal"
-            onClick={setIsShownUpdateModal}
+            onClick={() => setIsShownUpdateModal(true)}
           >
             Atualizar
           </Button>
         </Pane>
 
-        {error.status && (
-          <Alert intent={error.type} title={error.title}>
-            {error.message}
-          </Alert>
-        )}
+        <Pane marginTop={16}>
+          {error.status && (
+            <Alert intent={error.type} title={error.title}>
+              {error.message}
+            </Alert>
+          )}
+        </Pane>
       </Pane>
 
       <Dialog

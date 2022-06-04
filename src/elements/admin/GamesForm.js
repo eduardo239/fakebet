@@ -5,11 +5,11 @@ import {
   Select,
   Small,
   TextInputField,
-} from 'evergreen-ui';
-import React from 'react';
-import { postGame } from '../../api/game';
-import { GameContext } from '../../context/GameContext';
-import { TeamContext } from '../../context/TeamContext';
+} from "evergreen-ui";
+import React from "react";
+import { postGame } from "../../api/game";
+import { GameContext } from "../../context/GameContext";
+import { TeamContext } from "../../context/TeamContext";
 
 function Games() {
   const { game, setGame } = React.useContext(GameContext);
@@ -21,7 +21,7 @@ function Games() {
   };
 
   const handleUpdate = () => {
-    console.log('update');
+    console.log("update");
   };
 
   return (
@@ -122,6 +122,7 @@ function Games() {
             onChange={(e) => setGame({ ...game, winner: e.target.value })}
           />
         </Pane>
+
         <Pane marginTop={8}>
           <Button marginRight={16} appearance="primary" onClick={handleSubmit}>
             Adicionar

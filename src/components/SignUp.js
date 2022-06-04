@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   Pane,
@@ -7,39 +7,44 @@ import {
   Checkbox,
   Heading,
   Alert,
-} from 'evergreen-ui';
-import '../css/sign.css';
-import { signUp } from '../api/user';
-import { useNavigate } from 'react-router-dom';
-import { browserDetect } from '../utils/utils';
-import { validateEmail, validatePassword } from '../utils/regex';
-import { SUCCESS, WARNING } from '../utils/constants';
+} from "evergreen-ui";
+import "../css/sign.css";
+import { signUp } from "../api/user";
+import { useNavigate } from "react-router-dom";
+import { browserDetect } from "../utils/utils";
+import { validateEmail, validatePassword } from "../utils/regex";
+import {
+  ERROR_DB_MESSAGE,
+  ERROR_INVALID_EMAIL,
+  ERROR_INVALID_PASSWORD,
+  ERROR_PASSWORD_DOES_NOT_MATCH,
+  ERROR_RESET,
+  ERROR_TERMS,
+  ERROR_USERNAME_MIN_LENGTH,
+  SUCCESS,
+  WARNING,
+} from "../utils/constants";
+import { errorHandler } from "../utils/error";
 
 function SignUpView() {
   const navigate = useNavigate();
 
-  const [username, setUsername] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [password2, setPassword2] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [password2, setPassword2] = React.useState("");
 
   const [checkTerms, setCheckTerms] = React.useState(false);
   const [checkAge, setCheckAge] = React.useState(false);
   const [error, setError] = React.useState({
-    title: '',
-    message: '',
+    title: "",
+    message: "",
     status: false,
-    type: '',
+    type: "",
   });
+  console.log(error);
 
   const handleSignUp = async () => {
-    setError({
-      title: '',
-      message: '',
-      status: false,
-      type: '',
-    });
-
     const emailValidated = validateEmail(email);
     const passwordValidated = validatePassword(password);
     const passwordMatch = password === password2;
@@ -54,8 +59,8 @@ function SignUpView() {
       checkAge
     ) {
       setError({
-        title: 'Sign up successful!',
-        message: 'Redirecting to home page, in 3 seconds...',
+        title: "Sign up successful!",
+        message: "Redirecting to home page, in 3 seconds...",
         status: true,
         type: SUCCESS,
       });
@@ -67,7 +72,7 @@ function SignUpView() {
         bets: [],
         balance: {
           amount: 0,
-          currency: 'EUR',
+          currency: "BRA",
           lastDeposit: null,
         },
         lastLogin: new Date(),
@@ -78,54 +83,27 @@ function SignUpView() {
 
       if (response.success) {
         user = response.data;
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(user));
         setTimeout(() => {
-          navigate('/signin');
+          navigate("/signin");
+          errorHandler(ERROR_RESET, setError);
         }, 3000);
       } else {
-        setError({
-          title: 'Erro',
-          message: response.message || 'Erro ao realizar o registro.',
-          status: true,
-          type: WARNING,
-        });
+        errorHandler(ERROR_DB_MESSAGE, setError, response.message);
       }
     } else if (!usernameValidated) {
-      setError({
-        title: 'Erro',
-        message: 'O nome de usuário deve ter mais de 3 caracteres',
-        status: true,
-        type: WARNING,
-      });
+      errorHandler(ERROR_USERNAME_MIN_LENGTH, setError);
+
+      console.log(error);
+      return;
     } else if (!emailValidated) {
-      setError({
-        title: 'Erro - Email inválido',
-        message: 'Por favor, preencha um email válido',
-        status: true,
-        type: WARNING,
-      });
+      errorHandler(ERROR_INVALID_EMAIL, setError);
     } else if (!passwordValidated) {
-      setError({
-        title: 'Erro - Senha inválida',
-        message:
-          'Senha deve conter pelo menos 6 caracteres, uma letra maiúscula e um número',
-        status: true,
-        type: WARNING,
-      });
+      errorHandler(ERROR_INVALID_PASSWORD, setError);
     } else if (!checkTerms || !checkAge) {
-      setError({
-        title: 'Erro - Termos e condições',
-        message: 'É necessário aceitar os termos e condições',
-        status: true,
-        type: WARNING,
-      });
-    } else if (password !== password2) {
-      setError({
-        title: 'Password',
-        message: 'Passwords do not match',
-        status: true,
-        type: WARNING,
-      });
+      errorHandler(ERROR_TERMS, setError);
+    } else if (!passwordMatch) {
+      errorHandler(ERROR_PASSWORD_DOES_NOT_MATCH, setError);
     }
   };
 

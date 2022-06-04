@@ -1,50 +1,38 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Pane, TextInputField, Heading, Alert } from 'evergreen-ui';
-import '../css/sign.css';
-import { WARNING } from '../utils/constants';
-import { browserDetect } from '../utils/utils';
-import { signIn } from '../api/user';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { UserContext } from '../context/UserContext';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Pane, TextInputField, Heading, Alert } from "evergreen-ui";
+import {
+  ERROR_DB_MESSAGE,
+  ERROR_EMPTY_PASSWORD,
+  ERROR_EMPTY_USERNAME,
+  ERROR_RESET,
+} from "../utils/constants";
+import { browserDetect } from "../utils/utils";
+import { signIn } from "../api/user";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { UserContext } from "../context/UserContext";
+import { errorHandler } from "../utils/error";
+import "../css/sign.css";
 
 function SignInView() {
   const { setUser } = React.useContext(UserContext);
-  const [, setUserLocalStorage] = useLocalStorage('user', null);
+  const [, setUserLocalStorage] = useLocalStorage("user", null);
 
   const navigate = useNavigate();
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState({
-    title: '',
-    message: '',
+    title: "",
+    message: "",
     status: false,
-    type: '',
+    type: "",
   });
 
   const handleSignIn = async () => {
-    setError({
-      title: '',
-      message: '',
-      status: false,
-      type: '',
-    });
-
-    if (password === '') {
-      setError({
-        title: 'Erro',
-        message: 'Por favor, preencha o campo de senha.',
-        status: true,
-        type: WARNING,
-      });
+    if (password === "") {
+      errorHandler(ERROR_EMPTY_PASSWORD, setError);
     } else if (!username) {
-      setError({
-        title: 'Erro',
-        message: 'Por favor, preencha o campo de email.',
-        status: true,
-        type: WARNING,
-      });
+      errorHandler(ERROR_EMPTY_USERNAME, setError);
     } else {
       let user = {
         username,
@@ -58,16 +46,13 @@ function SignInView() {
       if (response.success) {
         setUserLocalStorage(response.user);
         setUser(response.user);
+
         setTimeout(() => {
-          navigate('/');
+          navigate("/");
+          errorHandler(ERROR_RESET, setError);
         }, 0);
       } else {
-        setError({
-          title: 'Error',
-          message: response.message || 'Erro ao realizar login.',
-          status: true,
-          type: WARNING,
-        });
+        errorHandler(ERROR_DB_MESSAGE, setError, response.message);
       }
     }
   };
@@ -81,8 +66,8 @@ function SignInView() {
 
         <Pane className="form-sign">
           <TextInputField
-            type="email"
-            label="E-mail"
+            type="text"
+            label="Nome de usuário"
             placeholder="Text input placeholder..."
             value={username}
             onChange={(e) => setUsername(e.target.value)}
