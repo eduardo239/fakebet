@@ -3,16 +3,21 @@ import { Alert, Button, Heading, Pane, Small, TextInput } from 'evergreen-ui';
 import { userEdit } from '../api/user';
 import { UserContext } from '../context/UserContext';
 import { validateEmail, validatePassword } from '../utils/regex';
-import { SUCCESS, WARNING } from '../utils/constants';
+import {
+  ERROR_USER_UPDATE,
+  SUCCESS_USER_UPDATE,
+  ERROR_RESET,
+  ERROR_USERNAME_MIN_LENGTH,
+  ERROR_PASSWORD_DOES_NOT_MATCH,
+} from '../utils/constants';
+import { errorHandler } from '../utils/error';
+import { TeamContext } from '../context/TeamContext';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 function MyProfile({ data, setIsProfileShown, ...props }) {
-  const { setUser } = React.useContext(UserContext);
-
-  const [username, setUsername] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [password2, setPassword2] = React.useState('');
-  const [userId, setUserId] = React.useState('');
+  const { resetTeam } = React.useContext(TeamContext);
+  const [, setUserLocalStorage] = useLocalStorage('user', null);
+  const { user, setUser, user_, setUser_ } = React.useContext(UserContext);
 
   const [error, setError] = React.useState({
     title: '',
@@ -22,77 +27,69 @@ function MyProfile({ data, setIsProfileShown, ...props }) {
   });
 
   const onSubmit = async () => {
-    const emailValidated = validateEmail(email);
-    const passwordValidated = validatePassword(password);
-    const passwordMatch = password === password2;
-    const usernameValidated = username.length > 3;
+    const emailValidated = validateEmail(user_.email);
+    const passwordValidated = validatePassword(user_.password);
+    const passwordMatch = user_.password === user_.password2;
+    const usernameValidated = user_.username.length > 3;
 
     let editedUser = null;
-    if (password && passwordValidated && passwordMatch) {
+
+    if (user_.password && passwordValidated && passwordMatch) {
       editedUser = {
-        id: userId,
-        username,
-        email,
-        password,
+        id: user_.userId,
+        username: user_.username,
+        email: user_.email,
+        password: user_.password,
       };
-    } else if (!password && !password2) {
+    } else if (!user_.password && !user_.password2) {
       editedUser = {
-        id: userId,
-        username,
-        email,
+        id: user_.userId,
+        username: user_.username,
+        email: user_.email,
       };
     } else {
-      setError({
-        title: 'Erro',
-        message: 'Senha inválida',
-        status: true,
-        type: WARNING,
-      });
+      errorHandler(ERROR_PASSWORD_DOES_NOT_MATCH, setError);
       return;
     }
 
     if (emailValidated && usernameValidated) {
       const { data: response } = await userEdit(editedUser);
       if (response.success) {
-        setError({
-          title: 'Atualização',
-          message: response.message || 'Algo errado aconteceu',
-          status: true,
-          type: SUCCESS,
-        });
         setUser(response.user);
+        errorHandler(SUCCESS_USER_UPDATE, setError, response.message);
+        resetTeam();
         setTimeout(() => {
-          setError({
-            title: '',
-            message: '',
-            status: false,
-            type: '',
-          });
+          errorHandler(ERROR_RESET, setError);
         }, 3000);
       } else {
-        setError({
-          title: 'Sign up failed! 1',
-          message: response.message || 'Algo errado aconteceu',
-          status: true,
-          type: WARNING,
-        });
+        errorHandler(ERROR_USER_UPDATE, setError, response.message);
       }
     } else {
-      setError({
-        title: 'Erro de validação',
-        message:
-          'O nome de usuário deve ter mais de 3 caracteres, e o email deve ser válido',
-        status: true,
-        type: WARNING,
-      });
+      errorHandler(ERROR_USERNAME_MIN_LENGTH, setError);
     }
   };
 
   React.useEffect(() => {
-    setUsername(data.username);
-    setEmail(data.email);
-    setUserId(data._id);
-  }, [data]);
+    let mounted = true;
+
+    if (mounted) {
+      const loggedInUser = localStorage.getItem('user');
+      if (loggedInUser) {
+        const foundUser = JSON.parse(loggedInUser);
+        setUserLocalStorage(foundUser);
+        setUser(foundUser);
+
+        setUser_({
+          userId: foundUser._id,
+          username: foundUser.username,
+          email: foundUser.email,
+          password: '',
+          password2: '',
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Pane display='flex' justifyContent='center'>
@@ -100,28 +97,28 @@ function MyProfile({ data, setIsProfileShown, ...props }) {
         <Pane className='form-grid--field'>
           <Heading size={400}>Nome usuário:</Heading>
           <TextInput
-            name='text-input-name'
-            placeholder='Text input placeholder...'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name='Nome do usuário'
+            placeholder='Insira seu nome de usuário'
+            value={user_.username}
+            onChange={(e) => setUser_({ ...user_, username: e.target.value })}
           />
         </Pane>
         <Pane className='form-grid--field'>
           <Heading size={400}>E-mail:</Heading>
           <TextInput
-            name='text-input-name'
-            placeholder='Text input placeholder...'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name='E-mail'
+            placeholder='Insira seu e-mail'
+            value={user_.email}
+            onChange={(e) => setUser_({ ...user_, email: e.target.value })}
           />
         </Pane>
         <Pane className='form-grid--field'>
           <Heading size={400}>Senha:</Heading>
           <TextInput
-            name='text-input-name'
-            placeholder='Senha com no mínimo 6 caracteres'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name='Senha'
+            placeholder='Senha com no mínimo 6 caracteres, com letras e números'
+            value={user_.password}
+            onChange={(e) => setUser_({ ...user_, password: e.target.value })}
           />
           <Pane className='form-grid--field' maxWidth={280}>
             <Small className='dark small'>
@@ -135,8 +132,8 @@ function MyProfile({ data, setIsProfileShown, ...props }) {
           <TextInput
             name='text-input-name'
             placeholder='Confirme a senha...'
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
+            value={user_.password2}
+            onChange={(e) => setUser_({ ...user_, password2: e.target.value })}
           />
         </Pane>
         <Pane className='form-grid--field'>

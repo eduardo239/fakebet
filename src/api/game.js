@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { removeSpaceAndSpecialCharacters } from '../utils/utils';
 
 const instance = axios.create({
   baseURL: 'http://localhost:3003/',
@@ -12,7 +11,7 @@ export const getGames = () => {
 
 // get all games by type
 export const getGamesByType = (type) => {
-  return instance.get(`/games/all/${removeSpaceAndSpecialCharacters(type)}`);
+  return instance.get(`/games/all/${type.name || 'futebol'}`);
 };
 
 // post new game

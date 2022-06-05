@@ -7,6 +7,13 @@ const UserProvider = UserContext.Provider;
 
 const UserContextContent = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [user_, setUser_] = useState({
+    userId: '',
+    username: '',
+    password: '',
+    password2: '',
+    email: '',
+  });
 
   const logout = async () => {
     localStorage.removeItem('user');
@@ -20,6 +27,8 @@ const UserContextContent = ({ children }) => {
         user,
         setUser,
         logout,
+        user_,
+        setUser_,
       }}
     >
       {children}

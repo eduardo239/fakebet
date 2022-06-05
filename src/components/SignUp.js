@@ -59,7 +59,7 @@ function SignUpView() {
     ) {
       setError({
         title: 'Sign up successful!',
-        message: 'Redirecting to home page, in 3 seconds...',
+        message: 'Redirecionando para a página de login... em 3 segundos',
         status: true,
         type: SUCCESS,
       });

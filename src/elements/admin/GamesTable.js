@@ -29,7 +29,7 @@ function GamesTable() {
     }
     setGames(allGames.filter((item) => item._id !== game._id));
   };
-
+  console.log(allGames);
   return (
     <Pane
       display='flex'

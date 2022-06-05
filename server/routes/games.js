@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Game = require('../models/game');
+const Sport = require('../models/sport');
 const {
   ERROR_MESSAGE,
   SUCCESS,
@@ -59,18 +60,33 @@ router.delete('/remove/:id', (req, res, next) => {
 });
 
 router.get('/all/:sport', (req, res, next) => {
-  Game.find({ type: req.params.sport }, (err, games) => {
+  const sport = req.params.sport;
+  // find all games by sport
+
+  Sport.findOne({ name: sport }, (err, sport_type) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
-    } else if (games.length === 0) {
-      res.json({ success: false, message: `GAME NOT FOUND`, games });
-    } else {
-      res.json({ success: true, message: SUCCESS, games });
     }
-  })
-    .sort('-createdAt')
-    .populate('teamAId')
-    .populate('teamBId');
+    if (!sport_type) {
+      res.json({ success: false, message: `TYPE NOT FOUND` });
+    } else {
+      // get all games by sport
+      Game.find({ type: sport_type._id }, (err, games) => {
+        if (err) {
+          res.json({ success: false, message: ERROR_MESSAGE, err });
+        }
+        if (!games) {
+          res.json({ success: false, message: `GAMES NOT FOUND` });
+        } else {
+          res.json({ success: true, message: `GAMES FOUND`, games });
+        }
+      })
+        .sort('-createdAt')
+        .populate('teamAId')
+        .populate('teamBId')
+        .populate('type');
+    }
+  });
 });
 
 router.get('/all', (req, res, next) => {
@@ -85,7 +101,8 @@ router.get('/all', (req, res, next) => {
   })
     .sort('-createdAt')
     .populate('teamAId')
-    .populate('teamBId');
+    .populate('teamBId')
+    .populate('type');
 });
 
 router.get('/:id', (req, res, next) => {

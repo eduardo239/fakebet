@@ -3,59 +3,52 @@ import React from 'react';
 import Banner from '../elements/Banner';
 import Games from '../elements/Games';
 import Footer from '../elements/Footer';
-import { FUTEBOL, BASQUETE, ESPORTS } from '../utils/constants';
+// import { FUTEBOL, BASQUETE, ESPORTS } from '../utils/constants';
+import { GameContext } from '../context/GameContext';
+import { TeamContext } from '../context/TeamContext';
 import '../css/game.css';
 import '../css/menu.css';
-import { GameContext } from '../context/GameContext';
+import { uppercaseFirstLetter } from '../utils/utils';
 
-function HomeView() {
+function ComponentHome() {
   const { setSport } = React.useContext(GameContext);
+  const { sports } = React.useContext(TeamContext);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [tabs] = React.useState([FUTEBOL, BASQUETE, ESPORTS]);
+  // const [tabs] = React.useState([FUTEBOL, BASQUETE, ESPORTS]);
 
   return (
     <Pane display='flex' flexDirection='column' height='100vh'>
       <Banner></Banner>
       <Pane className='games-container' flex={1}>
         <Tablist padding={8} flexBasis={240} className='tab-game-menu'>
-          {tabs.map((tab, index) => (
+          {sports.map((tab, index) => (
             <Tab
-              key={tab}
-              id={tab}
+              key={tab._id}
+              id={tab.name}
               onSelect={() => {
                 setSelectedIndex(index);
-                setSport(tab);
+                setSport(sports[index]);
               }}
               isSelected={index === selectedIndex}
-              aria-controls={`panel-${tab}`}
+              aria-controls={`panel-${tab.name}`}
               appearance='minimal'
               className={`tab-menu ${selectedIndex === index ? `active` : ''}`}
             >
-              {tab}
+              {uppercaseFirstLetter(tab.name)}
             </Tab>
           ))}
         </Tablist>
         <Pane paddingBottom={32} paddingTop={32}>
-          {tabs.map((tab, index) => (
+          {sports.map((tab, index) => (
             <Pane
-              key={tab}
-              id={`panel-${tab}`}
+              key={tab._id}
+              id={`panel-${tab.name}`}
               role='tabpanel'
-              aria-labelledby={tab}
+              aria-labelledby={tab.name}
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
             >
-              <Games
-                type={
-                  tab === FUTEBOL
-                    ? FUTEBOL
-                    : tab === BASQUETE
-                    ? BASQUETE
-                    : tab === ESPORTS
-                    ? ESPORTS
-                    : ''
-                }
-              ></Games>
+              <Games type={sports[index]}></Games>
             </Pane>
           ))}
         </Pane>
@@ -75,4 +68,4 @@ function HomeView() {
   );
 }
 
-export default HomeView;
+export default ComponentHome;

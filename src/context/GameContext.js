@@ -16,7 +16,7 @@ const GameContextContent = ({ children }) => {
     winner: '',
     type: '',
   });
-  const [sport, setSport] = useState('futebol');
+  const [sport, setSport] = useState('');
   const [allGames, setAllGames] = useState([]);
   const [allGamesByTye, setAllGamesByType] = useState([]);
   const [isGameUpdating, setGameIsUpdating] = React.useState(false);
@@ -45,6 +45,8 @@ const GameContextContent = ({ children }) => {
 
         if (responseGamesType.success) {
           setAllGamesByType(responseGamesType.games);
+        }
+        if (responseGames.success) {
           setAllGames(responseGames.games);
         }
       })();
@@ -52,10 +54,7 @@ const GameContextContent = ({ children }) => {
     return () => {
       mounted = false;
     };
-  }, []);
-
-  console.log(allGames);
-  console.log(allGamesByTye);
+  }, [sport]);
 
   return (
     <GameProvider

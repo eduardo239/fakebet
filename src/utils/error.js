@@ -17,6 +17,9 @@ import {
   SUCCESS_TEAM_REGISTER,
   WARNING,
   SUCCESS_SPORT_REGISTER,
+  SUCCESS_GAME_REGISTER,
+  ERROR_USER_UPDATE,
+  SUCCESS_USER_UPDATE,
 } from './constants';
 
 export const errorHandler = (error, setError, response) => {
@@ -155,6 +158,34 @@ export const errorHandler = (error, setError, response) => {
       });
       break;
 
+    // - - - - - - - - - - - SPORT ERROR - - - - - - - - - - -
+    case SUCCESS_GAME_REGISTER:
+      setError({
+        title: 'Sucesso!',
+        message: SUCCESS_GAME_REGISTER,
+        status: true,
+        type: SUCCESS,
+      });
+      break;
+
+    // - - - - - - - - - - - SPORT ERROR - - - - - - - - - - -
+    case ERROR_USER_UPDATE:
+      setError({
+        title: 'Erro - Não foi possível atualizar o usuário',
+        message: ERROR_USER_UPDATE,
+        status: true,
+        type: SUCCESS,
+      });
+      break;
+
+    case SUCCESS_USER_UPDATE:
+      setError({
+        title: 'Erro - Não foi possível atualizar o usuário',
+        message: SUCCESS_USER_UPDATE,
+        status: true,
+        type: SUCCESS,
+      });
+      break;
     // - - - - - - - - - - - DEFAULT ERROR - - - - - - - - - - -
     default:
       setError({

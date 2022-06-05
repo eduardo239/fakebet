@@ -41,12 +41,6 @@ export function convertDate(date) {
   return [day, month, year].join('/') + ' ' + [hours, minutes].join(':');
 }
 
-export function removeSpaceAndSpecialCharacters(str) {
-  return str
-    .replace(/\s/g, '')
-    .replace(/[^\w\s]/gi, '')
-    .toLowerCase();
-}
 // 2022-06-25T15:00:00.000Z" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm
 
 export function convertDateToMongoose(date) {
@@ -63,4 +57,9 @@ export function convertDateToMongoose(date) {
   if (minutes.length < 2) minutes = '0' + minutes;
 
   return [year, month, day].join('-') + 'T' + [hours, minutes].join(':');
+}
+
+// uppercase first letter
+export function uppercaseFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }

@@ -46,3 +46,8 @@ export const SUCCESS_TEAM_REGISTER = 'Time cadastrado com sucesso.';
 export const ERROR_EMPTY_SPORT_NAME =
   'Por favor, preencha o campo de nome do esporte.';
 export const SUCCESS_SPORT_REGISTER = 'Esporte cadastrado com sucesso.';
+
+export const SUCCESS_GAME_REGISTER = 'Jogo cadastrado com sucesso.';
+
+export const ERROR_USER_UPDATE = 'Erro ao atualizar usuário.';
+export const SUCCESS_USER_UPDATE = 'Usuário atualizado com sucesso.';

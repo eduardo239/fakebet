@@ -1,16 +1,13 @@
 import React from 'react';
-import { ReactComponent as MC } from '../assets/emblems/manchester-city-football-club.svg';
-import { ReactComponent as RB } from '../assets/emblems/red-bull-bragantino.svg';
-
-import { Pane, Alert } from 'evergreen-ui';
-import '../css/game.css';
-import '../css/message.css';
 import BetTeam from './Bet/Team';
 import BetDraw from './Bet/Draw';
 import BetValue from './Bet/Input';
+import { Pane, Alert } from 'evergreen-ui';
 import { EMBLEM_URL } from '../utils/constants';
+import '../css/game.css';
+import '../css/message.css';
 
-function ElGame({ game }) {
+function ElementGame({ game }) {
   const [showValue, setShowValue] = React.useState(false);
   const [odd, setOdd] = React.useState(1);
   const [startAnimation, setStartAnimation] = React.useState(false);
@@ -21,7 +18,7 @@ function ElGame({ game }) {
     status: false,
     type: '',
   });
-
+  console.log(game);
   const betRef = React.useRef();
 
   const showInput = (e, pick) => {
@@ -113,13 +110,13 @@ function ElGame({ game }) {
             gameId={game.id}
             gameType={game.type}
             showInput={showInput}
-            teamEmblem={EMBLEM_URL + game.teamAId.emblem}
-            odds={game.teamAOdd.toFixed(2)}
+            teamEmblem={EMBLEM_URL + (game.teamAId.emblem || 'default.png')}
+            odds={parseFloat(game.teamAOdd).toFixed(2)}
           />
 
           <BetDraw
             showInput={showInput}
-            odds={((game.teamAOdd / game.teamBOdd) * 11).toFixed(2)}
+            odds={parseFloat((game.teamAOdd / game.teamBOdd) * 11).toFixed(2)}
           />
 
           <BetTeam
@@ -127,8 +124,8 @@ function ElGame({ game }) {
             gameId={game.id}
             gameType={game.type}
             showInput={showInput}
-            teamEmblem={EMBLEM_URL + game.teamBId.emblem}
-            odds={game.teamBOdd.toFixed(2)}
+            teamEmblem={EMBLEM_URL + (game.teamBId.emblem || 'default.png')}
+            odds={parseFloat(game.teamBOdd).toFixed(2)}
           />
         </Pane>
 
@@ -143,4 +140,4 @@ function ElGame({ game }) {
   );
 }
 
-export default ElGame;
+export default ElementGame;

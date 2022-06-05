@@ -6,24 +6,55 @@ import {
   Select,
   Small,
   TextInputField,
+  Alert,
 } from 'evergreen-ui';
+import { errorHandler } from '../../utils/error';
 import { GameContext } from '../../context/GameContext';
 import { TeamContext } from '../../context/TeamContext';
-import { getGames, postGame } from '../../api/game';
+import { getGames, postGame, getGamesByType } from '../../api/game';
+import {
+  ERROR_RESET,
+  ERROR_DB_MESSAGE,
+  SUCCESS_GAME_REGISTER,
+} from '../../utils/constants';
 
 function Games() {
-  const { game, setGame, setAllGames } = React.useContext(GameContext);
-  const { teams, sports } = React.useContext(TeamContext);
+  const { teams, sports, resetTeam } = React.useContext(TeamContext);
+  const { game, sport, setGame, setAllGames, setAllGamesByType } =
+    React.useContext(GameContext);
+
+  const [error, setError] = React.useState({
+    title: '',
+    message: '',
+    status: false,
+    type: '',
+  });
 
   const handleSubmit = async () => {
     let { data: response } = await postGame(game);
     if (response.success) {
-      let { data: responseGames } = await getGames();
+      const { data: responseGamesType } = await getGamesByType(sport);
+      const { data: responseGames } = await getGames();
+
+      // handle game type response
+      if (responseGamesType.success) setAllGamesByType(responseGamesType.games);
+      else errorHandler(ERROR_DB_MESSAGE, setError, responseGamesType.message);
+
+      // handle game response
       if (responseGames.success) {
         setAllGames(responseGames.games);
+        errorHandler(SUCCESS_GAME_REGISTER, setError);
+
+        resetTeam();
+        setTimeout(() => {
+          errorHandler(ERROR_RESET, setError);
+        }, 3000);
+      } else {
+        errorHandler(ERROR_DB_MESSAGE, setError, responseGames.message);
       }
     } else {
-      // error
+      // handl post game error
+      errorHandler(ERROR_DB_MESSAGE, setError, response.message);
     }
   };
 
@@ -40,7 +71,7 @@ function Games() {
 
         <Pane className='form'>
           <Pane>
-            <Small className='label'>Time A</Small>
+            <Small className='label'>Time 1</Small>
             <Select
               marginTop={8}
               width='100%'
@@ -64,7 +95,7 @@ function Games() {
           </Pane>
 
           <Pane>
-            <Small className='label'>Time B</Small>
+            <Small className='label'>Time 2</Small>
             <Select
               marginTop={8}
               width='100%'
@@ -160,6 +191,14 @@ function Games() {
           <Button appearance='minimal' onClick={handleUpdate}>
             Atualizar
           </Button>
+        </Pane>
+
+        <Pane marginTop={16}>
+          {error.status && (
+            <Alert intent={error.type} title={error.title}>
+              {error.message}
+            </Alert>
+          )}
         </Pane>
       </Pane>
     </Pane>
