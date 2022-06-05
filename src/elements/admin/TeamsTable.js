@@ -27,12 +27,12 @@ function TeamsTable() {
 
   return (
     <Pane
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      width="100%"
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      width='100%'
     >
-      <Table className="table">
+      <Table className='table'>
         <Table.Head>
           <Table.TextHeaderCell>Emblema</Table.TextHeaderCell>
           <Table.TextHeaderCell>id</Table.TextHeaderCell>
@@ -54,7 +54,7 @@ function TeamsTable() {
             >
               <Table.TextCell>
                 <img
-                  className="image-small"
+                  className='image-small'
                   src={URL_IMAGE + (item.emblem || 'default.png')}
                   alt={item.name}
                 />
@@ -66,8 +66,8 @@ function TeamsTable() {
 
               <Table.TextCell>
                 <Button
-                  appearance="primary"
-                  intent="danger"
+                  appearance='primary'
+                  intent='danger'
                   onClick={() => setIsShownDeleteModal(true)}
                 >
                   Remover
@@ -80,11 +80,11 @@ function TeamsTable() {
 
       <Dialog
         isShown={isShownDeleteModal}
-        title="Remover Time"
-        intent="danger"
-        cancelLabel="Cancelar"
+        title='Remover Time'
+        intent='danger'
+        cancelLabel='Cancelar'
         onCloseComplete={() => setIsShownDeleteModal(false)}
-        confirmLabel="Remover"
+        confirmLabel='Remover'
         onConfirm={() => handleDelete()}
       >
         <Paragraph size={300} marginTop={12}>

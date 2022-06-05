@@ -17,19 +17,18 @@ function GameView() {
   React.useEffect(() => {
     getGameById(id);
   }, [id]);
-  console.log(data);
 
   return (
-    <Pane display="flex" justifyContent="center" flexDirection="column">
+    <Pane display='flex' justifyContent='center' flexDirection='column'>
       <Banner></Banner>
-      <Pane className="game-container">
-        <Pane textAlign="center" paddingTop={8}>
+      <Pane className='game-container'>
+        <Pane textAlign='center' paddingTop={8}>
           <Heading size={400}>{type && type.toUpperCase()}</Heading>
         </Pane>
 
         <Pane>
           {data.length > 0 && (
-            <Pane className="game-heading">
+            <Pane className='game-heading'>
               <Heading size={900}>{data[0].team1}</Heading>
               <Heading size={900}>VS</Heading>
               <Heading size={900}>{data[0].team2}</Heading>

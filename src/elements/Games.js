@@ -1,30 +1,25 @@
 import React from 'react';
-import { Pane, Heading } from 'evergreen-ui';
-import { BASQUETE, ESPORTS, FUTEBOL } from '../utils/constants';
 import Game from './Game';
-import futebol from '../api/futebol.json';
-import basquete from '../api/basquete.json';
-import esports from '../api/esports.json';
+import { GameContext } from '../context/GameContext';
+import { Pane, Heading } from 'evergreen-ui';
 import '../css/menu.css';
 import '../css/game.css';
 
 function ElGames({ type }) {
+  const { games } = React.useContext(GameContext);
+
   return (
     <Pane>
-      <Heading className="games-title">{type}</Heading>
+      <Heading className='games-title'>{type}</Heading>
       <Pane
-        display="flex"
-        alignItems="flex-start"
-        justifyContent="center"
-        flexWrap="wrap"
+        display='flex'
+        alignItems='flex-start'
+        justifyContent='center'
+        flexWrap='wrap'
       >
-        {type === FUTEBOL
-          ? futebol.map((game, index) => <Game key={index} game={game}></Game>)
-          : type === BASQUETE
-          ? basquete.map((game, index) => <Game key={index} game={game}></Game>)
-          : type === ESPORTS
-          ? esports.map((game, index) => <Game key={index} game={game}></Game>)
-          : ''}
+        {games &&
+          games.length > 0 &&
+          games.map((game, index) => <Game key={index} game={game}></Game>)}
       </Pane>
     </Pane>
   );

@@ -20,6 +20,14 @@ const gameSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    teamAOdd: {
+      type: Number,
+      required: true,
+    },
+    teamBOdd: {
+      type: Number,
+      required: true,
+    },
     winner: {
       type: Number,
       required: false,

@@ -48,6 +48,12 @@ img {
   height: 32px;
 }
 
+.team-log--small {
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+}
+
 code {
   font-family: var(--font-code);
 }
