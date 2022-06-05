@@ -5,9 +5,9 @@ import '../css/banner.css';
 
 function BannerDeposit() {
   return (
-    <Pane className="banner-container">
+    <Pane className='banner-container'>
       <Pane>
-        <img src={banner} alt="Fakebet - BET" className="banner" />
+        <img src={banner} alt='Fakebet - BET' className='banner' />
       </Pane>
     </Pane>
   );

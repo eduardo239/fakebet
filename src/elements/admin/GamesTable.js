@@ -1,19 +1,12 @@
 import React from 'react';
-import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
+import { removeGame } from '../../api/game';
 import { GameContext } from '../../context/GameContext';
 import { convertDate, convertDateToMongoose } from '../../utils/utils';
-import { removeGame } from '../../api/game';
+import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
 
 function GamesTable() {
-  const {
-    game,
-    games,
-    setGame,
-    setGames,
-    setAllGames,
-    allGames,
-    setGameIsUpdating,
-  } = React.useContext(GameContext);
+  const { game, setGame, setGames, setAllGames, allGames, setGameIsUpdating } =
+    React.useContext(GameContext);
 
   const [isShownDeleteModal, setIsShownDeleteModal] = React.useState(false);
 
@@ -22,7 +15,6 @@ function GamesTable() {
       ...game,
       createdAt: convertDateToMongoose(game.createdAt),
     });
-
     setGameIsUpdating(true);
   };
 
@@ -35,7 +27,7 @@ function GamesTable() {
     } else {
       // errorHandler(response.error);
     }
-    setGames(games.filter((item) => item._id !== game._id));
+    setGames(allGames.filter((item) => item._id !== game._id));
   };
 
   return (

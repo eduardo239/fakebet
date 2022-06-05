@@ -41,8 +41,6 @@ function DepositForm() {
       type: '',
     });
 
-    console.log(value, method);
-
     if (value === 0 || method === '') {
       setError({
         title: 'Error',
@@ -60,44 +58,42 @@ function DepositForm() {
 
       user.balance.amount += parseFloat(value);
       user.balance.lastDeposit = new Date();
-
-      console.log(user);
     }
   };
 
   return (
-    <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="form-container">
+    <Pane display='flex' justifyContent='center'>
+      <Pane elevation={2} className='form-container'>
         <Heading size={700} marginBottom={24}>
           Depositar
         </Heading>
 
-        <Pane className="form">
+        <Pane className='form'>
           <TextInputField
-            label="Valor"
-            type="number"
+            label='Valor'
+            type='number'
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
 
           <Pane>
-            <Small className="label">Método de depósito</Small>
+            <Small className='label'>Método de depósito</Small>
             <Select
               marginTop={8}
-              className="select"
+              className='select'
               onChange={(event) => setMethod(event.target.value)}
             >
-              <option value="pix">PIX</option>
-              <option value="transferencia-bancaria">
+              <option value='pix'>PIX</option>
+              <option value='transferencia-bancaria'>
                 Transferência Bancária
               </option>
-              <option value="paypal">Paypal</option>
+              <option value='paypal'>Paypal</option>
             </Select>
           </Pane>
         </Pane>
 
         <Pane marginTop={8}>
-          <Button appearance="primary" onClick={nextPayment}>
+          <Button appearance='primary' onClick={nextPayment}>
             Continuar
           </Button>
         </Pane>

@@ -3,12 +3,12 @@ import Type from '../elements/Type';
 import Banner from '../elements/Banner';
 import Footer from '../elements/Footer';
 import { Pane, Tablist, Tab } from 'evergreen-ui';
-import { TIMES, JOGOS } from '../utils/constants';
+import { TIMES, JOGOS, ESPORTES } from '../utils/constants';
 import '../css/menu.css';
 
 function AdminView() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [tabs] = React.useState([TIMES, JOGOS]);
+  const [tabs] = React.useState([TIMES, JOGOS, ESPORTES]);
 
   return (
     <Pane display="flex" flexDirection="column" height="100vh">
@@ -41,7 +41,15 @@ function AdminView() {
               display={index === selectedIndex ? 'block' : 'none'}
             >
               <Type
-                type={tab === TIMES ? TIMES : tab === JOGOS ? JOGOS : ''}
+                type={
+                  tab === TIMES
+                    ? TIMES
+                    : tab === JOGOS
+                    ? JOGOS
+                    : tab === ESPORTES
+                    ? ESPORTES
+                    : ''
+                }
               ></Type>
             </Pane>
           ))}

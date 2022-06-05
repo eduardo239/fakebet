@@ -10,6 +10,7 @@ export const ESPORTS = 'E-sports';
 
 export const TIMES = 'Times';
 export const JOGOS = 'Jogos';
+export const ESPORTES = 'Esportes';
 
 export const RETIRADA = 'Retirada';
 export const DEPOSITO = 'Depósito';
@@ -41,3 +42,7 @@ export const ERROR_TEAM_TYPE = 'Por favor, selecione um esporte do time.';
 export const ERROR_TEAM_REGISTER = 'Erro ao cadastrar time.';
 
 export const SUCCESS_TEAM_REGISTER = 'Time cadastrado com sucesso.';
+
+export const ERROR_EMPTY_SPORT_NAME =
+  'Por favor, preencha o campo de nome do esporte.';
+export const SUCCESS_SPORT_REGISTER = 'Esporte cadastrado com sucesso.';

@@ -14,11 +14,12 @@ import FileUploaderSingleUpload from './FilleUploader';
 import { TeamContext } from '../../context/TeamContext';
 import { getTeams, postTeam, updateTeam, uploadImage } from '../../api/team';
 import {
-  ERROR_ABBREVIATED_NAME,
-  ERROR_EMPTY_TEAM_NAME,
   ERROR_RESET,
-  ERROR_TEAM_TYPE,
   SUCCESS_TEAM_REGISTER,
+  ERROR_EMPTY_TEAM_NAME,
+  ERROR_ABBREVIATED_NAME,
+  ERROR_TEAM_TYPE,
+  ERROR_DB_MESSAGE,
 } from '../../utils/constants';
 import { errorHandler } from '../../utils/error';
 
@@ -32,8 +33,10 @@ function TeamsForm() {
     setIsUpdating,
     isUpdating,
     resetTeam,
+    sports,
   } = React.useContext(TeamContext);
   const [isShownUpdateModal, setIsShownUpdateModal] = React.useState(false);
+
   const [error, setError] = React.useState({
     title: '',
     message: '',
@@ -51,17 +54,18 @@ function TeamsForm() {
     }
   };
 
-  const submitTeam = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    errorHandler(ERROR_RESET, setError);
 
     let validateEmptyTeamName = team.name.trim() !== '';
-    let validateEmptyAbbreviation = team.shortName.trim() !== '';
-    let validateEmptyType = team.type.trim() !== '';
+    let validateEmptyAbbreviation = team.shortName !== '';
+    let validateTeamType = team.type !== '';
 
     if (
       validateEmptyTeamName &&
       validateEmptyAbbreviation &&
-      validateEmptyType
+      validateTeamType
     ) {
       let { data: teamResponse } = await postTeam(team);
 
@@ -82,21 +86,25 @@ function TeamsForm() {
             setTimeout(() => {
               errorHandler(ERROR_RESET, setError);
             }, 3000);
+          } else {
+            errorHandler(ERROR_DB_MESSAGE, setError, teamsResponse.message);
           }
+        } else {
+          errorHandler(ERROR_DB_MESSAGE, setError, emblemResponse.message);
         }
       }
     } else if (!validateEmptyTeamName) {
       errorHandler(ERROR_EMPTY_TEAM_NAME, setError);
     } else if (!validateEmptyAbbreviation) {
       errorHandler(ERROR_ABBREVIATED_NAME, setError);
-    } else if (!validateEmptyType) {
+    } else if (!validateTeamType) {
       errorHandler(ERROR_TEAM_TYPE, setError);
     }
   };
 
   return (
     <Pane display='flex' justifyContent='center'>
-      <Pane elevation={2} className='form-container'>
+      <Pane elevation={2} className='form-container' alignSelf='center'>
         <Heading size={700} marginBottom={24}>
           Adicionar Times
         </Heading>
@@ -117,15 +125,18 @@ function TeamsForm() {
               className='select'
               marginBottom={24}
               name='type'
-              value={team.type}
               onChange={(e) => setTeam({ ...team, type: e.target.value })}
             >
-              <option value='' defaultChecked disabled>
+              <option value='' defaultChecked>
                 ---
               </option>
-              <option value='futebol'>Futebol</option>
-              <option value='basquete'>Basquete</option>
-              <option value='esports'>Esports</option>
+              {sports &&
+                sports.length > 0 &&
+                sports.map((sport) => (
+                  <option key={sport._id} value={sport._id}>
+                    {sport.name}
+                  </option>
+                ))}
             </Select>
           </Pane>
 
@@ -145,7 +156,7 @@ function TeamsForm() {
         </Pane>
 
         <Pane marginTop={8}>
-          <Button marginRight={16} appearance='primary' onClick={submitTeam}>
+          <Button marginRight={16} appearance='primary' onClick={handleSubmit}>
             Adicionar
           </Button>
           <Button

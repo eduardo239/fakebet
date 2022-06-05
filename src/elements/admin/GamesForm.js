@@ -13,7 +13,7 @@ import { getGames, postGame } from '../../api/game';
 
 function Games() {
   const { game, setGame, setAllGames } = React.useContext(GameContext);
-  const { teams } = React.useContext(TeamContext);
+  const { teams, sports } = React.useContext(TeamContext);
 
   const handleSubmit = async () => {
     let { data: response } = await postGame(game);
@@ -33,7 +33,7 @@ function Games() {
 
   return (
     <Pane display='flex' justifyContent='center'>
-      <Pane elevation={2} className='form-container'>
+      <Pane elevation={2} className='form-container' alignSelf='center'>
         <Heading size={700} marginBottom={24}>
           Adicionar Jogo
         </Heading>
@@ -50,7 +50,7 @@ function Games() {
               value={game.teamAId}
               onChange={(e) => setGame({ ...game, teamAId: e.target.value })}
             >
-              <option value='' defaultChecked disabled>
+              <option value='' defaultChecked>
                 ---
               </option>
               {teams &&
@@ -74,7 +74,7 @@ function Games() {
               value={game.teamBId}
               onChange={(e) => setGame({ ...game, teamBId: e.target.value })}
             >
-              <option value='' defaultChecked disabled>
+              <option value='' defaultChecked>
                 ---
               </option>
               {teams &&
@@ -102,15 +102,18 @@ function Games() {
               className='select'
               marginBottom={24}
               name='type'
-              value={game.type}
               onChange={(e) => setGame({ ...game, type: e.target.value })}
             >
-              <option value='' defaultChecked disabled>
+              <option value='' defaultChecked>
                 ---
               </option>
-              <option value='futebol'>Futebol</option>
-              <option value='basquete'>Basquete</option>
-              <option value='esports'>Esports</option>
+              {sports &&
+                sports.length > 0 &&
+                sports.map((sport) => (
+                  <option key={sport._id} value={sport._id}>
+                    {sport.name}
+                  </option>
+                ))}
             </Select>
           </Pane>
 

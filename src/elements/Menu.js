@@ -14,61 +14,61 @@ function Menu() {
   const [isProfileShown, setIsProfileShown] = React.useState(false);
 
   return (
-    <Pane position="relative">
-      <Pane className="menu">
-        <Pane display="flex" gap={4} alignItems="center">
-          <Link to="/" className="menu-link">
+    <Pane position='relative'>
+      <Pane className='menu'>
+        <Pane display='flex' gap={4} alignItems='center'>
+          <Link to='/' className='menu-link'>
             FAKEBET
           </Link>
           {user && (
-            <Link to="/transfer" className="menu-link">
+            <Link to='/transfer' className='menu-link'>
               DEPÓSITO
             </Link>
           )}
           {user && (
-            <Link to="#" onClick={() => getUserInfo()} className="menu-link">
+            <Link to='#' onClick={() => getUserInfo()} className='menu-link'>
               {user && user.username}
             </Link>
           )}
         </Pane>
 
-        <Pane display="flex" gap={4} alignItems="center">
+        <Pane display='flex' gap={4} alignItems='center'>
           {user && (
             <Link
-              className="menu-link"
-              to="#"
+              className='menu-link'
+              to='#'
               onClick={() => setMyBetsIsShown(!isMyBetsShown)}
             >
               MINHAS APOSTAS
             </Link>
           )}
 
-          <Link to="/admin" className="menu-link">
+          <Link to='/admin' className='menu-link'>
             ADMIN
           </Link>
-          <Link to="/api" className="menu-link">
+          <Link to='/api' className='menu-link'>
             API
           </Link>
 
           {!user && (
-            <Link to="/signup" className="menu-link">
+            <Link to='/signup' className='menu-link'>
               REGISTRAR
             </Link>
           )}
           {!user && (
-            <Link to="/signin" className="menu-link">
+            <Link to='/signin' className='menu-link'>
               ENTRAR
             </Link>
           )}
           {user && (
-            <Link to="#" onClick={() => logout()} className="menu-link">
+            <Link to='#' onClick={() => logout()} className='menu-link'>
               SAIR
             </Link>
           )}
-          <Link to="#" onClick={() => setIsProfileShown(!isProfileShown)}>
+          <Link to='#' onClick={() => setIsProfileShown(!isProfileShown)}>
             <Avatar
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-              name="Alan Turing"
+              src='https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg'
+              name='Alan Turing'
               size={34}
             />
           </Link>
@@ -77,7 +77,7 @@ function Menu() {
 
       <Dialog
         isShown={isMyBetsShown}
-        title="Minhas Apostas"
+        title='Minhas Apostas'
         hasCancel={false}
         hasFooter={false}
       >
@@ -86,7 +86,7 @@ function Menu() {
 
       <Dialog
         isShown={isProfileShown}
-        title="Perfil"
+        title='Perfil'
         hasCancel={false}
         hasFooter={false}
       >

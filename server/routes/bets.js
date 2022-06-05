@@ -32,7 +32,7 @@ router.delete('/remove/:id', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else {
-      if (!bet) res.json({ success: false, message: USER_NOT_FOUND });
+      if (!bet) res.json({ success: false, message: `BET NOT FOUND` });
       else res.json({ success: true, message: USER_REMOVED });
     }
   });
@@ -43,7 +43,7 @@ router.get('/all', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else if (bets.length === 0) {
-      res.json({ success: false, message: USER_NOT_FOUND });
+      res.json({ success: false, message: `BETS NOT FOUND` });
     } else {
       res.json({ success: true, message: SUCCESS, users: bets });
     }
@@ -55,7 +55,7 @@ router.get('/:id', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else if (!bet) {
-      res.json({ success: false, message: USER_NOT_FOUND });
+      res.json({ success: false, message: `BET NOT FOUND` });
     } else {
       res.json({ success: true, message: SUCCESS, user: bet });
     }

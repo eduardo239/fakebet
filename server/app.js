@@ -18,12 +18,15 @@ const User = require('./models/user');
 const Bet = require('./models/bet');
 // eslint-disable-next-line no-unused-vars
 const Team = require('./models/team');
+// eslint-disable-next-line no-unused-vars
+const Sport = require('./models/sport');
 // - - - - - - ROUTES - - - - - - //
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const betsRouter = require('./routes/bets');
 const teamsRouter = require('./routes/teams');
 const gamesRouter = require('./routes/games');
+const sportsRouter = require('./routes/sports');
 
 const app = express();
 const URL =
@@ -74,6 +77,7 @@ app.use('/users', usersRouter);
 app.use('/bets', betsRouter);
 app.use('/teams', teamsRouter);
 app.use('/games', gamesRouter);
+app.use('/sports', sportsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

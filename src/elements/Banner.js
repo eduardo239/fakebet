@@ -5,8 +5,8 @@ import banner from '../assets/banner/poster.jpg';
 
 function Banner() {
   return (
-    <Pane className="banner-container">
-      <img src={banner} alt="Fakebet - BET" className="banner" />
+    <Pane className='banner-container'>
+      <img src={banner} alt='Fakebet - BET' className='banner' />
     </Pane>
   );
 }

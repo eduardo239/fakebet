@@ -10,7 +10,6 @@ const {
 const { replaceCommaWithDot } = require('../utils/utils');
 
 router.post('/add', (req, res, next) => {
-  console.log(req.body);
   const newGame = new Game({
     teamAId: req.body.teamAId,
     teamBId: req.body.teamBId,
@@ -38,8 +37,7 @@ router.put('/edit', (req, res, next) => {
     req.body.id,
     { $set: req.body },
     { new: true },
-    (err, x) => {
-      console.log(x);
+    (err) => {
       if (err) {
         res.json({ success: false, message: ERROR_MESSAGE, err });
       } else {
@@ -54,8 +52,8 @@ router.delete('/remove/:id', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else {
-      if (!game) res.json({ success: false, message: USER_NOT_FOUND });
-      else res.json({ success: true, message: USER_REMOVED });
+      if (!game) res.json({ success: false, message: `GAME NOT FOUND` });
+      else res.json({ success: true, message: `GAME ADDED` });
     }
   });
 });
@@ -65,7 +63,7 @@ router.get('/all/:sport', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else if (games.length === 0) {
-      res.json({ success: false, message: USER_NOT_FOUND, games });
+      res.json({ success: false, message: `GAME NOT FOUND`, games });
     } else {
       res.json({ success: true, message: SUCCESS, games });
     }
@@ -80,7 +78,7 @@ router.get('/all', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else if (games.length === 0) {
-      res.json({ success: false, message: USER_NOT_FOUND, games });
+      res.json({ success: false, message: `GAME NOT FOUND`, games });
     } else {
       res.json({ success: true, message: SUCCESS, games });
     }
@@ -95,7 +93,7 @@ router.get('/:id', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else if (!game) {
-      res.json({ success: false, message: USER_NOT_FOUND });
+      res.json({ success: false, message: `GAME NOT FOUND` });
     } else {
       res.json({ success: true, message: SUCCESS, team: game });
     }

@@ -81,95 +81,93 @@ function WithdrawalForm() {
 
       user.balance.amount -= parseFloat(value);
       user.balance.lastWithdraw = new Date();
-
-      console.log(user);
     }
   };
 
   return (
-    <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="form-container">
+    <Pane display='flex' justifyContent='center'>
+      <Pane elevation={2} className='form-container'>
         <Heading size={700} marginBottom={24}>
           Retirada
         </Heading>
 
         <Pane marginBottom={24}>
-          <Heading size={400} fontFamily="monospace">
+          <Heading size={400} fontFamily='monospace'>
             Total: R$ {user.balance.amount}
           </Heading>
         </Pane>
 
-        <Pane className="form">
+        <Pane className='form'>
           <TextInputField
-            label="Valor"
-            type="number"
+            label='Valor'
+            type='number'
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
 
           <Pane>
-            <Small className="label">Método de Retirada</Small>
+            <Small className='label'>Método de Retirada</Small>
             <Select
               marginTop={8}
-              className="select"
+              className='select'
               onChange={(event) => setMethod(event.target.value)}
             >
-              <option value="" defaultChecked>
+              <option value='' defaultChecked>
                 ---
               </option>
-              <option value="bradesco">Banco</option>
-              <option value="santander">Paypal</option>
+              <option value='bradesco'>Banco</option>
+              <option value='santander'>Paypal</option>
             </Select>
           </Pane>
 
           <Pane>
-            <Small className="label">Agência Bancária</Small>
+            <Small className='label'>Agência Bancária</Small>
             <Select
               marginTop={8}
-              className="select"
+              className='select'
               marginBottom={24}
               onChange={(event) => setMethod(event.target.value)}
             >
-              <option value="" defaultChecked>
+              <option value='' defaultChecked>
                 ---
               </option>
-              <option value="bradesco">Bradesco</option>
-              <option value="santander">Santander</option>
-              <option value="nubank">Nubank</option>
+              <option value='bradesco'>Bradesco</option>
+              <option value='santander'>Santander</option>
+              <option value='nubank'>Nubank</option>
             </Select>
           </Pane>
 
           <TextInputField
-            label="Número da Agência"
-            type="number"
+            label='Número da Agência'
+            type='number'
             value={agency}
             onChange={(e) => setAgency(e.target.value)}
           />
 
           <TextInputField
-            label="Número da Conta"
-            type="number"
+            label='Número da Conta'
+            type='number'
             value={accountNumber}
             onChange={(e) => setAccountNumber(e.target.value)}
           />
           <Pane>
-            <Small className="label">Tipo da Conta</Small>
+            <Small className='label'>Tipo da Conta</Small>
             <Select
               marginTop={8}
-              className="select"
+              className='select'
               onChange={(event) => setAccountType(event.target.value)}
             >
-              <option value="" defaultChecked>
+              <option value='' defaultChecked>
                 ---
               </option>
-              <option value="bradesco">Conta Corrente</option>
-              <option value="santander">Conta Poupança</option>
+              <option value='bradesco'>Conta Corrente</option>
+              <option value='santander'>Conta Poupança</option>
             </Select>
           </Pane>
         </Pane>
 
         <Pane marginTop={8}>
-          <Button appearance="primary" onClick={submitWithdrawal}>
+          <Button appearance='primary' onClick={submitWithdrawal}>
             Continuar
           </Button>
         </Pane>

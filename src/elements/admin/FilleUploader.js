@@ -16,8 +16,8 @@ function FileUploaderSingleUpload({ setFiles, files }) {
   return (
     <Pane>
       <FileUploader
-        label="Enviar arquivo"
-        description="You can upload 1 file. File can be up to 50 MB."
+        label='Enviar arquivo'
+        description='You can upload 1 file. File can be up to 50 MB.'
         maxSizeInBytes={50 * 1024 ** 2}
         maxFiles={1}
         onChange={handleChange}

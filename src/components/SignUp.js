@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Pane,
@@ -7,12 +7,12 @@ import {
   Checkbox,
   Heading,
   Alert,
-} from "evergreen-ui";
-import "../css/sign.css";
-import { signUp } from "../api/user";
-import { useNavigate } from "react-router-dom";
-import { browserDetect } from "../utils/utils";
-import { validateEmail, validatePassword } from "../utils/regex";
+} from 'evergreen-ui';
+import '../css/sign.css';
+import { signUp } from '../api/user';
+import { useNavigate } from 'react-router-dom';
+import { browserDetect } from '../utils/utils';
+import { validateEmail, validatePassword } from '../utils/regex';
 import {
   ERROR_DB_MESSAGE,
   ERROR_INVALID_EMAIL,
@@ -23,26 +23,25 @@ import {
   ERROR_USERNAME_MIN_LENGTH,
   SUCCESS,
   WARNING,
-} from "../utils/constants";
-import { errorHandler } from "../utils/error";
+} from '../utils/constants';
+import { errorHandler } from '../utils/error';
 
 function SignUpView() {
   const navigate = useNavigate();
 
-  const [username, setUsername] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [password2, setPassword2] = React.useState("");
+  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [password2, setPassword2] = React.useState('');
 
   const [checkTerms, setCheckTerms] = React.useState(false);
   const [checkAge, setCheckAge] = React.useState(false);
   const [error, setError] = React.useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     status: false,
-    type: "",
+    type: '',
   });
-  console.log(error);
 
   const handleSignUp = async () => {
     const emailValidated = validateEmail(email);
@@ -59,8 +58,8 @@ function SignUpView() {
       checkAge
     ) {
       setError({
-        title: "Sign up successful!",
-        message: "Redirecting to home page, in 3 seconds...",
+        title: 'Sign up successful!',
+        message: 'Redirecting to home page, in 3 seconds...',
         status: true,
         type: SUCCESS,
       });
@@ -72,7 +71,7 @@ function SignUpView() {
         bets: [],
         balance: {
           amount: 0,
-          currency: "BRA",
+          currency: 'BRA',
           lastDeposit: null,
         },
         lastLogin: new Date(),
@@ -83,9 +82,9 @@ function SignUpView() {
 
       if (response.success) {
         user = response.data;
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
         setTimeout(() => {
-          navigate("/signin");
+          navigate('/signin');
           errorHandler(ERROR_RESET, setError);
         }, 3000);
       } else {
@@ -94,7 +93,6 @@ function SignUpView() {
     } else if (!usernameValidated) {
       errorHandler(ERROR_USERNAME_MIN_LENGTH, setError);
 
-      console.log(error);
       return;
     } else if (!emailValidated) {
       errorHandler(ERROR_INVALID_EMAIL, setError);
@@ -108,52 +106,52 @@ function SignUpView() {
   };
 
   return (
-    <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="form-container-sign">
+    <Pane display='flex' justifyContent='center'>
+      <Pane elevation={2} className='form-container-sign'>
         <Heading size={700} marginBottom={24}>
           Login
         </Heading>
 
-        <Pane className="form-sign">
+        <Pane className='form-sign'>
           <TextInputField
-            label="Username"
-            placeholder="Placeholder text"
+            label='Username'
+            placeholder='Placeholder text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
 
           <TextInputField
-            label="E-mail"
-            placeholder="Text input placeholder..."
+            label='E-mail'
+            placeholder='Text input placeholder...'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <TextInputField
-            type="password"
-            label="Password"
-            placeholder="Text input placeholder..."
+            type='password'
+            label='Password'
+            placeholder='Text input placeholder...'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
           <TextInputField
-            type="password"
-            label="Password Confirmation"
-            placeholder="Text input placeholder..."
+            type='password'
+            label='Password Confirmation'
+            placeholder='Text input placeholder...'
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
           />
 
           <Pane>
             <Checkbox
-              label="I Agree to the Terms and Conditions"
+              label='I Agree to the Terms and Conditions'
               checked={checkTerms}
               onChange={(e) => setCheckTerms(e.target.checked)}
             />
             <Checkbox
               marginBottom={32}
-              label="I am at least 18 years old"
+              label='I am at least 18 years old'
               checked={checkAge}
               onChange={(e) => setCheckAge(e.target.checked)}
             />
@@ -161,18 +159,18 @@ function SignUpView() {
 
           <Pane marginTop={0}>
             <Button
-              type="button"
-              appearance="primary"
-              width="100%"
+              type='button'
+              appearance='primary'
+              width='100%'
               onClick={handleSignUp}
             >
               Register
             </Button>
           </Pane>
 
-          <Pane display="flex" justifyContent="flex-end">
-            <Link to="/signin">
-              <Button marginTop={32} appearance="minimal">
+          <Pane display='flex' justifyContent='flex-end'>
+            <Link to='/signin'>
+              <Button marginTop={32} appearance='minimal'>
                 I already have an account
               </Button>
             </Link>

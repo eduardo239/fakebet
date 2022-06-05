@@ -95,57 +95,57 @@ function MyProfile({ data, setIsProfileShown, ...props }) {
   }, [data]);
 
   return (
-    <Pane display="flex" justifyContent="center">
-      <Pane className="form-grid" marginBottom={64}>
-        <Pane className="form-grid--field">
+    <Pane display='flex' justifyContent='center'>
+      <Pane className='form-grid' marginBottom={64}>
+        <Pane className='form-grid--field'>
           <Heading size={400}>Nome usuário:</Heading>
           <TextInput
-            name="text-input-name"
-            placeholder="Text input placeholder..."
+            name='text-input-name'
+            placeholder='Text input placeholder...'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </Pane>
-        <Pane className="form-grid--field">
+        <Pane className='form-grid--field'>
           <Heading size={400}>E-mail:</Heading>
           <TextInput
-            name="text-input-name"
-            placeholder="Text input placeholder..."
+            name='text-input-name'
+            placeholder='Text input placeholder...'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </Pane>
-        <Pane className="form-grid--field">
+        <Pane className='form-grid--field'>
           <Heading size={400}>Senha:</Heading>
           <TextInput
-            name="text-input-name"
-            placeholder="Senha com no mínimo 6 caracteres"
+            name='text-input-name'
+            placeholder='Senha com no mínimo 6 caracteres'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Pane className="form-grid--field" maxWidth={280}>
-            <Small className="dark small">
+          <Pane className='form-grid--field' maxWidth={280}>
+            <Small className='dark small'>
               A senha deve ter no mínimo 6 caracteres, letra minúscula, letra
               maiúscula e número
             </Small>
           </Pane>
         </Pane>
-        <Pane className="form-grid--field">
+        <Pane className='form-grid--field'>
           <Heading size={400}>Confirme a Senha:</Heading>
           <TextInput
-            name="text-input-name"
-            placeholder="Confirme a senha..."
+            name='text-input-name'
+            placeholder='Confirme a senha...'
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
           />
         </Pane>
-        <Pane className="form-grid--field">
-          <Pane display="flex" justifyContent="space-between">
-            <Button appearance="primary" onClick={onSubmit}>
+        <Pane className='form-grid--field'>
+          <Pane display='flex' justifyContent='space-between'>
+            <Button appearance='primary' onClick={onSubmit}>
               Salvar
             </Button>
             <Button
-              appearance="minimal"
+              appearance='minimal'
               onClick={() => setIsProfileShown(false)}
             >
               Sair

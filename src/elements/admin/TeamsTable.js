@@ -1,7 +1,7 @@
 import React from 'react';
-import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
 import { TeamContext } from '../../context/TeamContext';
 import { removeTeam } from '../../api/team';
+import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
 
 const URL_IMAGE = 'http://localhost:3003/images/emblems/';
 
@@ -27,10 +27,10 @@ function TeamsTable() {
 
   return (
     <Pane
+      width='100%'
       display='flex'
       flexDirection='column'
       justifyContent='center'
-      width='100%'
     >
       <Table className='table'>
         <Table.Head>
@@ -61,7 +61,7 @@ function TeamsTable() {
               </Table.TextCell>
               <Table.TextCell>{item._id}</Table.TextCell>
               <Table.TextCell>{item.name}</Table.TextCell>
-              <Table.TextCell>{item.type}</Table.TextCell>
+              <Table.TextCell>{item.type.name}</Table.TextCell>
               <Table.TextCell>{item.shortName}</Table.TextCell>
 
               <Table.TextCell>

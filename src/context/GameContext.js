@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { getGamesByType } from '../api/game';
+import { getGames, getGamesByType } from '../api/game';
 
 const GameContext = React.createContext();
-
 const GameProvider = GameContext.Provider;
 
 const GameContextContent = ({ children }) => {
@@ -17,9 +16,9 @@ const GameContextContent = ({ children }) => {
     winner: '',
     type: '',
   });
-  const [allGames, setAllGames] = useState([]);
-  const [games, setGames] = useState([]);
   const [sport, setSport] = useState('futebol');
+  const [allGames, setAllGames] = useState([]);
+  const [allGamesByTye, setAllGamesByType] = useState([]);
   const [isGameUpdating, setGameIsUpdating] = React.useState(false);
 
   const resetGame = () => {
@@ -41,28 +40,33 @@ const GameContextContent = ({ children }) => {
 
     if (mounted) {
       (async () => {
-        const { data: response } = await getGamesByType(sport);
-        console.log(response);
-        if (response.success) {
-          setGames(response.games);
+        const { data: responseGamesType } = await getGamesByType(sport);
+        const { data: responseGames } = await getGames();
+
+        if (responseGamesType.success) {
+          setAllGamesByType(responseGamesType.games);
+          setAllGames(responseGames.games);
         }
       })();
     }
     return () => {
       mounted = false;
     };
-  }, [sport]);
+  }, []);
+
+  console.log(allGames);
+  console.log(allGamesByTye);
 
   return (
     <GameProvider
       value={{
         game,
-        games,
+        allGamesByTye,
         sport,
         allGames,
         isGameUpdating,
         setGame,
-        setGames,
+        setAllGamesByType,
         setSport,
         resetGame,
         setAllGames,

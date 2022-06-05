@@ -15,15 +15,15 @@ function MyBets({ data, setIsProfileShown, ...props }) {
       <MyBetItem />
       <hr />
 
-      <Pane display="flex" justifyContent="space-between" marginBottom={36}>
+      <Pane display='flex' justifyContent='space-between' marginBottom={36}>
         <Heading size={400}>Total</Heading>
         <Heading size={400}>$324</Heading>
       </Pane>
 
-      <Pane className="form-grid--field">
-        <Pane display="flex" justifyContent="space-between">
-          <Button appearance="primary">Salvar</Button>
-          <Button appearance="minimal" onClick={() => setIsProfileShown(false)}>
+      <Pane className='form-grid--field'>
+        <Pane display='flex' justifyContent='space-between'>
+          <Button appearance='primary'>Salvar</Button>
+          <Button appearance='minimal' onClick={() => setIsProfileShown(false)}>
             Sair
           </Button>
         </Pane>
