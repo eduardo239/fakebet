@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Alert,
   Button,
@@ -9,18 +9,18 @@ import {
   Select,
   Small,
   TextInputField,
-} from "evergreen-ui";
-import FileUploaderSingleUpload from "./FilleUploader";
-import { TeamContext } from "../../context/TeamContext";
-import { getTeams, postTeam, updateTeam, uploadImage } from "../../api/team";
+} from 'evergreen-ui';
+import FileUploaderSingleUpload from './FilleUploader';
+import { TeamContext } from '../../context/TeamContext';
+import { getTeams, postTeam, updateTeam, uploadImage } from '../../api/team';
 import {
   ERROR_ABBREVIATED_NAME,
   ERROR_EMPTY_TEAM_NAME,
   ERROR_RESET,
   ERROR_TEAM_TYPE,
   SUCCESS_TEAM_REGISTER,
-} from "../../utils/constants";
-import { errorHandler } from "../../utils/error";
+} from '../../utils/constants';
+import { errorHandler } from '../../utils/error';
 
 function TeamsForm() {
   const {
@@ -35,10 +35,10 @@ function TeamsForm() {
   } = React.useContext(TeamContext);
   const [isShownUpdateModal, setIsShownUpdateModal] = React.useState(false);
   const [error, setError] = React.useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     status: false,
-    type: "",
+    type: '',
   });
 
   const handleEdit = async () => {
@@ -54,9 +54,9 @@ function TeamsForm() {
   const submitTeam = async (e) => {
     e.preventDefault();
 
-    let validateEmptyTeamName = team.name.trim() !== "";
-    let validateEmptyAbbreviation = team.shortName.trim() !== "";
-    let validateEmptyType = team.type.trim() !== "";
+    let validateEmptyTeamName = team.name.trim() !== '';
+    let validateEmptyAbbreviation = team.shortName.trim() !== '';
+    let validateEmptyType = team.type.trim() !== '';
 
     if (
       validateEmptyTeamName &&
@@ -68,7 +68,7 @@ function TeamsForm() {
       // upload team
       if (teamResponse.success) {
         const newTeamFile = new FormData();
-        newTeamFile.append("emblem", files[0]);
+        newTeamFile.append('emblem', files[0]);
 
         let { team } = teamResponse;
         let { data: emblemResponse } = await uploadImage(newTeamFile, team._id);
@@ -95,43 +95,43 @@ function TeamsForm() {
   };
 
   return (
-    <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="form-container">
+    <Pane display='flex' justifyContent='center'>
+      <Pane elevation={2} className='form-container'>
         <Heading size={700} marginBottom={24}>
           Adicionar Times
         </Heading>
 
-        <Pane className="form">
+        <Pane className='form'>
           <TextInputField
-            label="Nome do Time"
-            placeholder="O nome do time"
+            label='Nome do Time'
+            placeholder='O nome do time'
             value={team.name}
             onChange={(e) => setTeam({ ...team, name: e.target.value })}
           />
 
           <Pane>
-            <Small className="label">Gênero do Esporte</Small>
+            <Small className='label'>Gênero do Esporte</Small>
             <Select
               marginTop={8}
-              width="100%"
-              className="select"
+              width='100%'
+              className='select'
               marginBottom={24}
-              name="type"
+              name='type'
               value={team.type}
               onChange={(e) => setTeam({ ...team, type: e.target.value })}
             >
-              <option value="" defaultChecked disabled>
+              <option value='' defaultChecked disabled>
                 ---
               </option>
-              <option value="futebol">Futebol</option>
-              <option value="basquete">Basquete</option>
-              <option value="esports">Esports</option>
+              <option value='futebol'>Futebol</option>
+              <option value='basquete'>Basquete</option>
+              <option value='esports'>Esports</option>
             </Select>
           </Pane>
 
           <TextInputField
-            label="Nome Abreviado"
-            placeholder="Um nome curto com até 3 caracteres"
+            label='Nome Abreviado'
+            placeholder='Um nome curto com até 3 caracteres'
             value={team.shortName}
             onChange={(e) =>
               setTeam({ ...team, shortName: e.target.value.toUpperCase() })
@@ -139,18 +139,18 @@ function TeamsForm() {
             maxLength={3}
           />
 
-          <Pane className="form--span-3">
+          <Pane className='form--span-3'>
             <FileUploaderSingleUpload setFiles={setFiles} files={files} />
           </Pane>
         </Pane>
 
         <Pane marginTop={8}>
-          <Button marginRight={16} appearance="primary" onClick={submitTeam}>
+          <Button marginRight={16} appearance='primary' onClick={submitTeam}>
             Adicionar
           </Button>
           <Button
             disabled={!isUpdating}
-            appearance="minimal"
+            appearance='minimal'
             onClick={() => setIsShownUpdateModal(true)}
           >
             Atualizar
@@ -168,11 +168,11 @@ function TeamsForm() {
 
       <Dialog
         isShown={isShownUpdateModal}
-        title="Remover Time"
-        intent="primary"
-        cancelLabel="Cancelar"
+        title='Remover Time'
+        intent='primary'
+        cancelLabel='Cancelar'
         onCloseComplete={() => setIsShownUpdateModal(false)}
-        confirmLabel="Atualizar"
+        confirmLabel='Atualizar'
         onConfirm={() => handleEdit(team)}
       >
         <Paragraph size={300} marginTop={12}>

@@ -6,24 +6,29 @@ import Footer from '../elements/Footer';
 import { FUTEBOL, BASQUETE, ESPORTS } from '../utils/constants';
 import '../css/game.css';
 import '../css/menu.css';
+import { GameContext } from '../context/GameContext';
 
 function HomeView() {
+  const { setSport } = React.useContext(GameContext);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [tabs] = React.useState([FUTEBOL, BASQUETE, ESPORTS]);
 
   return (
-    <Pane display="flex" flexDirection="column" height="100vh">
+    <Pane display='flex' flexDirection='column' height='100vh'>
       <Banner></Banner>
-      <Pane className="games-container" flex={1}>
-        <Tablist padding={8} flexBasis={240} className="tab-game-menu">
+      <Pane className='games-container' flex={1}>
+        <Tablist padding={8} flexBasis={240} className='tab-game-menu'>
           {tabs.map((tab, index) => (
             <Tab
               key={tab}
               id={tab}
-              onSelect={() => setSelectedIndex(index)}
+              onSelect={() => {
+                setSelectedIndex(index);
+                setSport(tab);
+              }}
               isSelected={index === selectedIndex}
               aria-controls={`panel-${tab}`}
-              appearance="minimal"
+              appearance='minimal'
               className={`tab-menu ${selectedIndex === index ? `active` : ''}`}
             >
               {tab}
@@ -35,7 +40,7 @@ function HomeView() {
             <Pane
               key={tab}
               id={`panel-${tab}`}
-              role="tabpanel"
+              role='tabpanel'
               aria-labelledby={tab}
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
@@ -59,8 +64,8 @@ function HomeView() {
       <Pane
         marginTop={16}
         marginBottom={16}
-        display="flex"
-        justifyContent="center"
+        display='flex'
+        justifyContent='center'
       >
         <Pagination page={1} totalPages={5}></Pagination>
       </Pane>

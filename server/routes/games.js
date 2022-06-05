@@ -7,6 +7,7 @@ const {
   USER_NOT_FOUND,
   USER_REMOVED,
 } = require('../utils/constants');
+const { replaceCommaWithDot } = require('../utils/utils');
 
 router.post('/add', (req, res, next) => {
   console.log(req.body);
@@ -15,6 +16,8 @@ router.post('/add', (req, res, next) => {
     teamBId: req.body.teamBId,
     teamAScore: req.body.teamAScore,
     teamBScore: req.body.teamBScore,
+    teamAOdd: replaceCommaWithDot('' + req.body.teamAOdd),
+    teamBOdd: replaceCommaWithDot('' + req.body.teamBOdd),
     createdAt: req.body.createdAt,
     winner: req.body.winner,
     type: req.body.type,
@@ -57,6 +60,21 @@ router.delete('/remove/:id', (req, res, next) => {
   });
 });
 
+router.get('/all/:sport', (req, res, next) => {
+  Game.find({ type: req.params.sport }, (err, games) => {
+    if (err) {
+      res.json({ success: false, message: ERROR_MESSAGE, err });
+    } else if (games.length === 0) {
+      res.json({ success: false, message: USER_NOT_FOUND, games });
+    } else {
+      res.json({ success: true, message: SUCCESS, games });
+    }
+  })
+    .sort('-createdAt')
+    .populate('teamAId')
+    .populate('teamBId');
+});
+
 router.get('/all', (req, res, next) => {
   Game.find({}, (err, games) => {
     if (err) {
@@ -67,6 +85,7 @@ router.get('/all', (req, res, next) => {
       res.json({ success: true, message: SUCCESS, games });
     }
   })
+    .sort('-createdAt')
     .populate('teamAId')
     .populate('teamBId');
 });

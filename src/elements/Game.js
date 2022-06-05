@@ -8,6 +8,7 @@ import '../css/message.css';
 import BetTeam from './Bet/Team';
 import BetDraw from './Bet/Draw';
 import BetValue from './Bet/Input';
+import { EMBLEM_URL } from '../utils/constants';
 
 function ElGame({ game }) {
   const [showValue, setShowValue] = React.useState(false);
@@ -37,7 +38,7 @@ function ElGame({ game }) {
     let profit = odd * value;
 
     let bet = {
-      game: game.id,
+      game: game._id,
       pick,
       value,
       odd,
@@ -86,7 +87,7 @@ function ElGame({ game }) {
   };
 
   return (
-    <Pane className="games-grid">
+    <Pane className='games-grid'>
       {message.status && (
         <Pane className={`message-top ${!!message.status ? 'fixed' : 'none'}`}>
           <Alert intent={message.type} title={message.title} marginBottom={32}>
@@ -101,30 +102,33 @@ function ElGame({ game }) {
         paddingBottom={showValue ? '54px' : '0'}
       >
         <Pane
-          display="flex"
-          alignItems="flex-end"
-          justifyContent="space-between"
+          display='flex'
+          alignItems='flex-end'
+          justifyContent='space-between'
           paddingTop={16}
           paddingBottom={16}
         >
           <BetTeam
-            teamName={game.team1}
+            teamName={game.teamAId.name}
             gameId={game.id}
             gameType={game.type}
             showInput={showInput}
-            TeamEmblem={MC}
-            odds={game.odds.team1.toFixed(2)}
+            teamEmblem={EMBLEM_URL + game.teamAId.emblem}
+            odds={game.teamAOdd.toFixed(2)}
           />
 
-          <BetDraw showInput={showInput} odds={game.odds.draw.toFixed(2)} />
+          <BetDraw
+            showInput={showInput}
+            odds={((game.teamAOdd / game.teamBOdd) * 11).toFixed(2)}
+          />
 
           <BetTeam
-            teamName={game.team2}
+            teamName={game.teamBId.name}
             gameId={game.id}
             gameType={game.type}
             showInput={showInput}
-            TeamEmblem={RB}
-            odds={game.odds.team2.toFixed(2)}
+            teamEmblem={EMBLEM_URL + game.teamBId.emblem}
+            odds={game.teamBOdd.toFixed(2)}
           />
         </Pane>
 
