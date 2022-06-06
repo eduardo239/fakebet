@@ -51,3 +51,7 @@ export const SUCCESS_GAME_REGISTER = 'Jogo cadastrado com sucesso.';
 
 export const ERROR_USER_UPDATE = 'Erro ao atualizar usuário.';
 export const SUCCESS_USER_UPDATE = 'Usuário atualizado com sucesso.';
+
+export const ERROR_PAYMENT_METHOD =
+  'Por favor, selecione um método de pagamento.';
+export const ERROR_PAYMENT_VALUE = 'Por favor, preencha o valor do pagamento.';

@@ -18,7 +18,7 @@ function ElementGame({ game }) {
     status: false,
     type: '',
   });
-  console.log(game);
+
   const betRef = React.useRef();
 
   const showInput = (e, pick) => {

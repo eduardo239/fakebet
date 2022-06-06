@@ -11,11 +11,11 @@ function AdminView() {
   const [tabs] = React.useState([TIMES, JOGOS, ESPORTES]);
 
   return (
-    <Pane display="flex" flexDirection="column" height="100vh">
+    <Pane display='flex' flexDirection='column' height='100vh'>
       <Banner></Banner>
 
-      <Pane className="games-container" flex={1}>
-        <Tablist padding={8} flexBasis={240} className="tab-game-menu">
+      <Pane className='games-container' flex={1}>
+        <Tablist padding={8} flexBasis={240} className='tab-game-menu'>
           {tabs.map((tab, index) => (
             <Tab
               key={tab}
@@ -23,7 +23,7 @@ function AdminView() {
               onSelect={() => setSelectedIndex(index)}
               isSelected={index === selectedIndex}
               aria-controls={`panel-${tab}`}
-              appearance="minimal"
+              appearance='minimal'
               className={`tab-menu ${selectedIndex === index ? `active` : ''}`}
             >
               {tab}
@@ -35,22 +35,12 @@ function AdminView() {
             <Pane
               key={tab}
               id={`panel-${tab}`}
-              role="tabpanel"
+              role='tabpanel'
               aria-labelledby={tab}
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
             >
-              <Type
-                type={
-                  tab === TIMES
-                    ? TIMES
-                    : tab === JOGOS
-                    ? JOGOS
-                    : tab === ESPORTES
-                    ? ESPORTES
-                    : ''
-                }
-              ></Type>
+              <Type type={tabs[selectedIndex]}></Type>
             </Pane>
           ))}
         </Pane>

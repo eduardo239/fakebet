@@ -20,6 +20,8 @@ import {
   SUCCESS_GAME_REGISTER,
   ERROR_USER_UPDATE,
   SUCCESS_USER_UPDATE,
+  ERROR_PAYMENT_METHOD,
+  ERROR_PAYMENT_VALUE,
 } from './constants';
 
 export const errorHandler = (error, setError, response) => {
@@ -174,7 +176,7 @@ export const errorHandler = (error, setError, response) => {
         title: 'Erro - Não foi possível atualizar o usuário',
         message: ERROR_USER_UPDATE,
         status: true,
-        type: SUCCESS,
+        type: WARNING,
       });
       break;
 
@@ -183,9 +185,29 @@ export const errorHandler = (error, setError, response) => {
         title: 'Erro - Não foi possível atualizar o usuário',
         message: SUCCESS_USER_UPDATE,
         status: true,
-        type: SUCCESS,
+        type: WARNING,
       });
       break;
+    // - - - - - - - - - - - PAYMENT ERROR - - - - - - - - - - -
+
+    case ERROR_PAYMENT_VALUE:
+      setError({
+        title: 'Erro - Valor inválido',
+        message: ERROR_PAYMENT_VALUE,
+        status: true,
+        type: WARNING,
+      });
+      break;
+
+    case ERROR_PAYMENT_METHOD:
+      setError({
+        title: 'Erro - Método de pagamento inválido',
+        message: ERROR_PAYMENT_METHOD,
+        status: true,
+        type: WARNING,
+      });
+      break;
+
     // - - - - - - - - - - - DEFAULT ERROR - - - - - - - - - - -
     default:
       setError({

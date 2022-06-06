@@ -89,6 +89,23 @@ router.put('/edit', async (req, res, next) => {
   );
 });
 
+// TODO: add to thunder client
+router.put('/balance', async (req, res, next) => {
+  User.findByIdAndUpdate(
+    req.body.id,
+    { $inc: { 'balance.amount': req.body.balance.amount } },
+    { new: true },
+    (err, user) => {
+      if (err) {
+        res.json({ success: false, message: ERROR_MESSAGE });
+      } else {
+        if (!user) res.json({ success: false, message: USER_NOT_FOUND, err });
+        else res.json({ success: true, message: USER_UPDATED, user });
+      }
+    }
+  );
+});
+
 router.post('/logout', (req, res, next) => {
   req.logout(req.user, (err) => {
     if (err) return next(err);

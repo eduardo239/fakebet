@@ -18,8 +18,9 @@ const GameContextContent = ({ children }) => {
   });
   const [sport, setSport] = useState('');
   const [allGames, setAllGames] = useState([]);
-  const [allGamesByTye, setAllGamesByType] = useState([]);
+  const [allGamesByType, setAllGamesByType] = useState([]);
   const [isGameUpdating, setGameIsUpdating] = React.useState(false);
+  console.log(allGamesByType);
 
   const resetGame = () => {
     setGame({
@@ -60,7 +61,7 @@ const GameContextContent = ({ children }) => {
     <GameProvider
       value={{
         game,
-        allGamesByTye,
+        allGamesByType,
         sport,
         allGames,
         isGameUpdating,

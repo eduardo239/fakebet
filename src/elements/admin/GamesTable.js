@@ -7,7 +7,7 @@ import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
 function GamesTable() {
   const { game, setGame, setGames, setAllGames, allGames, setGameIsUpdating } =
     React.useContext(GameContext);
-
+  console.log(allGames);
   const [isShownDeleteModal, setIsShownDeleteModal] = React.useState(false);
 
   const handleSelect = (game) => {
@@ -80,7 +80,6 @@ function GamesTable() {
             ))}
         </Table.Body>
       </Table>
-
       <Dialog
         isShown={isShownDeleteModal}
         title='Remover Time'

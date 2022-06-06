@@ -38,6 +38,7 @@ function ComponentHome() {
             </Tab>
           ))}
         </Tablist>
+
         <Pane paddingBottom={32} paddingTop={32}>
           {sports.map((tab, index) => (
             <Pane
@@ -48,7 +49,7 @@ function ComponentHome() {
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
             >
-              <Games type={sports[index]}></Games>
+              <Games type={sports[selectedIndex]}></Games>
             </Pane>
           ))}
         </Pane>

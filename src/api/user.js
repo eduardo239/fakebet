@@ -29,3 +29,8 @@ export function userLogout() {
 export function userEdit(user) {
   return instance.put('/users/edit', user);
 }
+
+// user edit
+export function userAddBalance(user) {
+  return instance.put('/users/balance', user);
+}

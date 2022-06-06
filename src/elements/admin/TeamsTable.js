@@ -42,39 +42,41 @@ function TeamsTable() {
           <Table.TextHeaderCell>Remover</Table.TextHeaderCell>
         </Table.Head>
         <Table.Body height={240}>
-          {teams.map((item) => (
-            <Table.Row
-              className={`${
-                team && item._id === team._id ? 'selected' : ''
-              } table-row`}
-              key={item._id}
-              height={40}
-              isSelectable
-              onSelect={() => handleSelect(item)}
-            >
-              <Table.TextCell>
-                <img
-                  className='image-small'
-                  src={URL_IMAGE + (item.emblem || 'default.png')}
-                  alt={item.name}
-                />
-              </Table.TextCell>
-              <Table.TextCell>{item._id}</Table.TextCell>
-              <Table.TextCell>{item.name}</Table.TextCell>
-              <Table.TextCell>{item.type.name}</Table.TextCell>
-              <Table.TextCell>{item.shortName}</Table.TextCell>
+          {teams &&
+            teams.length > 0 &&
+            teams.map((item) => (
+              <Table.Row
+                className={`${
+                  team && item._id === team._id ? 'selected' : ''
+                } table-row`}
+                key={item._id}
+                height={40}
+                isSelectable
+                onSelect={() => handleSelect(item)}
+              >
+                <Table.TextCell>
+                  <img
+                    className='image-small'
+                    src={URL_IMAGE + (item.emblem || 'default.png')}
+                    alt={item.name}
+                  />
+                </Table.TextCell>
+                <Table.TextCell>{item._id}</Table.TextCell>
+                <Table.TextCell>{item.name}</Table.TextCell>
+                <Table.TextCell>{item.type.name}</Table.TextCell>
+                <Table.TextCell>{item.shortName}</Table.TextCell>
 
-              <Table.TextCell>
-                <Button
-                  appearance='primary'
-                  intent='danger'
-                  onClick={() => setIsShownDeleteModal(true)}
-                >
-                  Remover
-                </Button>
-              </Table.TextCell>
-            </Table.Row>
-          ))}
+                <Table.TextCell>
+                  <Button
+                    appearance='primary'
+                    intent='danger'
+                    onClick={() => setIsShownDeleteModal(true)}
+                  >
+                    Remover
+                  </Button>
+                </Table.TextCell>
+              </Table.Row>
+            ))}
         </Table.Body>
       </Table>
 

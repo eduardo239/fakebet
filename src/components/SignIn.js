@@ -1,35 +1,38 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Button, Pane, TextInputField, Heading, Alert } from "evergreen-ui";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Pane, TextInputField, Heading, Alert } from 'evergreen-ui';
 import {
   ERROR_DB_MESSAGE,
   ERROR_EMPTY_PASSWORD,
   ERROR_EMPTY_USERNAME,
   ERROR_RESET,
-} from "../utils/constants";
-import { browserDetect } from "../utils/utils";
-import { signIn } from "../api/user";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { UserContext } from "../context/UserContext";
-import { errorHandler } from "../utils/error";
-import "../css/sign.css";
+} from '../utils/constants';
+import { browserDetect } from '../utils/utils';
+import { signIn } from '../api/user';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { UserContext } from '../context/UserContext';
+import { errorHandler } from '../utils/error';
+import '../css/sign.css';
+import { GameContext } from '../context/GameContext';
+import { getGamesByType } from '../api/game';
 
 function SignInView() {
   const { setUser } = React.useContext(UserContext);
-  const [, setUserLocalStorage] = useLocalStorage("user", null);
+  const { setAllGamesByType } = React.useContext(GameContext);
+  const [, setUserLocalStorage] = useLocalStorage('user', null);
 
   const navigate = useNavigate();
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     status: false,
-    type: "",
+    type: '',
   });
 
   const handleSignIn = async () => {
-    if (password === "") {
+    if (password === '') {
       errorHandler(ERROR_EMPTY_PASSWORD, setError);
     } else if (!username) {
       errorHandler(ERROR_EMPTY_USERNAME, setError);
@@ -47,8 +50,15 @@ function SignInView() {
         setUserLocalStorage(response.user);
         setUser(response.user);
 
+        // get all games, futebol
+        const { data: responseGamesType } = await getGamesByType(`futebol`);
+
+        if (responseGamesType.success) {
+          setAllGamesByType(responseGamesType.games);
+        }
+
         setTimeout(() => {
-          navigate("/");
+          navigate('/');
           errorHandler(ERROR_RESET, setError);
         }, 0);
       } else {
@@ -58,39 +68,39 @@ function SignInView() {
   };
 
   return (
-    <Pane display="flex" justifyContent="center">
-      <Pane elevation={2} className="form-container-sign">
+    <Pane display='flex' justifyContent='center'>
+      <Pane elevation={2} className='form-container-sign'>
         <Heading size={700} marginBottom={24}>
           Login
         </Heading>
 
-        <Pane className="form-sign">
+        <Pane className='form-sign'>
           <TextInputField
-            type="text"
-            label="Nome de usuário"
-            placeholder="Text input placeholder..."
+            type='text'
+            label='Nome de usuário'
+            placeholder='Text input placeholder...'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
 
           <TextInputField
-            type="password"
-            label="Password"
-            placeholder="Text input placeholder..."
+            type='password'
+            label='Password'
+            placeholder='Text input placeholder...'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Pane>
 
         <Pane marginTop={8}>
-          <Button appearance="primary" onClick={handleSignIn}>
+          <Button appearance='primary' onClick={handleSignIn}>
             Login
           </Button>
         </Pane>
 
-        <Pane display="flex" justifyContent="flex-end">
-          <Link to="/signup">
-            <Button marginTop={32} appearance="minimal">
+        <Pane display='flex' justifyContent='flex-end'>
+          <Link to='/signup'>
+            <Button marginTop={32} appearance='minimal'>
               I don't have an account
             </Button>
           </Link>

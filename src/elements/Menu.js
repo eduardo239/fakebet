@@ -10,8 +10,10 @@ import '../css/bet.css';
 
 function Menu() {
   const { user, logout } = React.useContext(UserContext);
+
   const [isMyBetsShown, setMyBetsIsShown] = React.useState(false);
   const [isProfileShown, setIsProfileShown] = React.useState(false);
+  const [isAmountShown, setIsAmountShown] = React.useState(false);
 
   return (
     <Pane position='relative'>
@@ -33,6 +35,15 @@ function Menu() {
         </Pane>
 
         <Pane display='flex' gap={4} alignItems='center'>
+          {user && (
+            <Link
+              className='menu-link'
+              to='#'
+              onClick={() => setIsAmountShown(!isAmountShown)}
+            >
+              {user && isAmountShown ? `R$${user.balance.amount}` : 'SALDO'}
+            </Link>
+          )}
           {user && (
             <Link
               className='menu-link'
