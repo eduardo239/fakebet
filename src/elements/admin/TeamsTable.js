@@ -63,7 +63,9 @@ function TeamsTable() {
                 </Table.TextCell>
                 <Table.TextCell>{item._id}</Table.TextCell>
                 <Table.TextCell>{item.name}</Table.TextCell>
-                <Table.TextCell>{item.type.name}</Table.TextCell>
+                <Table.TextCell>
+                  {item.type ? item.type.name : 'null'}
+                </Table.TextCell>
                 <Table.TextCell>{item.shortName}</Table.TextCell>
 
                 <Table.TextCell>

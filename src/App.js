@@ -40,6 +40,7 @@ function App() {
 
       <Routes>
         <Route exact path='/' element={<Home />} />
+        <Route exact path='/all/:type/:page' element={<Home />} />
         <Route exact path='/signin' element={<SignIn />} />
         <Route exact path='/signup' element={<SignUp />} />
         <Route exact path='/transfer' element={<Transfer />} />

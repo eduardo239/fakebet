@@ -8,7 +8,7 @@ function BetTeam({ teamName, gameId, gameType, showInput, teamEmblem, odds }) {
       <Link to={`game/${gameType}/${gameId}`}>
         <img className='team-log--small' src={teamEmblem} alt={teamName} />
       </Link>
-      <Small>{teamName}</Small>
+      <Small>{teamName || 'null'}</Small>
       <Button
         appearance='minimal'
         onClick={(e) => showInput(e, teamName)}

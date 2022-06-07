@@ -33,7 +33,9 @@ function TeamsForm() {
     let validateEmptyTeamName = sport.trim() !== '';
 
     if (validateEmptyTeamName) {
-      let { data: sportResponse } = await postSport({ name: sport });
+      let { data: sportResponse } = await postSport({
+        name: sport.toLowerCase(),
+      });
 
       if (sportResponse.success) {
         const { data: response } = await getSports();
@@ -77,6 +79,7 @@ function TeamsForm() {
     return () => {
       mounted = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

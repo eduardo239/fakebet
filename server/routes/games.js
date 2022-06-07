@@ -105,6 +105,41 @@ router.get('/all', (req, res, next) => {
     .populate('type');
 });
 
+router.get('/:type/:page', (req, res, next) => {
+  const type = req.params.type;
+  const page = Math.max(0, req.params.page);
+  const perPage = 3;
+
+  Sport.findOne({ name: type }, (err, sport_type) => {
+    if (err) {
+      res.json({ success: false, message: ERROR_MESSAGE, err });
+    }
+    if (!sport_type) {
+      res.json({ success: false, message: `TYPE NOT FOUND` });
+    } else {
+      Game.find(
+        { type: sport_type._id },
+        {},
+        { skip: perPage * page, limit: perPage },
+        (err, games) => {
+          if (err) {
+            res.json({ success: false, message: ERROR_MESSAGE, err });
+          }
+          if (!games) {
+            res.json({ success: false, message: `GAMES NOT FOUND` });
+          } else {
+            res.json({ success: true, message: `GAMES FOUND`, games });
+          }
+        }
+      )
+        .sort('-createdAt')
+        .populate('teamAId')
+        .populate('teamBId')
+        .populate('type');
+    }
+  });
+});
+
 router.get('/:id', (req, res, next) => {
   Game.findById(req.params.id, (err, game) => {
     if (err) {

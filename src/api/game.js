@@ -19,10 +19,15 @@ export function postGame(game) {
   return instance.post('/games/add', game);
 }
 
-// get game info
-export function getGame(game) {
-  return instance.get(`/games/${game._id}`);
+// get game by pagination
+export function getGamesByPagination(page, type) {
+  return instance.get(`/games/${type}/${page}`);
 }
+
+// get game info
+// export function getGame(game) {
+//   return instance.get(`/games/${game._id}`);
+// }
 
 // edit game
 export function updateGame(game) {

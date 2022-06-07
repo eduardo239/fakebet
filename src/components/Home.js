@@ -1,20 +1,25 @@
-import { Pane, Tablist, Tab, Pagination } from 'evergreen-ui';
 import React from 'react';
 import Banner from '../elements/Banner';
 import Games from '../elements/Games';
 import Footer from '../elements/Footer';
-// import { FUTEBOL, BASQUETE, ESPORTS } from '../utils/constants';
 import { GameContext } from '../context/GameContext';
 import { TeamContext } from '../context/TeamContext';
+import { useNavigate } from 'react-router-dom';
+import { uppercaseFirstLetter } from '../utils/utils';
+import { Pane, Tablist, Tab, Pagination } from 'evergreen-ui';
 import '../css/game.css';
 import '../css/menu.css';
-import { uppercaseFirstLetter } from '../utils/utils';
 
 function ComponentHome() {
-  const { setSport } = React.useContext(GameContext);
+  const navigate = useNavigate();
+  const { sport, setSport, page, setPage } = React.useContext(GameContext);
   const { sports } = React.useContext(TeamContext);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  // const [tabs] = React.useState([FUTEBOL, BASQUETE, ESPORTS]);
+
+  const handleChangePage = (page) => {
+    setPage(page);
+    navigate(`/all/${sport}/${page}`);
+  };
 
   return (
     <Pane display='flex' flexDirection='column' height='100vh'>
@@ -49,7 +54,7 @@ function ComponentHome() {
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
             >
-              <Games type={sports[selectedIndex]}></Games>
+              <Games type={tab.name}></Games>
             </Pane>
           ))}
         </Pane>
@@ -61,7 +66,13 @@ function ComponentHome() {
         display='flex'
         justifyContent='center'
       >
-        <Pagination page={1} totalPages={5}></Pagination>
+        <Pagination
+          page={page}
+          totalPages={5}
+          onPreviousPage={() => handleChangePage(page - 1)}
+          onPageChange={(x) => handleChangePage(x)}
+          onNextPage={() => handleChangePage(page + 1)}
+        ></Pagination>
       </Pane>
 
       <Footer></Footer>
