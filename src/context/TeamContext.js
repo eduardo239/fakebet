@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { getSports } from '../api/sport';
-import { getTeams } from '../api/team';
 
 const TeamContext = React.createContext();
 
@@ -23,14 +22,9 @@ const TeamContextContent = ({ children }) => {
     if (mounted) {
       (async () => {
         const { data: responseSports } = await getSports();
-        const { data: responseTeams } = await getTeams();
 
         if (responseSports.success) {
           setSports(responseSports.sports);
-        }
-
-        if (responseTeams.success) {
-          setTeams(responseTeams.teams);
         }
       })();
     }

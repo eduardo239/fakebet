@@ -63,3 +63,25 @@ export function convertDateToMongoose(date) {
 export function uppercaseFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+// countdown
+export function countdown(date) {
+  let countDownDate = new Date(date).getTime();
+  let x = setInterval(() => {
+    let now = new Date().getTime();
+    let distance = countDownDate - now;
+
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    if (distance < 0) {
+      clearInterval(x);
+      return 'EXPIRED';
+    }
+    return days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+  }, 1000);
+}

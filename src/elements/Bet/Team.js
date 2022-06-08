@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, Pane, Small } from 'evergreen-ui';
-import { Link } from 'react-router-dom';
 
-function BetTeam({ teamName, gameId, gameType, showInput, teamEmblem, odds }) {
+function BetTeam({ teamName, showInput, teamEmblem, odds, onClick }) {
   return (
     <Pane className='game-card--team'>
-      <Link to={`game/${gameType}/${gameId}`}>
+      <Pane onClick={onClick}>
         <img className='team-log--small' src={teamEmblem} alt={teamName} />
-      </Link>
+      </Pane>
+
       <Small>{teamName || 'null'}</Small>
       <Button
         appearance='minimal'

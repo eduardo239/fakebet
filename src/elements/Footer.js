@@ -4,7 +4,7 @@ import '../css/banner.css';
 
 function Footer() {
   return (
-    <Pane>
+    <Pane className='footer'>
       {/* <SignIn /> */}
       Footer
     </Pane>

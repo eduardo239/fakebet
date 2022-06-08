@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { getGames, getGamesByPagination, getGamesByType } from '../api/game';
+import { useNavigate } from 'react-router-dom';
+import { getGamesByPagination } from '../api/game';
 
 const GameContext = React.createContext();
 const GameProvider = GameContext.Provider;
 
 const GameContextContent = ({ children }) => {
+  const navigate = useNavigate();
   const [game, setGame] = useState({
     teamAId: '',
     teamBId: '',
@@ -16,13 +18,17 @@ const GameContextContent = ({ children }) => {
     winner: '',
     type: '',
   });
-  const [sport, setSport] = useState('futebol');
+  const [sport, setSport] = useState({
+    name: 'futebol',
+  });
   const [allGames, setAllGames] = useState([]);
   const [allGamesByType, setAllGamesByType] = useState([]);
   const [allGamesPagination, setAllGamesPagination] = useState([]);
   const [isGameUpdating, setGameIsUpdating] = React.useState(false);
   const [isLoadingGames, setIsLoadingGames] = React.useState(false);
   const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [totalPages, setTotalPages] = useState(3);
   const [isLoadingGamesByType, setIsLoadingGamesByType] = React.useState(false);
   const [isLoadingGamesPagination, setIsLoadingPagination] =
     React.useState(false);
@@ -46,30 +52,18 @@ const GameContextContent = ({ children }) => {
 
     if (mounted) {
       (async () => {
-        setIsLoadingGamesByType(true);
-        const { data: responseGamesType } = await getGamesByType(sport);
-        if (responseGamesType.success) {
-          setAllGamesByType(responseGamesType.games);
-        }
-
-        setIsLoadingGames(true);
-        const { data: responseGames } = await getGames();
-        if (responseGames.success) {
-          setAllGames(responseGames.games);
-        }
-
-        setIsLoadingGamesByType(false);
-        setIsLoadingGames(false);
+        setPage(1);
+        navigate(`/all/${sport.name}`);
       })();
     }
     return () => {
       mounted = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sport]);
 
   React.useEffect(() => {
     let mounted = true;
-    console.log(sport);
 
     if (mounted) {
       (async () => {
@@ -78,7 +72,10 @@ const GameContextContent = ({ children }) => {
           page,
           sport?.name || ''
         );
-
+        let length = responsePagination.games.length;
+        if (length === itemsPerPage) {
+          setTotalPages(page + 1);
+        }
         if (responsePagination.success) {
           setAllGamesPagination(responsePagination.games);
         }
@@ -89,7 +86,7 @@ const GameContextContent = ({ children }) => {
     return () => {
       mounted = false;
     };
-  }, [page, sport]);
+  }, [page, sport, itemsPerPage]);
 
   return (
     <GameProvider
@@ -115,6 +112,10 @@ const GameContextContent = ({ children }) => {
         setAllGamesPagination,
         page,
         setPage,
+        setTotalPages,
+        totalPages,
+        setItemsPerPage,
+        itemsPerPage,
       }}
     >
       {children}

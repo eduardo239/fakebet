@@ -3,11 +3,22 @@ import BetTeam from './Bet/Team';
 import BetDraw from './Bet/Draw';
 import BetValue from './Bet/Input';
 import { Pane, Alert } from 'evergreen-ui';
-import { EMBLEM_URL } from '../utils/constants';
+import { useNavigate } from 'react-router-dom';
+import { GameContext } from '../context/GameContext';
+import { errorHandler } from '../utils/error';
+import {
+  EMBLEM_URL,
+  ERROR_INVALID_VALUE,
+  ERROR_RESET,
+  SUCCESS_BET,
+} from '../utils/constants';
 import '../css/game.css';
 import '../css/message.css';
 
 function ElementGame({ game }) {
+  const navigate = useNavigate();
+  const { sport } = React.useContext(GameContext);
+
   const [showValue, setShowValue] = React.useState(false);
   const [odd, setOdd] = React.useState(1);
   const [startAnimation, setStartAnimation] = React.useState(false);
@@ -25,7 +36,7 @@ function ElementGame({ game }) {
     setStartAnimation(true);
     setTimeout(() => {
       setShowValue(true);
-    }, 250); // FIXME: .25 from animation.css
+    }, 250); // .25 from animation.css
     setOdd(e.target.innerText);
     setPick(pick);
   };
@@ -45,42 +56,36 @@ function ElementGame({ game }) {
     };
 
     if (!isNaN(value) && value > 0 && value !== '' && !value.includes('e')) {
-      setMessage({
-        title: 'Você apostou',
-        message: `Você apostou ${bet.value} no ${bet.pick}`,
-        status: true,
-        type: 'success',
-      });
-    } else {
-      setMessage({
-        title: 'Aviso',
-        message: 'Valor inválido, tente novamente',
-        status: true,
-        type: 'warning',
-      });
-    }
+      errorHandler(
+        SUCCESS_BET,
+        setMessage,
+        `Você apostou R$${bet.value} no time ${bet.pick}`
+      );
 
-    setTimeout(() => {
-      setStartAnimation(false);
-      setShowValue(false);
-      setMessage({
-        title: '',
-        message: '',
-        status: false,
-        type: '',
-      });
+      setTimeout(() => {
+        setStartAnimation(false);
+        setShowValue(false);
+        errorHandler(ERROR_RESET, setMessage);
+
+        betRef.current.value = '';
+      }, 3000);
+    } else {
+      errorHandler(ERROR_INVALID_VALUE, setMessage);
       betRef.current.value = '';
-    }, 2000);
+
+      setTimeout(() => {
+        errorHandler(ERROR_RESET, setMessage);
+      }, 3000);
+    }
   };
 
   const closeBet = () => {
     setShowValue(false);
-    setMessage({
-      title: '',
-      message: '',
-      status: false,
-      type: '',
-    });
+    errorHandler(ERROR_RESET, setMessage);
+  };
+
+  const onClick = (id) => {
+    navigate(`/all/${sport.name}/match/${id}`);
   };
 
   return (
@@ -106,9 +111,8 @@ function ElementGame({ game }) {
           paddingBottom={16}
         >
           <BetTeam
+            onClick={() => onClick(game._id)}
             teamName={game.teamAId.name}
-            gameId={game.id}
-            gameType={game.type}
             showInput={showInput}
             teamEmblem={EMBLEM_URL + (game.teamAId.emblem || 'default.png')}
             odds={parseFloat(game.teamAOdd).toFixed(2)}
@@ -120,15 +124,13 @@ function ElementGame({ game }) {
           />
 
           <BetTeam
+            onClick={() => onClick(game._id)}
             teamName={game.teamBId.name}
-            gameId={game.id}
-            gameType={game.type}
             showInput={showInput}
             teamEmblem={EMBLEM_URL + (game.teamBId.emblem || 'default.png')}
             odds={parseFloat(game.teamBOdd).toFixed(2)}
           />
         </Pane>
-
         <BetValue
           betRef={betRef}
           showValue={showValue}

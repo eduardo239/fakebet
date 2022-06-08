@@ -41,10 +41,11 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/all/:type/:page' element={<Home />} />
+        <Route exact path='/all/:type' element={<Home />} />
         <Route exact path='/signin' element={<SignIn />} />
         <Route exact path='/signup' element={<SignUp />} />
         <Route exact path='/transfer' element={<Transfer />} />
-        <Route exact path='/game/:type/:id' element={<Game />} />
+        <Route exact path='/all/:type/match/:match' element={<Game />} />
         <Route exact path='/admin' element={<Admin />} />
         <Route exact path='/api' element={<Api />} />
       </Routes>

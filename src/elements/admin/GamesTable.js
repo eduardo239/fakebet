@@ -7,7 +7,7 @@ import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
 function GamesTable() {
   const { game, setGame, setGames, setAllGames, allGames, setGameIsUpdating } =
     React.useContext(GameContext);
-  console.log(allGames);
+
   const [isShownDeleteModal, setIsShownDeleteModal] = React.useState(false);
 
   const handleSelect = (game) => {
@@ -29,7 +29,7 @@ function GamesTable() {
     }
     setGames(allGames.filter((item) => item._id !== game._id));
   };
-  console.log(allGames);
+
   return (
     <Pane
       display='flex'

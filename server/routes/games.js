@@ -2,12 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Game = require('../models/game');
 const Sport = require('../models/sport');
-const {
-  ERROR_MESSAGE,
-  SUCCESS,
-  USER_NOT_FOUND,
-  USER_REMOVED,
-} = require('../utils/constants');
+const { ERROR_MESSAGE, SUCCESS } = require('../utils/constants');
 const { replaceCommaWithDot } = require('../utils/utils');
 
 router.post('/add', (req, res, next) => {
@@ -108,7 +103,7 @@ router.get('/all', (req, res, next) => {
 router.get('/:type/:page', (req, res, next) => {
   const type = req.params.type;
   const page = Math.max(0, req.params.page);
-  const perPage = 3;
+  const perPage = 4;
 
   Sport.findOne({ name: type }, (err, sport_type) => {
     if (err) {

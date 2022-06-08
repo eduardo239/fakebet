@@ -22,6 +22,8 @@ import {
   SUCCESS_USER_UPDATE,
   ERROR_PAYMENT_METHOD,
   ERROR_PAYMENT_VALUE,
+  ERROR_INVALID_VALUE,
+  SUCCESS_BET,
 } from './constants';
 
 export const errorHandler = (error, setError, response) => {
@@ -208,6 +210,24 @@ export const errorHandler = (error, setError, response) => {
       });
       break;
 
+    // - - - - - - - - - - - GAME ERROR - - - - - - - - - - -
+    case ERROR_INVALID_VALUE:
+      setError({
+        title: 'Erro - Valor inválido',
+        message: ERROR_INVALID_VALUE,
+        status: true,
+        type: WARNING,
+      });
+      break;
+
+    case SUCCESS_BET:
+      setError({
+        title: 'Sucesso!',
+        message: response,
+        status: true,
+        type: SUCCESS,
+      });
+      break;
     // - - - - - - - - - - - DEFAULT ERROR - - - - - - - - - - -
     default:
       setError({

@@ -7,7 +7,7 @@ import '../css/menu.css';
 import '../css/game.css';
 
 function ElementGames({ type }) {
-  const { allGamesPagination, isLoadingGamesByType } =
+  const { allGamesPagination, isLoadingGamesPagination } =
     React.useContext(GameContext);
 
   return (
@@ -19,7 +19,7 @@ function ElementGames({ type }) {
         justifyContent='center'
         flexWrap='wrap'
       >
-        {isLoadingGamesByType ? (
+        {isLoadingGamesPagination ? (
           <Pane
             display='flex'
             alignItems='center'

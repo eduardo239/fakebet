@@ -12,17 +12,20 @@ import '../css/menu.css';
 
 function ComponentHome() {
   const navigate = useNavigate();
-  const { sport, setSport, page, setPage } = React.useContext(GameContext);
+
   const { sports } = React.useContext(TeamContext);
+  const { sport, setSport, page, setPage, totalPages } =
+    React.useContext(GameContext);
+
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleChangePage = (page) => {
     setPage(page);
-    navigate(`/all/${sport}/${page}`);
+    navigate(`/all/${sport.name}/${page}`);
   };
 
   return (
-    <Pane display='flex' flexDirection='column' height='100vh'>
+    <Pane className='main-content'>
       <Banner></Banner>
       <Pane className='games-container' flex={1}>
         <Tablist padding={8} flexBasis={240} className='tab-game-menu'>
@@ -68,7 +71,7 @@ function ComponentHome() {
       >
         <Pagination
           page={page}
-          totalPages={5}
+          totalPages={totalPages}
           onPreviousPage={() => handleChangePage(page - 1)}
           onPageChange={(x) => handleChangePage(x)}
           onNextPage={() => handleChangePage(page + 1)}

@@ -55,3 +55,6 @@ export const SUCCESS_USER_UPDATE = 'Usuário atualizado com sucesso.';
 export const ERROR_PAYMENT_METHOD =
   'Por favor, selecione um método de pagamento.';
 export const ERROR_PAYMENT_VALUE = 'Por favor, preencha o valor do pagamento.';
+
+export const ERROR_INVALID_VALUE = 'Valor inválido, insira um valor numérico.';
+export const SUCCESS_BET = 'Aposta realizada com sucesso.';

@@ -65,6 +65,13 @@ code {
 pre {
   font-size: 0.8rem;
 }
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 44px);
+}
+
 .code-grid {
   display: grid;
   grid-template-columns: 20% 1fr;
@@ -112,6 +119,13 @@ small {
   font-weight: 500;
 }
 
+.footer {
+  background-color: var(--primary-color);
+  min-height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 ::-webkit-scrollbar {
   width: 12px;
 }

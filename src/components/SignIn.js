@@ -51,7 +51,9 @@ function SignInView() {
         setUser(response.user);
 
         // get all games, futebol
-        const { data: responseGamesType } = await getGamesByType(`futebol`);
+        const { data: responseGamesType } = await getGamesByType({
+          name: 'futebol',
+        });
 
         if (responseGamesType.success) {
           setAllGamesByType(responseGamesType.games);
