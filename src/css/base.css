@@ -83,11 +83,12 @@ pre {
 
 .small,
 small {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.4px;
 }
 
 .done {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
 }
 /*  */
 .select {

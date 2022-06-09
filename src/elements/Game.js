@@ -2,22 +2,27 @@ import React from 'react';
 import BetTeam from './Bet/Team';
 import BetDraw from './Bet/Draw';
 import BetValue from './Bet/Input';
-import { Pane, Alert } from 'evergreen-ui';
+import { Pane, Alert, Paragraph } from 'evergreen-ui';
 import { useNavigate } from 'react-router-dom';
 import { GameContext } from '../context/GameContext';
 import { errorHandler } from '../utils/error';
 import {
   EMBLEM_URL,
+  ERROR_DB_MESSAGE,
   ERROR_INVALID_VALUE,
   ERROR_RESET,
   SUCCESS_BET,
 } from '../utils/constants';
 import '../css/game.css';
 import '../css/message.css';
+import { convertDateToFormat, convertDateToMongoose } from '../utils/utils';
+import { postBet } from '../api/bet';
+import { UserContext } from '../context/UserContext';
 
 function ElementGame({ game }) {
   const navigate = useNavigate();
   const { sport } = React.useContext(GameContext);
+  const { user } = React.useContext(UserContext);
 
   const [showValue, setShowValue] = React.useState(false);
   const [odd, setOdd] = React.useState(1);
@@ -41,34 +46,45 @@ function ElementGame({ game }) {
     setPick(pick);
   };
 
-  const addBet = () => {
+  const addBet = async () => {
+    errorHandler(ERROR_RESET, setMessage);
     let value = betRef.current.value;
     let profit = odd * value;
 
+    if (!user) {
+      errorHandler(ERROR_RESET, setMessage);
+      return;
+    }
     let bet = {
-      game: game._id,
+      userId: user._id,
+      gameId: game._id,
       pick,
-      value,
-      odd,
+      value: parseFloat(value),
+      odd: parseFloat(odd),
       profit,
-      createdAt: new Date(),
-      win: null,
+      win: false,
     };
 
     if (!isNaN(value) && value > 0 && value !== '' && !value.includes('e')) {
-      errorHandler(
-        SUCCESS_BET,
-        setMessage,
-        `Você apostou R$${bet.value} no time ${bet.pick}`
-      );
+      // add a new bet
+      let { data: response } = await postBet(bet);
+      if (response.success) {
+        errorHandler(
+          SUCCESS_BET,
+          setMessage,
+          `Você apostou R$${bet.value} no time ${bet.pick}`
+        );
 
-      setTimeout(() => {
-        setStartAnimation(false);
-        setShowValue(false);
-        errorHandler(ERROR_RESET, setMessage);
+        setTimeout(() => {
+          setStartAnimation(false);
+          setShowValue(false);
+          errorHandler(ERROR_RESET, setMessage);
 
-        betRef.current.value = '';
-      }, 3000);
+          betRef.current.value = '';
+        }, 3000);
+      } else {
+        errorHandler(ERROR_DB_MESSAGE, setMessage, response.message);
+      }
     } else {
       errorHandler(ERROR_INVALID_VALUE, setMessage);
       betRef.current.value = '';
@@ -108,7 +124,7 @@ function ElementGame({ game }) {
           alignItems='flex-end'
           justifyContent='space-between'
           paddingTop={16}
-          paddingBottom={16}
+          paddingBottom={4}
         >
           <BetTeam
             onClick={() => onClick(game._id)}
@@ -131,6 +147,13 @@ function ElementGame({ game }) {
             odds={parseFloat(game.teamBOdd).toFixed(2)}
           />
         </Pane>
+
+        <Pane marginBottom={8}>
+          <Paragraph textAlign='center' className='small light-alternate'>
+            {convertDateToFormat(game.createdAt)}
+          </Paragraph>
+        </Pane>
+
         <BetValue
           betRef={betRef}
           showValue={showValue}

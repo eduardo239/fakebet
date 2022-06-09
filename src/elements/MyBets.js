@@ -1,7 +1,7 @@
 import React from 'react';
+import MyBetItem from './Bet/MyBetItem';
 import { Button, Heading, Pane } from 'evergreen-ui';
 import '../css/bet.css';
-import MyBetItem from './Bet/MyBetItem';
 
 function MyBets({ data, setIsProfileShown, ...props }) {
   return (

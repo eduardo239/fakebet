@@ -58,3 +58,5 @@ export const ERROR_PAYMENT_VALUE = 'Por favor, preencha o valor do pagamento.';
 
 export const ERROR_INVALID_VALUE = 'Valor inválido, insira um valor numérico.';
 export const SUCCESS_BET = 'Aposta realizada com sucesso.';
+
+export const ERROR_USER_NOT_LOGGED = 'Usuário não logado.';

@@ -1,20 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Bet = require('../models/bet');
-const {
-  ERROR_MESSAGE,
-  SUCCESS,
-  USER_NOT_FOUND,
-  USER_REMOVED,
-} = require('../utils/constants');
+const { SUCCESS, ERROR_MESSAGE, USER_REMOVED } = require('../utils/constants');
 
 router.post('/add', (req, res, next) => {
   const newBet = new Bet({
     userId: req.body.userId,
+    gameId: req.body.gameId,
     pick: req.body.pick,
     value: req.body.value,
     odd: req.body.odd,
     profit: req.body.profit,
+    createdAt: new Date(),
     win: req.body.win,
   });
 
@@ -33,7 +30,7 @@ router.delete('/remove/:id', (req, res, next) => {
       res.json({ success: false, message: ERROR_MESSAGE, err });
     } else {
       if (!bet) res.json({ success: false, message: `BET NOT FOUND` });
-      else res.json({ success: true, message: USER_REMOVED });
+      else res.json({ success: true, message: `BET REMOVED` });
     }
   });
 });
@@ -47,7 +44,7 @@ router.get('/all', (req, res, next) => {
     } else {
       res.json({ success: true, message: SUCCESS, users: bets });
     }
-  });
+  }).sort('-createdAt');
 });
 
 router.get('/:id', (req, res, next) => {
@@ -59,6 +56,8 @@ router.get('/:id', (req, res, next) => {
     } else {
       res.json({ success: true, message: SUCCESS, user: bet });
     }
-  });
+  })
+    .sort('-createdAt')
+    .populate('userId');
 });
 module.exports = router;

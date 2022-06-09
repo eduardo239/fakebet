@@ -24,6 +24,7 @@ import {
   ERROR_PAYMENT_VALUE,
   ERROR_INVALID_VALUE,
   SUCCESS_BET,
+  ERROR_USER_NOT_LOGGED,
 } from './constants';
 
 export const errorHandler = (error, setError, response) => {
@@ -224,6 +225,16 @@ export const errorHandler = (error, setError, response) => {
       setError({
         title: 'Sucesso!',
         message: response,
+        status: true,
+        type: SUCCESS,
+      });
+      break;
+
+    // - - - - - - - - - - - USER ERROR - - - - - - - - - - -
+    case ERROR_USER_NOT_LOGGED:
+      setError({
+        title: 'Erro - Usuário precisa estar logado!',
+        message: ERROR_USER_NOT_LOGGED,
         status: true,
         type: SUCCESS,
       });

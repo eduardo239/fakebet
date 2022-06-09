@@ -7,6 +7,11 @@ const betSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    gameId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Game',
+      required: true,
+    },
     pick: {
       type: String,
       required: true,
