@@ -3,17 +3,15 @@ import MyBetItem from './Bet/MyBetItem';
 import { Button, Heading, Pane } from 'evergreen-ui';
 import '../css/bet.css';
 
-function MyBets({ data, setIsProfileShown, ...props }) {
+function MyBets({ bets, setIsProfileShown, ...props }) {
   return (
     <Pane>
       <Heading size={300}>Minhas Apostas</Heading>
       <hr />
       <MyBetItem />
-      <hr />
-      <MyBetItem />
-      <hr />
-      <MyBetItem />
-      <hr />
+      {bets &&
+        bets.length > 0 &&
+        bets.map((bet) => <MyBetItem key={bet._id} bet={bet} />)}
 
       <Pane display='flex' justifyContent='space-between' marginBottom={36}>
         <Heading size={400}>Total</Heading>

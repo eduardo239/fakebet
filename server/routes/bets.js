@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Bet = require('../models/bet');
-const { SUCCESS, ERROR_MESSAGE, USER_REMOVED } = require('../utils/constants');
+const { SUCCESS, ERROR_MESSAGE } = require('../utils/constants');
 
 router.post('/add', (req, res, next) => {
   const newBet = new Bet({
@@ -59,5 +59,27 @@ router.get('/:id', (req, res, next) => {
   })
     .sort('-createdAt')
     .populate('userId');
+});
+
+router.get('/user/:id', (req, res, next) => {
+  Bet.find({ userId: req.params.id }, (err, bets) => {
+    if (err) {
+      res.json({ success: false, message: ERROR_MESSAGE, err });
+    } else if (bets.length === 0) {
+      res.json({ success: false, message: `BETS NOT FOUND` });
+    } else {
+      res.json({ success: true, message: SUCCESS, bets: bets });
+    }
+  })
+    .sort('-createdAt')
+    .populate('gameId')
+    .populate({
+      path: 'gameId',
+      populate: { path: 'teamAId' },
+    })
+    .populate({
+      path: 'gameId',
+      populate: { path: 'teamBId' },
+    });
 });
 module.exports = router;

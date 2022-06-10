@@ -2,9 +2,10 @@ import React from 'react';
 import MyBets from './MyBets';
 import MyProfile from './MyProfile';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
-import { Avatar, Dialog, Pane } from 'evergreen-ui';
 import { getUserInfo } from '../api/user';
+import { UserContext } from '../context/UserContext';
+import { getBetsByUserId } from '../api/bet';
+import { Avatar, Dialog, Pane } from 'evergreen-ui';
 import '../css/menu.css';
 import '../css/bet.css';
 
@@ -14,6 +15,15 @@ function Menu() {
   const [isMyBetsShown, setMyBetsIsShown] = React.useState(false);
   const [isProfileShown, setIsProfileShown] = React.useState(false);
   const [isAmountShown, setIsAmountShown] = React.useState(false);
+  const [myBets, setMyBets] = React.useState([]);
+
+  const onMyBetsClick = async () => {
+    let { data: response } = await getBetsByUserId(user._id);
+    if (response.success) {
+      setMyBets(response.bets);
+      setMyBetsIsShown(true);
+    }
+  };
 
   return (
     <Pane position='relative'>
@@ -45,11 +55,7 @@ function Menu() {
             </Link>
           )}
           {user && (
-            <Link
-              className='menu-link'
-              to='#'
-              onClick={() => setMyBetsIsShown(!isMyBetsShown)}
-            >
+            <Link className='menu-link' to='#' onClick={() => onMyBetsClick()}>
               MINHAS APOSTAS
             </Link>
           )}
@@ -91,8 +97,11 @@ function Menu() {
         title='Minhas Apostas'
         hasCancel={false}
         hasFooter={false}
+        onCloseComplete={() => setMyBetsIsShown(false)}
       >
-        <MyBets data={user} setMyBetsIsShown={setMyBetsIsShown} />
+        {myBets.length > 0 && (
+          <MyBets bets={myBets} setMyBetsIsShown={setMyBetsIsShown} />
+        )}
       </Dialog>
 
       <Dialog

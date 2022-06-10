@@ -100,3 +100,8 @@ export function convertDateToFormat(date) {
 
   return [day, month, year].join('/') + ' ' + [hours, minutes].join(':');
 }
+
+// sum all values in an array
+export function sumArray(array) {
+  return array.reduce((a, b) => a + b, 0);
+}

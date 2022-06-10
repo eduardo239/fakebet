@@ -14,7 +14,7 @@ export const getBetById = (id) => {
   return instance.get(`/bets/${id}`);
 };
 
-// get bets by user id TODO:
+// get bets by user id
 export const getBetsByUserId = (id) => {
   return instance.get(`/bets/user/${id}`);
 };
