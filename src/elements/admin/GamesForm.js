@@ -75,7 +75,7 @@ function Games() {
               value={game.teamAId}
               onChange={(e) => setGame({ ...game, teamAId: e.target.value })}
             >
-              <option value='' selected>
+              <option value='' defaultValue>
                 ---
               </option>
               {teams &&
@@ -95,7 +95,7 @@ function Games() {
               value={game.teamBId}
               onChange={(e) => setGame({ ...game, teamBId: e.target.value })}
             >
-              <option value='' selected>
+              <option value='' defaultValue>
                 ---
               </option>
               {teams &&
@@ -121,7 +121,7 @@ function Games() {
               name='type'
               onChange={(e) => setGame({ ...game, type: e.target.value })}
             >
-              <option value='' selected>
+              <option value='' defaultValue>
                 ---
               </option>
               {sports &&

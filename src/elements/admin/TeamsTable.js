@@ -1,6 +1,6 @@
 import React from 'react';
 import { TeamContext } from '../../context/TeamContext';
-import { removeTeam } from '../../api/team';
+import { getTeams, removeTeam } from '../../api/team';
 import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
 
 const URL_IMAGE = 'http://localhost:3003/images/emblems/';
@@ -24,6 +24,23 @@ function TeamsTable() {
     setIsShownDeleteModal(false);
     setIsUpdating(false);
   };
+
+  React.useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      (async () => {
+        const { data: responseTeams } = await getTeams();
+        if (responseTeams.success) {
+          setTeams(responseTeams.teams);
+        }
+      })();
+    }
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Pane

@@ -48,21 +48,6 @@ const GameContextContent = ({ children }) => {
 
     if (mounted) {
       (async () => {
-        setPage(1);
-        navigate(`/all/${sport.name}`);
-      })();
-    }
-    return () => {
-      mounted = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sport]);
-
-  React.useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      (async () => {
         const { data: responsePagination } = await getGamesByPagination(
           page,
           sport?._id || ''
@@ -81,6 +66,21 @@ const GameContextContent = ({ children }) => {
       mounted = false;
     };
   }, [page, sport, itemsPerPage]);
+
+  React.useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      (async () => {
+        setPage(1);
+        navigate(`/all/${sport.name}`);
+      })();
+    }
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sport]);
 
   return (
     <GameProvider

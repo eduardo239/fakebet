@@ -6,10 +6,7 @@ import { GameContext } from '../context/GameContext';
 import { TeamContext } from '../context/TeamContext';
 import { useNavigate } from 'react-router-dom';
 import { uppercaseFirstLetter } from '../utils/utils';
-// import { INITIAL_STATE_SPORT } from '../utils/constants';
 import { Pane, Tablist, Tab, Pagination } from 'evergreen-ui';
-import '../css/game.css';
-import '../css/menu.css';
 
 function ComponentHome() {
   const navigate = useNavigate();
@@ -26,7 +23,6 @@ function ComponentHome() {
   };
 
   // FIXME: mudar de outra página, para home, recarregar os itens da página
-
   // React.useState(() => {
   //   let mounted = true;
   //   if (mounted) {
@@ -92,7 +88,7 @@ function ComponentHome() {
         ></Pagination>
       </Pane>
 
-      <Footer></Footer>
+      <Footer />
     </Pane>
   );
 }

@@ -121,7 +121,7 @@ function TeamsForm() {
               name='type'
               onChange={(e) => setTeam({ ...team, type: e.target.value })}
             >
-              <option value='' selected>
+              <option value='' defaultValue>
                 ---
               </option>
               {sports &&

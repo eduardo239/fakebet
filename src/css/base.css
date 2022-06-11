@@ -23,10 +23,14 @@
   box-sizing: border-box;
 }
 body {
-  background-color: var(--dark-color);
+ background-color: var(--dark-alternate);
   color: var(--light-color);
   font-family: var(--font-sans);
   overflow-y: scroll;
+
+
+
+
 }
 a {
   text-decoration: none;

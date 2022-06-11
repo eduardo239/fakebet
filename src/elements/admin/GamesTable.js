@@ -1,5 +1,5 @@
 import React from 'react';
-import { removeGame } from '../../api/game';
+import { getGames, removeGame } from '../../api/game';
 import { GameContext } from '../../context/GameContext';
 import { convertDate, convertDateToMongoose } from '../../utils/utils';
 import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
@@ -30,6 +30,23 @@ function GamesTable() {
     setGames(allGames.filter((item) => item._id !== game._id));
   };
 
+  React.useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      (async () => {
+        const { data: responseGames } = await getGames();
+
+        if (responseGames.success) {
+          setAllGames(responseGames.games);
+        }
+      })();
+    }
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Pane
       display='flex'

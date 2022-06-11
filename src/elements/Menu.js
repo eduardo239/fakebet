@@ -6,7 +6,6 @@ import { getUserInfo, userEdit } from '../api/user';
 import { UserContext } from '../context/UserContext';
 import { getBetsByUserId, removeBetById } from '../api/bet';
 import { Avatar, Dialog, Pane } from 'evergreen-ui';
-import '../css/menu.css';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 function Menu() {

@@ -3,7 +3,6 @@ import Game from './Game';
 import { Pane, Heading } from 'evergreen-ui';
 import { GameContext } from '../../context/GameContext';
 import { uppercaseFirstLetter } from '../../utils/utils';
-import '../../css/menu.css';
 import '../../css/game.css';
 
 function ElementGames({ type }) {

@@ -2,10 +2,15 @@ import React from 'react';
 import BetTeam from '../bet/Team';
 import BetDraw from '../bet/Draw';
 import BetValue from '../bet/Input';
-import { Pane, Alert, Paragraph } from 'evergreen-ui';
-import { useNavigate } from 'react-router-dom';
+import { postBet } from '../../api/bet';
+import { userEdit } from '../../api/user';
+import { UserContext } from '../../context/UserContext';
 import { GameContext } from '../../context/GameContext';
+import { useNavigate } from 'react-router-dom';
 import { errorHandler } from '../../utils/error';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { convertDateToFormat } from '../../utils/utils';
+import { Pane, Alert, Paragraph } from 'evergreen-ui';
 import {
   ERROR_DB_MESSAGE,
   ERROR_INSUFFICIENT_FUNDS,
@@ -14,12 +19,6 @@ import {
   SUCCESS_BET,
 } from '../../utils/constants';
 import '../../css/game.css';
-import '../../css/message.css';
-import { convertDateToFormat } from '../../utils/utils';
-import { postBet } from '../../api/bet';
-import { UserContext } from '../../context/UserContext';
-import { userEdit } from '../../api/user';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 function ElementGame({ game }) {
   const navigate = useNavigate();

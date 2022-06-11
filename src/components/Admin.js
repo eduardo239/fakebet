@@ -1,42 +1,17 @@
 import React from 'react';
-import Type from '../elements/Type';
 import Banner from '../elements/banner/Banner';
 import Footer from '../elements/Footer';
-import { getTeams } from '../api/team';
-import { getGames } from '../api/game';
-import { GameContext } from '../context/GameContext';
-import { TeamContext } from '../context/TeamContext';
+import TeamsForm from '../elements/admin/TeamsForm';
+import GamesForm from '../elements/admin/GamesForm';
+import SportsForm from '../elements/admin/SportsForm';
+import TeamsTable from '../elements/admin/TeamsTable';
+import GamesTable from '../elements/admin/GamesTable';
 import { Pane, Tablist, Tab } from 'evergreen-ui';
 import { TIMES, JOGOS, ESPORTES } from '../utils/constants';
-import '../css/menu.css';
 
 function AdminView() {
-  const { setTeams } = React.useContext(TeamContext);
-  const { setAllGames } = React.useContext(GameContext);
-
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [tabs] = React.useState([TIMES, JOGOS, ESPORTES]);
-
-  React.useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      (async () => {
-        const { data: responseTeams } = await getTeams();
-        const { data: responseGames } = await getGames();
-
-        if (responseGames.success) {
-          setAllGames(responseGames.games);
-        }
-        if (responseTeams.success) {
-          setTeams(responseTeams.teams);
-        }
-      })();
-    }
-    return () => {
-      mounted = false;
-    };
-  }, [setAllGames, setTeams]);
 
   return (
     <Pane className='main-container'>
@@ -68,12 +43,28 @@ function AdminView() {
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
             >
-              <Type type={tabs[selectedIndex]}></Type>
+              {TIMES === tabs[selectedIndex] ? (
+                <>
+                  <TeamsForm />
+                  <TeamsTable />
+                </>
+              ) : JOGOS === tabs[selectedIndex] ? (
+                <>
+                  <GamesForm />
+                  <GamesTable />
+                </>
+              ) : (
+                ESPORTES === tabs[selectedIndex] && (
+                  <>
+                    <SportsForm />
+                  </>
+                )
+              )}
             </Pane>
           ))}
         </Pane>
       </Pane>
-      <Footer></Footer>
+      <Footer />
     </Pane>
   );
 }

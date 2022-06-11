@@ -8,9 +8,9 @@ export const FUTEBOL = 'Futebol';
 export const BASQUETE = 'Basquete';
 export const ESPORTS = 'E-sports';
 
-export const TIMES = 'Times';
-export const JOGOS = 'Jogos';
-export const ESPORTES = 'Esportes';
+export const TIMES = '+ Time';
+export const JOGOS = '+ Jogo';
+export const ESPORTES = '+ Esporte';
 
 export const RETIRADA = 'Retirada';
 export const DEPOSITO = 'Depósito';

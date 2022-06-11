@@ -11,6 +11,7 @@ import Menu from './elements/Menu';
 import Admin from './components/Admin';
 import Api from './components/API';
 import Transfer from './components/Transfer';
+import { AdminContextContent } from './context/AdminContext';
 
 function App() {
   const { setUser } = React.useContext(UserContext);
@@ -39,7 +40,15 @@ function App() {
         <Route exact path='/signup' element={<SignUp />} />
         <Route exact path='/transfer' element={<Transfer />} />
         <Route exact path='/all/:type/match/:match' element={<Game />} />
-        <Route exact path='/admin' element={<Admin />} />
+        <Route
+          exact
+          path='/admin'
+          element={
+            <AdminContextContent>
+              <Admin />
+            </AdminContextContent>
+          }
+        />
         <Route exact path='/api' element={<Api />} />
       </Routes>
     </Pane>
