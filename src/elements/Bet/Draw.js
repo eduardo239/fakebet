@@ -10,7 +10,7 @@ function BetTeam({ showInput, odds }) {
       <Small>Empate</Small>
       <Button
         appearance='minimal'
-        onClick={(e) => showInput(e, 'empate')}
+        onClick={(e) => showInput(e, 'Empate')}
         className='bg-light'
         width='100%'
         fontFamily='monospace'

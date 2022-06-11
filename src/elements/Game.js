@@ -9,20 +9,24 @@ import { errorHandler } from '../utils/error';
 import {
   EMBLEM_URL,
   ERROR_DB_MESSAGE,
+  ERROR_INSUFICIENT_FUNDS,
   ERROR_INVALID_VALUE,
   ERROR_RESET,
   SUCCESS_BET,
 } from '../utils/constants';
 import '../css/game.css';
 import '../css/message.css';
-import { convertDateToFormat, convertDateToMongoose } from '../utils/utils';
+import { convertDateToFormat } from '../utils/utils';
 import { postBet } from '../api/bet';
 import { UserContext } from '../context/UserContext';
+import { userEdit } from '../api/user';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 function ElementGame({ game }) {
   const navigate = useNavigate();
+  const [, setUserLocalStorage] = useLocalStorage('user', null);
   const { sport } = React.useContext(GameContext);
-  const { user } = React.useContext(UserContext);
+  const { user, setUser } = React.useContext(UserContext);
 
   const [showValue, setShowValue] = React.useState(false);
   const [odd, setOdd] = React.useState(1);
@@ -51,6 +55,11 @@ function ElementGame({ game }) {
     let value = betRef.current.value;
     let profit = odd * value;
 
+    if (user.balance.amount < value) {
+      errorHandler(ERROR_INSUFICIENT_FUNDS, setMessage);
+      return;
+    }
+
     if (!user) {
       errorHandler(ERROR_RESET, setMessage);
       return;
@@ -69,19 +78,31 @@ function ElementGame({ game }) {
       // add a new bet
       let { data: response } = await postBet(bet);
       if (response.success) {
-        errorHandler(
-          SUCCESS_BET,
-          setMessage,
-          `Você apostou R$${bet.value} no time ${bet.pick}`
-        );
+        let updatedUser = {
+          id: user._id,
+          balance: {
+            amount: user.balance.amount - value,
+          },
+        };
+        let { data: userResponse } = await userEdit(updatedUser);
+        if (userResponse.success) {
+          setUserLocalStorage(userResponse.user);
+          setUser(userResponse.user);
 
-        setTimeout(() => {
-          setStartAnimation(false);
-          setShowValue(false);
-          errorHandler(ERROR_RESET, setMessage);
+          errorHandler(
+            SUCCESS_BET,
+            setMessage,
+            `Você apostou R$${bet.value} no time ${bet.pick}`
+          );
 
-          betRef.current.value = '';
-        }, 3000);
+          setTimeout(() => {
+            setStartAnimation(false);
+            setShowValue(false);
+            errorHandler(ERROR_RESET, setMessage);
+
+            betRef.current.value = '';
+          }, 3000);
+        }
       } else {
         errorHandler(ERROR_DB_MESSAGE, setMessage, response.message);
       }

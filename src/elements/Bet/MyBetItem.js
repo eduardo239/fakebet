@@ -1,35 +1,47 @@
 import React from 'react';
-import { Heading, IconButton, Pane, TrashIcon } from 'evergreen-ui';
+import {
+  Heading,
+  IconButton,
+  ListItem,
+  Pane,
+  Small,
+  TickCircleIcon,
+  TrashIcon,
+  UnorderedList,
+} from 'evergreen-ui';
+import { convertDateToFormat } from '../../utils/utils';
 
-function MyBetItem({ bet }) {
+function MyBetItem({ bet, handleRemoveBet }) {
   if (bet)
     return (
-      <>
-        <Pane display='flex' alignItems='center' gap={8}>
-          <Pane className='form-grid' flex={1}>
-            <Heading size={500}>
-              {bet?.gameId?.teamAId?.name
-                ? bet?.gameId?.teamAId?.name
-                : 'Não definido'}{' '}
-              VS{' '}
-              {bet?.gameId?.teamBId?.name
-                ? bet?.gameId?.teamBId?.name
-                : 'Não definido'}
-            </Heading>
-            <Heading size={200} textAlign='right'>
-              Valor: R${bet?.value ? bet.value : 0}
-            </Heading>
-
-            <Heading size={200}>My BET:</Heading>
-            <Heading size={200} textAlign='right'>
-              {bet?.pick ? bet.pick : 'Não definido'}
-            </Heading>
+      <Pane className='form-my-bets border-bottom--light'>
+        <Pane>
+          <Heading size={500}>
+            {bet.gameId.teamAId.name} VS {bet.gameId.teamBId.name}
+          </Heading>
+          <UnorderedList>
+            <ListItem icon={TickCircleIcon} iconColor='success'>
+              {bet.pick}, aposta R${bet.value}, odds: {bet.odd}, ganhos: R$
+              {bet.profit}
+            </ListItem>
+            {/* <ListItem icon={BanCircleIcon} iconColor='danger'>
+            Lorem ipsum dolar set amet
+          </ListItem> */}
+          </UnorderedList>
+          <Pane className='flex-between'>
+            <Heading size={100}>BET ID: {bet._id}</Heading>
+            <Heading size={100}>{convertDateToFormat(bet.createdAt)}</Heading>
           </Pane>
-
-          <IconButton icon={TrashIcon} intent='danger' />
         </Pane>
-        <hr />
-      </>
+        <Pane display='flex' alignItems='center' gap={8}>
+          <IconButton
+            disabled
+            icon={TrashIcon}
+            intent='minimal'
+            onClick={() => handleRemoveBet(bet._id)}
+          />
+        </Pane>
+      </Pane>
     );
   else return null;
 }

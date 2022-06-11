@@ -2,17 +2,19 @@ import React from 'react';
 import MyBets from './MyBets';
 import MyProfile from './MyProfile';
 import { Link } from 'react-router-dom';
-import { getUserInfo } from '../api/user';
+import { getUserInfo, userEdit } from '../api/user';
 import { UserContext } from '../context/UserContext';
-import { getBetsByUserId } from '../api/bet';
+import { getBetsByUserId, removeBetById } from '../api/bet';
 import { Avatar, Dialog, Pane } from 'evergreen-ui';
 import '../css/menu.css';
 import '../css/bet.css';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 function Menu() {
-  const { user, logout } = React.useContext(UserContext);
+  const { user, setUser, logout } = React.useContext(UserContext);
+  const [, setUserLocalStorage] = useLocalStorage('user', null);
 
-  const [isMyBetsShown, setMyBetsIsShown] = React.useState(false);
+  const [isMyBetsShown, setIsMyBetsShown] = React.useState(false);
   const [isProfileShown, setIsProfileShown] = React.useState(false);
   const [isAmountShown, setIsAmountShown] = React.useState(false);
   const [myBets, setMyBets] = React.useState([]);
@@ -21,7 +23,35 @@ function Menu() {
     let { data: response } = await getBetsByUserId(user._id);
     if (response.success) {
       setMyBets(response.bets);
-      setMyBetsIsShown(true);
+      setIsMyBetsShown(true);
+    }
+  };
+
+  const handleRemoveBet = async (id) => {
+    let balance = user.balance.amount;
+    let newBalance = balance + myBets.find((bet) => bet._id === id).value;
+
+    let editedUser = {
+      id: user._id,
+      balance: {
+        amount: newBalance,
+      },
+    };
+
+    //update user balance
+    let { data: userResponse } = await userEdit(editedUser);
+    if (userResponse.success) {
+      let { data: removeResponse } = await removeBetById(id);
+
+      if (removeResponse.success) {
+        setMyBets(myBets.filter((bet) => bet._id !== id));
+        setUserLocalStorage(userResponse.user);
+        setUser(userResponse.user);
+      } else {
+        console.error(removeResponse.message);
+      }
+    } else {
+      console.error(userResponse.message);
     }
   };
 
@@ -96,19 +126,25 @@ function Menu() {
         isShown={isMyBetsShown}
         title='Minhas Apostas'
         hasCancel={false}
-        hasFooter={false}
-        onCloseComplete={() => setMyBetsIsShown(false)}
+        confirmLabel='Fechar'
+        onCloseComplete={() => setIsMyBetsShown(false)}
       >
         {myBets.length > 0 && (
-          <MyBets bets={myBets} setMyBetsIsShown={setMyBetsIsShown} />
+          <MyBets
+            bets={myBets}
+            handleRemoveBet={handleRemoveBet}
+            setMyBetsIsShown={setIsMyBetsShown}
+          />
         )}
       </Dialog>
 
       <Dialog
         isShown={isProfileShown}
         title='Perfil'
+        confirmLabel='Fechar'
         hasCancel={false}
-        hasFooter={false}
+        hasClose={true}
+        onCloseComplete={() => setIsProfileShown(false)}
       >
         <MyProfile data={user} setIsProfileShown={setIsProfileShown} />
       </Dialog>

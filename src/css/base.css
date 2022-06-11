@@ -120,6 +120,10 @@ small {
   font-weight: 500;
 }
 
+.border-bottom--light {
+  border-bottom: 2px dashed var(--light-color);
+}
+
 .footer {
   background-color: var(--primary-color);
   min-height: 10rem;
@@ -127,6 +131,13 @@ small {
   justify-content: center;
   align-items: center;
 }
+
+/* new */
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }

@@ -23,3 +23,8 @@ export const getBetsByUserId = (id) => {
 export function postBet(bet) {
   return instance.post('/bets/add', bet);
 }
+
+// remove bet by id
+export const removeBetById = (id) => {
+  return instance.delete(`/bets/remove/${id}`);
+};

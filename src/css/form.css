@@ -28,21 +28,18 @@
   grid-template-columns: 1fr;
 }
 
-.form-grid {
+.form-my-bets {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  width: 100%;
+  grid-template-columns: 1fr auto;
+  grid-gap: 4px;
+  padding: 18px;
+  background-color: var(--light-alternate);
 }
 
-.form-grid--field {
-  margin-bottom: 8px;
-}
-
-.form-grid--field > input {
-  width: 100%;
-}
-
-.form--span-3 {
-  grid-column: 1 / span 3;
+.form-my-profile {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 4px;
+  padding: 18px;
+  background-color: var(--light-alternate);
 }

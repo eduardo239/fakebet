@@ -25,6 +25,7 @@ import {
   ERROR_INVALID_VALUE,
   SUCCESS_BET,
   ERROR_USER_NOT_LOGGED,
+  ERROR_INSUFICIENT_FUNDS,
 } from './constants';
 
 export const errorHandler = (error, setError, response) => {
@@ -163,7 +164,6 @@ export const errorHandler = (error, setError, response) => {
       });
       break;
 
-    // - - - - - - - - - - - SPORT ERROR - - - - - - - - - - -
     case SUCCESS_GAME_REGISTER:
       setError({
         title: 'Sucesso!',
@@ -237,6 +237,15 @@ export const errorHandler = (error, setError, response) => {
         message: ERROR_USER_NOT_LOGGED,
         status: true,
         type: SUCCESS,
+      });
+      break;
+    // - - - - - - - - - - - BET ERROR - - - - - - - - - - -
+    case ERROR_INSUFICIENT_FUNDS:
+      setError({
+        title: 'Erro - Saldo insuficiente',
+        message: ERROR_INSUFICIENT_FUNDS,
+        status: true,
+        type: WARNING,
       });
       break;
     // - - - - - - - - - - - DEFAULT ERROR - - - - - - - - - - -
