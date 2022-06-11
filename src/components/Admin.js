@@ -1,18 +1,18 @@
 import React from 'react';
 import Type from '../elements/Type';
-import Banner from '../elements/Banner';
+import Banner from '../elements/banner/Banner';
 import Footer from '../elements/Footer';
 import { getTeams } from '../api/team';
+import { getGames } from '../api/game';
+import { GameContext } from '../context/GameContext';
 import { TeamContext } from '../context/TeamContext';
 import { Pane, Tablist, Tab } from 'evergreen-ui';
 import { TIMES, JOGOS, ESPORTES } from '../utils/constants';
 import '../css/menu.css';
-import { GameContext } from '../context/GameContext';
-import { getGames } from '../api/game';
 
 function AdminView() {
   const { setTeams } = React.useContext(TeamContext);
-  const { setIsLoadingGames, setAllGames } = React.useContext(GameContext);
+  const { setAllGames } = React.useContext(GameContext);
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [tabs] = React.useState([TIMES, JOGOS, ESPORTES]);
@@ -23,14 +23,11 @@ function AdminView() {
     if (mounted) {
       (async () => {
         const { data: responseTeams } = await getTeams();
-
-        setIsLoadingGames(true);
         const { data: responseGames } = await getGames();
+
         if (responseGames.success) {
           setAllGames(responseGames.games);
         }
-        setIsLoadingGames(false);
-
         if (responseTeams.success) {
           setTeams(responseTeams.teams);
         }
@@ -39,14 +36,14 @@ function AdminView() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [setAllGames, setTeams]);
 
   return (
-    <Pane display='flex' flexDirection='column' height='100vh'>
-      <Banner></Banner>
+    <Pane className='main-container'>
+      <Banner />
 
-      <Pane className='games-container' flex={1}>
-        <Tablist padding={8} flexBasis={240} className='tab-game-menu'>
+      <Pane flex={1}>
+        <Tablist padding={8} flexBasis={240} className='bg-dark-alternative-2'>
           {tabs.map((tab, index) => (
             <Tab
               key={tab}

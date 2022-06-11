@@ -1,19 +1,20 @@
 import React from 'react';
 import { Pane, Tab, Tablist } from 'evergreen-ui';
-import DepositForm from '../elements/DepositForm';
-import BannerDeposit from '../elements/BannerDeposit';
-import WithdrawalForm from '../elements/WithdrawalForm';
 import { DEPOSITO, RETIRADA } from '../utils/constants';
+import DepositForm from '../elements/deposit/Deposit';
+import BannerDeposit from '../elements/banner/BannerDeposit';
+import WithdrawalForm from '../elements/withdrawal/Withdrawal';
 
 function TransferView() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [tabs] = React.useState([DEPOSITO, RETIRADA]);
 
   return (
-    <Pane display="flex" flexDirection="column" height="100vh">
+    <Pane className='main-container'>
       <BannerDeposit />
-      <Pane className="games-container" flex={1}>
-        <Tablist padding={8} flexBasis={240} className="tab-game-menu">
+
+      <Pane flex={1}>
+        <Tablist padding={8} flexBasis={240} className='bg-dark-alternative-2'>
           {tabs.map((tab, index) => (
             <Tab
               key={tab}
@@ -21,19 +22,19 @@ function TransferView() {
               onSelect={() => setSelectedIndex(index)}
               isSelected={index === selectedIndex}
               aria-controls={`panel-${tab}`}
-              appearance="minimal"
+              appearance='minimal'
               className={`tab-menu ${selectedIndex === index ? `active` : ''}`}
             >
               {tab}
             </Tab>
           ))}
         </Tablist>
-        <Pane paddingBottom={32} paddingTop={32}>
+        <Pane paddingBottom={32}>
           {tabs.map((tab, index) => (
             <Pane
               key={tab}
               id={`panel-${tab}`}
-              role="tabpanel"
+              role='tabpanel'
               aria-labelledby={tab}
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}

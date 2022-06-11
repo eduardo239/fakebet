@@ -71,7 +71,7 @@ function SignInView() {
 
   return (
     <Pane display='flex' justifyContent='center'>
-      <Pane elevation={2} className='form-container-sign'>
+      <Pane className='form-container-sign'>
         <Heading size={700} marginBottom={24}>
           Login
         </Heading>

@@ -28,14 +28,7 @@ function App() {
   }, []);
 
   return (
-    <Pane
-      display='flex'
-      justifyContent='center'
-      flexDirection='column'
-      maxWidth={1000}
-      width='100%'
-      margin='auto'
-    >
+    <Pane className='app-container'>
       <Menu></Menu>
 
       <Routes>

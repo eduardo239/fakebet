@@ -25,7 +25,7 @@ import {
   ERROR_INVALID_VALUE,
   SUCCESS_BET,
   ERROR_USER_NOT_LOGGED,
-  ERROR_INSUFICIENT_FUNDS,
+  ERROR_INSUFFICIENT_FUNDS,
 } from './constants';
 
 export const errorHandler = (error, setError, response) => {
@@ -240,10 +240,10 @@ export const errorHandler = (error, setError, response) => {
       });
       break;
     // - - - - - - - - - - - BET ERROR - - - - - - - - - - -
-    case ERROR_INSUFICIENT_FUNDS:
+    case ERROR_INSUFFICIENT_FUNDS:
       setError({
         title: 'Erro - Saldo insuficiente',
-        message: ERROR_INSUFICIENT_FUNDS,
+        message: ERROR_INSUFFICIENT_FUNDS,
         status: true,
         type: WARNING,
       });

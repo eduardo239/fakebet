@@ -56,8 +56,8 @@ function TeamsTable() {
               >
                 <Table.TextCell>
                   <img
-                    className='image-small'
-                    src={URL_IMAGE + (item.emblem || 'default.png')}
+                    className='table-icon--small'
+                    src={URL_IMAGE + (item.emblem || 'default-team-logo.png')}
                     alt={item.name}
                   />
                 </Table.TextCell>

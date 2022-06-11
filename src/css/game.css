@@ -34,13 +34,8 @@
   border-radius: 3px;
 }
 
-.tab-game-menu {
-  background-color: var(--dark-alternate-2);
-}
 
-.games-container {
-  background-color: var(--dark-alternate);
-}
+
 
 /* Game element */
 .game {
@@ -57,15 +52,6 @@
   padding: 16px;
 }
 
-.games-title {
-  color: var(--light-color);
-  font-size: 2rem;
-  text-align: center;
-  margin-top: 16px;
-  margin-right: 16px;
-  margin-left: 16px;
-  margin-bottom: 32px;
-}
 
 /* game page */
 .game-container {

@@ -22,18 +22,15 @@
 *::before {
   box-sizing: border-box;
 }
-
 body {
   background-color: var(--dark-color);
   color: var(--light-color);
   font-family: var(--font-sans);
   overflow-y: scroll;
 }
-
 a {
   text-decoration: none;
 }
-
 h3 {
   font-size: 1.5rem;
   font-weight: 500;
@@ -44,74 +41,27 @@ img {
   max-width: 100%;
   display: block;
 }
-
-.image-small {
-  width: 32px;
-  height: 32px;
-}
-
-.team-log--small {
-  max-width: 50px;
-  max-height: 50px;
-  min-width: 45px;
-  min-height: 45px;
-  border-radius: 3px;
-}
-
 code {
   font-family: var(--font-code);
 }
-
 pre {
   font-size: 0.8rem;
 }
-
-.main-content {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 44px);
+b {
+  font-weight: 700;
+  color: var(--primary-color);
 }
-
-.code-grid {
-  display: grid;
-  grid-template-columns: 20% 1fr;
-  font-family: var(--font-code);
-  background-color: var(--dark-alternate-3);
-  padding: 0.2rem 0.4rem;
-  border: 1px solid var(--dark-alternate-2);
-}
-
 .small,
 small {
   font-size: 0.7rem;
   letter-spacing: 0.4px;
 }
-
-.done {
-  background-color: var(--primary-color);
-}
-/*  */
 .select {
   background-color: var(--light-color);
   width: 100%;
+  margin-top: 8px;
+  margin-bottom: 24px;
 }
-
-.bg-light {
-  background-color: var(--light-color);
-}
-.light {
-  color: var(--light-color);
-}
-.light-alternate {
-  color: var(--light-alternate);
-}
-.dark {
-  color: var(--dark-color);
-}
-.dark-alternative {
-  color: var(--dark-alternate);
-}
-
 .label {
   color: #101840;
   line-height: 18px;
@@ -120,10 +70,87 @@ small {
   font-weight: 500;
 }
 
+
+/* new */
+/* -------------------- bg colors -------------------- */
+.bg-light {
+  background-color: var(--light-color);
+}
+.bg-dark-alternative-2 {
+  background-color: var(--dark-alternate-2);
+}
+/* -------------------- colors -------------------- */
+.light {
+  color: var(--light-color);
+}
+.light-alternate {
+  color: var(--light-alternate);
+}
+.light-alternate-2 {
+  color: var(--light-alternate-2);
+}
+.dark {
+  color: var(--dark-color);
+}
+.dark-alternative {
+  color: var(--dark-alternate);
+}
+/* -------------------- title -------------------- */
+.title-h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 1rem 0 1.5rem;
+  text-align: center;
+}
+.title-h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1rem 0 1.5rem;
+}
+/* -------------------- container -------------------- */
+.app-container {
+  display: grid;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 44px);
+}
+/* -------------------- display -------------------- */
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-start-center {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+/* -------------------- display plus -------------------- */
+.grid--span3 {
+  grid-column: span 3;
+}
+/* -------------------- images -------------------- */
+
+.table-icon--small {
+  max-width: 32px;
+  max-height: 32px;
+}
+.team-logo--small {
+  max-width: 50px;
+  max-height: 70px;
+}
+/* -------------------- border -------------------- */
 .border-bottom--light {
   border-bottom: 2px dashed var(--light-color);
 }
-
+/* -------------------- sections -------------------- */
 .footer {
   background-color: var(--primary-color);
   min-height: 10rem;
@@ -131,13 +158,7 @@ small {
   justify-content: center;
   align-items: center;
 }
-
-/* new */
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-}
-
+/* -------------------- scroll -------------------- */
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -149,4 +170,17 @@ small {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
+}
+
+/* -------------------- code -------------------- */
+.code-grid {
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  font-family: var(--font-code);
+  background-color: var(--dark-alternate-3);
+  padding: 0.2rem 0.4rem;
+  border: 1px solid var(--dark-alternate-2);
+}
+.done {
+  background-color: var(--primary-color);
 }

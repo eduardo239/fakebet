@@ -13,7 +13,7 @@ const TeamContextContent = ({ children }) => {
   const [isUpdating, setIsUpdating] = React.useState(false);
 
   const resetTeam = () => {
-    setTeam({ name: '', shortName: '' });
+    setTeam({ ...team, name: '', shortName: '' });
   };
 
   React.useEffect(() => {
