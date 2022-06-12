@@ -17,7 +17,7 @@ import {
 import { TeamContext } from '../../context/TeamContext';
 
 function TeamsForm() {
-  const { setSports, sports } = React.useContext(TeamContext);
+  const { setSports, sportsData } = React.useContext(TeamContext);
 
   const [sport, setSport] = React.useState('');
   const [error, setError] = React.useState({
@@ -115,9 +115,8 @@ function TeamsForm() {
         <Heading size={700} marginBottom={24}>
           Esportes
         </Heading>
-        {sports &&
-          sports.length > 0 &&
-          sports.map((sport) => (
+        {sportsData?.sports?.length > 0 &&
+          sportsData?.sports?.map((sport) => (
             <Badge
               key={sport._id}
               color='green'

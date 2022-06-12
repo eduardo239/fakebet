@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getSports } from '../api/sport';
+import useFetch from '../hooks/useFetch';
 
 const TeamContext = React.createContext();
 
@@ -9,36 +9,24 @@ const TeamContextContent = ({ children }) => {
   const [team, setTeam] = useState({ name: '', shortName: '', type: '' });
   const [teams, setTeams] = useState([]);
   const [files, setFiles] = React.useState([]);
-  const [sports, setSports] = React.useState([]);
+
   const [isUpdating, setIsUpdating] = React.useState(false);
 
   const resetTeam = () => {
     setTeam({ ...team, name: '', shortName: '' });
   };
 
-  React.useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      (async () => {
-        const { data: responseSports } = await getSports();
-
-        if (responseSports.success) {
-          setSports(responseSports.sports);
-        }
-      })();
-    }
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  const {
+    data: sportsData,
+    loading: sportsLoading,
+    error: sportsError,
+  } = useFetch(`/sports/all`);
 
   return (
     <TeamProvider
       value={{
         team,
         teams,
-        sports,
         setTeam,
         setTeams,
         resetTeam,
@@ -46,7 +34,9 @@ const TeamContextContent = ({ children }) => {
         setFiles,
         isUpdating,
         setIsUpdating,
-        setSports,
+        sportsData,
+        sportsLoading,
+        sportsError,
       }}
     >
       {children}

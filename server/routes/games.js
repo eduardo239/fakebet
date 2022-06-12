@@ -100,18 +100,25 @@ router.get('/all', (req, res, next) => {
 });
 
 router.get('/:sportId/:page', (req, res, next) => {
-  const sportId = req.params.sportId;
+  let sportId = req.params.sportId;
+  let limit = 3;
+  let page = req.params.page;
 
-  Game.find({ type: sportId }, null, {}, (err, games) => {
-    if (err) {
-      res.json({ success: false, message: ERROR_MESSAGE, err });
+  Game.find(
+    { type: sportId },
+    null,
+    { limit: limit, skip: (page - 1) * limit },
+    (err, games) => {
+      if (err) {
+        res.json({ success: false, message: ERROR_MESSAGE, err });
+      }
+      if (!games) {
+        res.json({ success: false, message: `GAMES NOT FOUND` });
+      } else {
+        res.json({ success: true, message: `GAMES FOUND`, games });
+      }
     }
-    if (!games) {
-      res.json({ success: false, message: `GAMES NOT FOUND` });
-    } else {
-      res.json({ success: true, message: `GAMES FOUND`, games });
-    }
-  })
+  )
     .sort('-createdAt')
     .populate('teamAId')
     .populate('teamBId');

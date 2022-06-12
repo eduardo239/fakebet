@@ -36,19 +36,18 @@ function DepositForm() {
     type: '',
   });
 
-  const modalPaymentHandle = () => {
+  const handlePaymentModal = () => {
     errorHandler(ERROR_RESET, setError);
     if (value === 0 || value === '' || value === null) {
       errorHandler(ERROR_PAYMENT_VALUE, setError);
     } else if (method === '') {
       errorHandler(ERROR_PAYMENT_METHOD, setError);
     } else {
-      console.log(1);
       setIsDepositDialogShown(true);
     }
   };
 
-  const paymentHandle = async () => {
+  const handlePayment = async () => {
     errorHandler(ERROR_RESET, setError);
     let { data: response } = await userAddBalance({
       id: user._id,
@@ -98,7 +97,7 @@ function DepositForm() {
         </Pane>
 
         <Pane marginTop={8}>
-          <Button appearance='primary' onClick={modalPaymentHandle}>
+          <Button appearance='primary' onClick={handlePaymentModal}>
             Continuar
           </Button>
         </Pane>
@@ -133,7 +132,7 @@ function DepositForm() {
             </Pane>
 
             <Pane marginTop={8}>
-              <Button appearance='primary' onClick={paymentHandle}>
+              <Button appearance='primary' onClick={handlePayment}>
                 Finalizar o Pagamento
               </Button>
             </Pane>

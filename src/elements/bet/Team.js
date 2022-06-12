@@ -13,7 +13,9 @@ function BetTeam({ showInput, odds, onClick, team }) {
         />
       </Pane>
 
-      <Paragraph className='light'>{team.name || 'null'}</Paragraph>
+      <Paragraph className='light' lineHeight={1} textAlign='center'>
+        {team.name || 'null'}
+      </Paragraph>
       <Button
         appearance='minimal'
         onClick={(e) => showInput(e, team.name)}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import useFetch from '../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
-import { getGamesByPagination } from '../api/game';
 import { INITIAL_STATE_SPORT } from '../utils/constants';
 
 const GameContext = React.createContext();
@@ -29,6 +29,12 @@ const GameContextContent = ({ children }) => {
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const [totalPages, setTotalPages] = useState(3);
 
+  const {
+    data: gameData,
+    loading: gameLoading,
+    error: gameError,
+  } = useFetch(`/games/${sport?._id}/${page}`);
+
   const resetGame = () => {
     setGame({
       teamAId: '',
@@ -45,27 +51,17 @@ const GameContextContent = ({ children }) => {
 
   React.useEffect(() => {
     let mounted = true;
-
     if (mounted) {
-      (async () => {
-        const { data: responsePagination } = await getGamesByPagination(
-          page,
-          sport?._id || ''
-        );
-
-        if (responsePagination.success) {
-          let length = responsePagination.games.length;
-          if (length === itemsPerPage) {
-            setTotalPages(page + 1);
-          }
-          setAllGamesPerPage(responsePagination.games);
-        }
-      })();
+      if (gameData?.games?.length < 3) {
+        setTotalPages(page);
+      } else {
+        setTotalPages(page + 1);
+      }
     }
     return () => {
       mounted = false;
     };
-  }, [page, sport, itemsPerPage]);
+  }, [page, sport, itemsPerPage, gameData]);
 
   React.useEffect(() => {
     let mounted = true;
@@ -96,7 +92,6 @@ const GameContextContent = ({ children }) => {
         resetGame,
         setAllGames,
         setGameIsUpdating,
-
         allGamesPerPage,
         setAllGamesPerPage,
         page,
@@ -105,6 +100,9 @@ const GameContextContent = ({ children }) => {
         totalPages,
         setItemsPerPage,
         itemsPerPage,
+        gameData,
+        gameError,
+        gameLoading,
       }}
     >
       {children}

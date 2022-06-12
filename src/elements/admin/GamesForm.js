@@ -4,7 +4,6 @@ import {
   Heading,
   Pane,
   SelectField,
-  Small,
   TextInputField,
   Alert,
 } from 'evergreen-ui';
@@ -19,7 +18,7 @@ import {
 } from '../../utils/constants';
 
 function Games() {
-  const { teams, sports, resetTeam } = React.useContext(TeamContext);
+  const { teams, sportsData, resetTeam } = React.useContext(TeamContext);
   const { game, sport, setGame, setAllGames, setAllGamesByType } =
     React.useContext(GameContext);
 
@@ -124,9 +123,8 @@ function Games() {
               <option value='' defaultValue>
                 ---
               </option>
-              {sports &&
-                sports.length > 0 &&
-                sports.map((sport) => (
+              {sportsData?.sports?.length > 0 &&
+                sportsData?.sports?.map((sport) => (
                   <option key={sport._id} value={sport._id}>
                     {sport.name}
                   </option>

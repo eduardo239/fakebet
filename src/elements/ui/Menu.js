@@ -1,15 +1,18 @@
 import React from 'react';
-import MyBets from './user/Bets';
-import MyProfile from './user/Profile';
+import MyBets from '../user/Bets';
+import MyProfile from '../user/Profile';
 import { Link } from 'react-router-dom';
-import { getUserInfo, userEdit } from '../api/user';
-import { UserContext } from '../context/UserContext';
-import { getBetsByUserId, removeBetById } from '../api/bet';
+import { GameContext } from '../../context/GameContext';
+import { UserContext } from '../../context/UserContext';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { Avatar, Dialog, Pane } from 'evergreen-ui';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { getUserInfo, userEdit } from '../../api/user';
+import { getBetsByUserId, removeBetById } from '../../api/bet';
+import { INITIAL_STATE_SPORT } from '../../utils/constants';
 
 function Menu() {
   const { user, setUser, logout } = React.useContext(UserContext);
+  const { setSport } = React.useContext(GameContext);
   const [, setUserLocalStorage] = useLocalStorage('user', null);
 
   const [isMyBetsShown, setIsMyBetsShown] = React.useState(false);
@@ -57,7 +60,11 @@ function Menu() {
     <Pane position='relative'>
       <Pane className='menu'>
         <Pane display='flex' gap={4} alignItems='center'>
-          <Link to='/' className='menu-link'>
+          <Link
+            to='/'
+            className='menu-link'
+            onClick={() => setSport(INITIAL_STATE_SPORT)}
+          >
             FAKEBET
           </Link>
           {user && (

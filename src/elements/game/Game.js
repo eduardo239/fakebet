@@ -22,14 +22,14 @@ import '../../css/game.css';
 
 function ElementGame({ game }) {
   const navigate = useNavigate();
-  const [, setUserLocalStorage] = useLocalStorage('user', null);
   const { sport } = React.useContext(GameContext);
   const { user, setUser } = React.useContext(UserContext);
+  const [, setUserLocalStorage] = useLocalStorage('user', null);
 
-  const [showValue, setShowValue] = React.useState(false);
   const [odd, setOdd] = React.useState(1);
-  const [startAnimation, setStartAnimation] = React.useState(false);
   const [pick, setPick] = React.useState(null);
+  const [showValue, setShowValue] = React.useState(false);
+  const [startAnimation, setStartAnimation] = React.useState(false);
   const [message, setMessage] = React.useState({
     title: '',
     message: '',

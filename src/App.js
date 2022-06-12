@@ -7,7 +7,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
 import Game from './components/Game';
-import Menu from './elements/Menu';
+import Menu from './elements/ui/Menu';
 import Admin from './components/Admin';
 import Api from './components/API';
 import Transfer from './components/Transfer';

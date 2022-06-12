@@ -7,7 +7,6 @@ import {
   Pane,
   Paragraph,
   SelectField,
-  Small,
   TextInputField,
 } from 'evergreen-ui';
 import FileUploaderSingleUpload from './FilleUploader';
@@ -33,7 +32,7 @@ function TeamsForm() {
     setIsUpdating,
     isUpdating,
     resetTeam,
-    sports,
+    sportsData,
   } = React.useContext(TeamContext);
   const [isShownUpdateModal, setIsShownUpdateModal] = React.useState(false);
 
@@ -124,9 +123,8 @@ function TeamsForm() {
               <option value='' defaultValue>
                 ---
               </option>
-              {sports &&
-                sports.length > 0 &&
-                sports.map((sport) => (
+              {sportsData?.sports?.length > 0 &&
+                sportsData?.sports?.map((sport) => (
                   <option key={sport._id} value={sport._id}>
                     {sport.name}
                   </option>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Banner from '../elements/banner/Banner';
-import Footer from '../elements/Footer';
+import Footer from '../elements/ui/Footer';
 import TeamsForm from '../elements/admin/TeamsForm';
 import GamesForm from '../elements/admin/GamesForm';
 import SportsForm from '../elements/admin/SportsForm';
@@ -17,7 +17,7 @@ function AdminView() {
     <Pane className='main-container'>
       <Banner />
 
-      <Pane flex={1}>
+      <Pane>
         <Tablist padding={8} flexBasis={240} className='bg-dark-alternative-2'>
           {tabs.map((tab, index) => (
             <Tab

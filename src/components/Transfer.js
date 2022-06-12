@@ -13,7 +13,7 @@ function TransferView() {
     <Pane className='main-container'>
       <BannerDeposit />
 
-      <Pane flex={1}>
+      <Pane>
         <Tablist padding={8} flexBasis={240} className='bg-dark-alternative-2'>
           {tabs.map((tab, index) => (
             <Tab

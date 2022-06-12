@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pane } from 'evergreen-ui';
-import '../css/banner.css';
+import '../../css/banner.css';
 
 function Footer() {
   return (
