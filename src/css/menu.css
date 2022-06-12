@@ -1,6 +1,6 @@
 .menu {
   background-color: var(--primary-color);
-  border-radius: 4px;
+  /* border-radius: 4px; */
   display: flex;
   justify-content: space-between;
   padding: 4px 8px;
@@ -17,7 +17,7 @@
 }
 
 .tab-menu {
-  color: var(--primary-color);
+  color: var(--secondary-color);
   display: inline-block;
   padding: 8px;
   font-size: 1rem;

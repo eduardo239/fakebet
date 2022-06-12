@@ -8,9 +8,9 @@ export const FUTEBOL = 'Futebol';
 export const BASQUETE = 'Basquete';
 export const ESPORTS = 'E-sports';
 
-export const TIMES = 'Times';
-export const JOGOS = 'Jogos';
-export const ESPORTES = 'Esportes';
+export const TIMES = '+ Time';
+export const JOGOS = '+ Jogo';
+export const ESPORTES = '+ Esporte';
 
 export const RETIRADA = 'Retirada';
 export const DEPOSITO = 'Depósito';
@@ -38,7 +38,8 @@ export const ERROR_EMPTY_TEAM_NAME =
   'Por favor, preencha o campo de nome do time.';
 export const ERROR_ABBREVIATED_NAME =
   'Nome precisa ter uma abreviação de 3 caracteres.';
-export const ERROR_TEAM_TYPE = 'Por favor, selecione um esporte do time.';
+export const ERROR_TEAM_TYPE =
+  'Por favor, selecione o tipo de esporte do time.';
 export const ERROR_TEAM_REGISTER = 'Erro ao cadastrar time.';
 
 export const SUCCESS_TEAM_REGISTER = 'Time cadastrado com sucesso.';
@@ -61,5 +62,10 @@ export const SUCCESS_BET = 'Aposta realizada com sucesso.';
 
 export const ERROR_USER_NOT_LOGGED = 'Usuário não logado.';
 
-export const ERROR_INSUFICIENT_FUNDS =
+export const ERROR_INSUFFICIENT_FUNDS =
   'Saldo insuficiente, faça um depósito para apostar.';
+
+export const INITIAL_STATE_SPORT = {
+  _id: '62a49a0e5bd76e9774316d33',
+  name: 'futebol',
+};

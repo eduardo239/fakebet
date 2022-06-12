@@ -1,52 +1,24 @@
 import React from 'react';
-import Type from '../elements/Type';
-import Banner from '../elements/Banner';
+import Banner from '../elements/banner/Banner';
 import Footer from '../elements/Footer';
-import { getTeams } from '../api/team';
-import { TeamContext } from '../context/TeamContext';
+import TeamsForm from '../elements/admin/TeamsForm';
+import GamesForm from '../elements/admin/GamesForm';
+import SportsForm from '../elements/admin/SportsForm';
+import TeamsTable from '../elements/admin/TeamsTable';
+import GamesTable from '../elements/admin/GamesTable';
 import { Pane, Tablist, Tab } from 'evergreen-ui';
 import { TIMES, JOGOS, ESPORTES } from '../utils/constants';
-import '../css/menu.css';
-import { GameContext } from '../context/GameContext';
-import { getGames } from '../api/game';
 
 function AdminView() {
-  const { setTeams } = React.useContext(TeamContext);
-  const { setIsLoadingGames, setAllGames } = React.useContext(GameContext);
-
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [tabs] = React.useState([TIMES, JOGOS, ESPORTES]);
 
-  React.useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      (async () => {
-        const { data: responseTeams } = await getTeams();
-
-        setIsLoadingGames(true);
-        const { data: responseGames } = await getGames();
-        if (responseGames.success) {
-          setAllGames(responseGames.games);
-        }
-        setIsLoadingGames(false);
-
-        if (responseTeams.success) {
-          setTeams(responseTeams.teams);
-        }
-      })();
-    }
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   return (
-    <Pane display='flex' flexDirection='column' height='100vh'>
-      <Banner></Banner>
+    <Pane className='main-container'>
+      <Banner />
 
-      <Pane className='games-container' flex={1}>
-        <Tablist padding={8} flexBasis={240} className='tab-game-menu'>
+      <Pane flex={1}>
+        <Tablist padding={8} flexBasis={240} className='bg-dark-alternative-2'>
           {tabs.map((tab, index) => (
             <Tab
               key={tab}
@@ -71,12 +43,28 @@ function AdminView() {
               aria-hidden={index !== selectedIndex}
               display={index === selectedIndex ? 'block' : 'none'}
             >
-              <Type type={tabs[selectedIndex]}></Type>
+              {TIMES === tabs[selectedIndex] ? (
+                <>
+                  <TeamsForm />
+                  <TeamsTable />
+                </>
+              ) : JOGOS === tabs[selectedIndex] ? (
+                <>
+                  <GamesForm />
+                  <GamesTable />
+                </>
+              ) : (
+                ESPORTES === tabs[selectedIndex] && (
+                  <>
+                    <SportsForm />
+                  </>
+                )
+              )}
             </Pane>
           ))}
         </Pane>
       </Pane>
-      <Footer></Footer>
+      <Footer />
     </Pane>
   );
 }

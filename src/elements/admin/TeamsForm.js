@@ -6,7 +6,7 @@ import {
   Heading,
   Pane,
   Paragraph,
-  Select,
+  SelectField,
   Small,
   TextInputField,
 } from 'evergreen-ui';
@@ -103,13 +103,11 @@ function TeamsForm() {
   };
 
   return (
-    <Pane display='flex' justifyContent='center'>
-      <Pane elevation={2} className='form-container' alignSelf='center'>
-        <Heading size={700} marginBottom={24}>
-          Adicionar Times
-        </Heading>
+    <Pane>
+      <Pane className='form-container' alignSelf='center'>
+        <Heading className='title-h2'>Adicionar Times</Heading>
 
-        <Pane className='form'>
+        <Pane className='form-registration'>
           <TextInputField
             label='Nome do Time'
             placeholder='O nome do time'
@@ -118,16 +116,12 @@ function TeamsForm() {
           />
 
           <Pane>
-            <Small className='label'>Gênero do Esporte</Small>
-            <Select
-              marginTop={8}
-              width='100%'
-              className='select'
-              marginBottom={24}
+            <SelectField
+              label='Gênero do Esporte'
               name='type'
               onChange={(e) => setTeam({ ...team, type: e.target.value })}
             >
-              <option value='' defaultChecked>
+              <option value='' defaultValue>
                 ---
               </option>
               {sports &&
@@ -137,7 +131,7 @@ function TeamsForm() {
                     {sport.name}
                   </option>
                 ))}
-            </Select>
+            </SelectField>
           </Pane>
 
           <TextInputField
@@ -150,7 +144,7 @@ function TeamsForm() {
             maxLength={3}
           />
 
-          <Pane className='form--span-3'>
+          <Pane className='grid--span3'>
             <FileUploaderSingleUpload setFiles={setFiles} files={files} />
           </Pane>
         </Pane>

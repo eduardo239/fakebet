@@ -84,15 +84,13 @@ function TeamsForm() {
 
   return (
     <Pane display='flex' justifyContent='center' flexDirection='column'>
-      <Pane elevation={2} className='form-container' alignSelf='center'>
-        <Heading size={700} marginBottom={24}>
-          Adicionar Times
-        </Heading>
+      <Pane className='form-container' alignSelf='center'>
+        <Heading className='title-h2'>Adicionar Uma Modalidade</Heading>
 
-        <Pane className='form'>
+        <Pane className='form-registration'>
           <TextInputField
-            label='Nome do Time'
-            placeholder='O nome do time'
+            label='Nome do esporte'
+            placeholder='O nome do esporte'
             value={sport}
             onChange={(e) => setSport(e.target.value)}
           />
@@ -113,7 +111,7 @@ function TeamsForm() {
         </Pane>
       </Pane>
 
-      <Pane elevation={2} className='bg-light' padding={36}>
+      <Pane className='bg-light' padding={36}>
         <Heading size={700} marginBottom={24}>
           Esportes
         </Heading>

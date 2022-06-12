@@ -1,13 +1,11 @@
 import React from 'react';
-import MyBets from './MyBets';
-import MyProfile from './MyProfile';
+import MyBets from './user/Bets';
+import MyProfile from './user/Profile';
 import { Link } from 'react-router-dom';
 import { getUserInfo, userEdit } from '../api/user';
 import { UserContext } from '../context/UserContext';
 import { getBetsByUserId, removeBetById } from '../api/bet';
 import { Avatar, Dialog, Pane } from 'evergreen-ui';
-import '../css/menu.css';
-import '../css/bet.css';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 function Menu() {
@@ -23,8 +21,8 @@ function Menu() {
     let { data: response } = await getBetsByUserId(user._id);
     if (response.success) {
       setMyBets(response.bets);
-      setIsMyBetsShown(true);
     }
+    setIsMyBetsShown(true);
   };
 
   const handleRemoveBet = async (id) => {
@@ -129,13 +127,11 @@ function Menu() {
         confirmLabel='Fechar'
         onCloseComplete={() => setIsMyBetsShown(false)}
       >
-        {myBets.length > 0 && (
-          <MyBets
-            bets={myBets}
-            handleRemoveBet={handleRemoveBet}
-            setMyBetsIsShown={setIsMyBetsShown}
-          />
-        )}
+        <MyBets
+          bets={myBets}
+          handleRemoveBet={handleRemoveBet}
+          setMyBetsIsShown={setIsMyBetsShown}
+        />
       </Dialog>
 
       <Dialog

@@ -3,7 +3,7 @@ import {
   Button,
   Heading,
   Pane,
-  Select,
+  SelectField,
   Small,
   TextInputField,
   Alert,
@@ -53,7 +53,7 @@ function Games() {
         errorHandler(ERROR_DB_MESSAGE, setError, responseGames.message);
       }
     } else {
-      // handl post game error
+      // handle post game error
       errorHandler(ERROR_DB_MESSAGE, setError, response.message);
     }
   };
@@ -64,24 +64,18 @@ function Games() {
 
   return (
     <Pane display='flex' justifyContent='center'>
-      <Pane elevation={2} className='form-container' alignSelf='center'>
-        <Heading size={700} marginBottom={24}>
-          Adicionar Jogo
-        </Heading>
+      <Pane className='form-container' alignSelf='center'>
+        <Heading className='title-h2'>Adicionar Jogo</Heading>
 
-        <Pane className='form'>
+        <Pane className='form-registration'>
           <Pane>
-            <Small className='label'>Time 1</Small>
-            <Select
-              marginTop={8}
-              width='100%'
-              className='select'
-              marginBottom={24}
+            <SelectField
+              label='Time 1'
               name='teamAId'
               value={game.teamAId}
               onChange={(e) => setGame({ ...game, teamAId: e.target.value })}
             >
-              <option value='' defaultChecked>
+              <option value='' defaultValue>
                 ---
               </option>
               {teams &&
@@ -91,21 +85,17 @@ function Games() {
                     {team.name}
                   </option>
                 ))}
-            </Select>
+            </SelectField>
           </Pane>
 
           <Pane>
-            <Small className='label'>Time 2</Small>
-            <Select
-              marginTop={8}
-              width='100%'
-              className='select'
-              marginBottom={24}
+            <SelectField
+              label='Time 2'
               name='teamB'
               value={game.teamBId}
               onChange={(e) => setGame({ ...game, teamBId: e.target.value })}
             >
-              <option value='' defaultChecked>
+              <option value='' defaultValue>
                 ---
               </option>
               {teams &&
@@ -115,7 +105,7 @@ function Games() {
                     {team.name}
                   </option>
                 ))}
-            </Select>
+            </SelectField>
           </Pane>
 
           <TextInputField
@@ -126,16 +116,12 @@ function Games() {
           />
 
           <Pane>
-            <Small className='label'>Esporte</Small>
-            <Select
-              marginTop={8}
-              width='100%'
-              className='select'
-              marginBottom={24}
+            <SelectField
+              label='Esporte'
               name='type'
               onChange={(e) => setGame({ ...game, type: e.target.value })}
             >
-              <option value='' defaultChecked>
+              <option value='' defaultValue>
                 ---
               </option>
               {sports &&
@@ -145,7 +131,7 @@ function Games() {
                     {sport.name}
                   </option>
                 ))}
-            </Select>
+            </SelectField>
           </Pane>
 
           <TextInputField

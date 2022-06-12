@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Heading, Pane } from 'evergreen-ui';
-import Banner from '../elements/Banner';
+import Banner from '../elements/banner/Banner';
 import esports from '../api/esports.json';
 import '../css/game.css';
 

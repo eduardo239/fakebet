@@ -1,14 +1,12 @@
 import React from 'react';
-import Banner from '../elements/Banner';
-import Games from '../elements/Games';
 import Footer from '../elements/Footer';
+import Games from '../elements/game/Games';
+import Banner from '../elements/banner/Banner';
 import { GameContext } from '../context/GameContext';
 import { TeamContext } from '../context/TeamContext';
 import { useNavigate } from 'react-router-dom';
 import { uppercaseFirstLetter } from '../utils/utils';
 import { Pane, Tablist, Tab, Pagination } from 'evergreen-ui';
-import '../css/game.css';
-import '../css/menu.css';
 
 function ComponentHome() {
   const navigate = useNavigate();
@@ -24,11 +22,23 @@ function ComponentHome() {
     navigate(`/all/${sport.name}/${page}`);
   };
 
+  // FIXME: mudar de outra página, para home, recarregar os itens da página
+  // React.useState(() => {
+  //   let mounted = true;
+  //   if (mounted) {
+  //     setSport(INITIAL_STATE_SPORT);
+  //   }
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, []);
+
   return (
-    <Pane className='main-content'>
-      <Banner></Banner>
-      <Pane className='games-container' flex={1}>
-        <Tablist padding={8} flexBasis={240} className='tab-game-menu'>
+    <Pane className='main-container'>
+      <Banner />
+
+      <Pane flex={1}>
+        <Tablist padding={8} flexBasis={240} className='bg-dark-alternative-2'>
           {sports.map((tab, index) => (
             <Tab
               key={tab._id}
@@ -78,7 +88,7 @@ function ComponentHome() {
         ></Pagination>
       </Pane>
 
-      <Footer></Footer>
+      <Footer />
     </Pane>
   );
 }
