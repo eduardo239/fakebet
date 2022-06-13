@@ -13,9 +13,9 @@ const GameContextContent = ({ children }) => {
     teamBId: '',
     teamAScore: 0,
     teamBScore: 0,
-    teamAOdd: 1,
-    teamBOdd: 1,
-    createdAt: '',
+    teamAOdd: 1.45,
+    teamBOdd: 1.55,
+    date: '',
     winner: '',
     type: '',
   });
@@ -43,7 +43,7 @@ const GameContextContent = ({ children }) => {
       teamBScore: 0,
       teamAOdd: 0.0,
       teamBOdd: 0.0,
-      createdAt: '',
+      date: '',
       winner: '',
       type: '',
     });

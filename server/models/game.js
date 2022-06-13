@@ -38,6 +38,10 @@ const gameSchema = new mongoose.Schema(
       ref: 'Sport',
       required: true,
     },
+    date: {
+      type: Date,
+      required: true,
+    },
   },
   { timestamps: true }
 );

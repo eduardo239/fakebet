@@ -105,3 +105,14 @@ export function convertDateToFormat(date) {
 export function sumArray(array) {
   return array.reduce((a, b) => a + b, 0);
 }
+
+// check if game is today
+export function isToday(date) {
+  let d = new Date(date);
+  let today = new Date();
+  return (
+    d.getDate() === today.getDate() &&
+    d.getMonth() === today.getMonth() &&
+    d.getFullYear() === today.getFullYear()
+  );
+}

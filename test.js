@@ -24,8 +24,6 @@ function flippingMatrix(matrix) {
     max_row.push(row_total);
     max_col.push(col_total);
   }
-  console.log(max_row);
-  console.log(max_col);
 }
 
 flippingMatrix(mat);

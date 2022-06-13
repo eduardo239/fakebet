@@ -13,7 +13,7 @@ router.post('/add', (req, res, next) => {
     teamBScore: req.body.teamBScore,
     teamAOdd: replaceCommaWithDot('' + req.body.teamAOdd),
     teamBOdd: replaceCommaWithDot('' + req.body.teamBOdd),
-    createdAt: req.body.createdAt,
+    date: req.body.date,
     winner: req.body.winner,
     type: req.body.type,
   });
@@ -113,7 +113,7 @@ router.get('/:sportId/:page', (req, res, next) => {
         res.json({ success: false, message: ERROR_MESSAGE, err });
       }
       if (!games) {
-        res.json({ success: false, message: `GAMES NOT FOUND` });
+        res.json({ success: false, message: `JOGOS NÃO ENCONTRADOS` });
       } else {
         res.json({ success: true, message: `GAMES FOUND`, games });
       }

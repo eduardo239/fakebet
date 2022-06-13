@@ -1,6 +1,4 @@
 import React from 'react';
-import BetTeam from '../bet/Team';
-import BetDraw from '../bet/Draw';
 import BetValue from '../bet/Input';
 import { postBet } from '../../api/bet';
 import { userEdit } from '../../api/user';
@@ -9,8 +7,7 @@ import { GameContext } from '../../context/GameContext';
 import { useNavigate } from 'react-router-dom';
 import { errorHandler } from '../../utils/error';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { convertDateToFormat } from '../../utils/utils';
-import { Pane, Alert, Paragraph } from 'evergreen-ui';
+import { Pane, Alert } from 'evergreen-ui';
 import {
   ERROR_DB_MESSAGE,
   ERROR_INSUFFICIENT_FUNDS,
@@ -19,6 +16,12 @@ import {
   SUCCESS_BET,
 } from '../../utils/constants';
 import '../../css/game.css';
+import GameLogo from './GameLogo';
+import GameName from './GameName';
+import GameNameDraw from './GameNameDraw';
+import GameButton from './GameButton';
+import GameLogoDraw from './GameLogoDraw';
+import GameToday from './GameToday';
 
 function ElementGame({ game }) {
   const navigate = useNavigate();
@@ -120,7 +123,7 @@ function ElementGame({ game }) {
     errorHandler(ERROR_RESET, setMessage);
   };
 
-  const onClick = (id) => {
+  const handleMatchClick = (id) => {
     navigate(`/all/${sport.name}/match/${id}`);
   };
 
@@ -133,51 +136,57 @@ function ElementGame({ game }) {
           </Alert>
         </Pane>
       )}
+      {/* new */}
       <Pane
-        className={`game-card--container ${
-          startAnimation ? 'padding-bottom--54' : ''
-        }`}
+        className={`${startAnimation ? 'padding-bottom--54' : ''}`}
         paddingBottom={showValue ? '54px' : '0'}
       >
-        <Pane
-          display='flex'
-          alignItems='flex-end'
-          justifyContent='space-between'
-          paddingTop={16}
-          paddingBottom={4}
-        >
-          <BetTeam
-            onClick={() => onClick(game._id)}
-            team={game.teamAId}
-            showInput={showInput}
-            odds={parseFloat(game.teamAOdd).toFixed(2)}
-          />
+        <Pane>
+          <Pane border='1px solid #075' margin={1} padding={18}>
+            <table width='100%'>
+              <tbody>
+                <tr
+                  style={{ verticalAlign: 'middle', textAlign: 'center' }}
+                  onClick={() => handleMatchClick(game._id)}
+                >
+                  <GameLogo team={game.teamAId} />
+                  <GameLogoDraw />
+                  <GameLogo team={game.teamBId} />
+                </tr>
+                <tr>
+                  <GameName team={game.teamAId} />
+                  <GameNameDraw />
+                  <GameName team={game.teamBId} />
+                </tr>
+                <tr>
+                  <GameButton
+                    team={game.teamAId}
+                    odd={game.teamAOdd}
+                    showInput={showInput}
+                  />
+                  <GameButton
+                    team={game.teamBId}
+                    odd={13.13}
+                    showInput={showInput}
+                  />
+                  <GameButton
+                    team={game.teamBId}
+                    odd={game.teamBOdd}
+                    showInput={showInput}
+                  />
+                </tr>
+              </tbody>
+            </table>
+            <GameToday game={game} />
 
-          <BetDraw
-            showInput={showInput}
-            odds={parseFloat((game.teamAOdd / game.teamBOdd) * 11).toFixed(2)}
-          />
-
-          <BetTeam
-            onClick={() => onClick(game._id)}
-            team={game.teamBId}
-            showInput={showInput}
-            odds={parseFloat(game.teamBOdd).toFixed(2)}
-          />
+            <BetValue
+              betRef={betRef}
+              showValue={showValue}
+              addBet={addBet}
+              closeBet={closeBet}
+            />
+          </Pane>
         </Pane>
-
-        <Pane marginBottom={8}>
-          <Paragraph textAlign='center' className='small light-alternate-2'>
-            {convertDateToFormat(game.createdAt)}
-          </Paragraph>
-        </Pane>
-
-        <BetValue
-          betRef={betRef}
-          showValue={showValue}
-          addBet={addBet}
-          closeBet={closeBet}
-        />
       </Pane>
     </Pane>
   );

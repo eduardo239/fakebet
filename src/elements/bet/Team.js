@@ -29,5 +29,5 @@ function BetTeam({ showInput, odds, onClick, team }) {
     </Pane>
   );
 }
-
+// TODO: remove component
 export default BetTeam;

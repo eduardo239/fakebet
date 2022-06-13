@@ -23,14 +23,10 @@
   box-sizing: border-box;
 }
 body {
- background-color: var(--dark-alternate);
+  background-color: var(--dark-alternate);
   color: var(--light-color);
   font-family: var(--font-sans);
   overflow-y: scroll;
-
-
-
-
 }
 a {
   text-decoration: none;
@@ -43,7 +39,7 @@ h3 {
 
 img {
   max-width: 100%;
-  display: block;
+  display: inline-block;
 }
 code {
   font-family: var(--font-code);
@@ -73,7 +69,6 @@ small {
   font-size: 14px;
   font-weight: 500;
 }
-
 
 /* new */
 /* -------------------- bg colors -------------------- */
@@ -187,4 +182,9 @@ small {
 }
 .done {
   background-color: var(--primary-color);
+}
+.today {
+  background-color: var(--primary-color);
+  color: var(--primary-contrast);
+  font-family: var(--font-code);
 }

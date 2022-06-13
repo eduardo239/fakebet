@@ -58,7 +58,7 @@ function Games() {
   };
 
   const handleUpdate = () => {
-    console.log('update');
+    console.warning('update');
   };
 
   return (
@@ -110,8 +110,8 @@ function Games() {
           <TextInputField
             type='datetime-local'
             label='Data e Hora do Jogo'
-            value={game.createdAt}
-            onChange={(e) => setGame({ ...game, createdAt: e.target.value })}
+            value={game.date}
+            onChange={(e) => setGame({ ...game, date: e.target.value })}
           />
 
           <Pane>
