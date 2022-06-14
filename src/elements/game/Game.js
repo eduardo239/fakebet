@@ -137,12 +137,9 @@ function ElementGame({ game }) {
         </Pane>
       )}
       {/* new */}
-      <Pane
-        className={`${startAnimation ? 'padding-bottom--54' : ''}`}
-        paddingBottom={showValue ? '54px' : '0'}
-      >
-        <Pane>
-          <Pane border='1px solid #075' margin={1} padding={18}>
+      <Pane>
+        <Pane className='game-item' paddingBottom={showValue ? '38px' : '0'}>
+          <Pane margin={1} padding={18}>
             <table width='100%'>
               <tbody>
                 <tr
@@ -177,7 +174,6 @@ function ElementGame({ game }) {
                 </tr>
               </tbody>
             </table>
-            <GameToday game={game} />
 
             <BetValue
               betRef={betRef}
@@ -185,6 +181,8 @@ function ElementGame({ game }) {
               addBet={addBet}
               closeBet={closeBet}
             />
+
+            <GameToday game={game} />
           </Pane>
         </Pane>
       </Pane>

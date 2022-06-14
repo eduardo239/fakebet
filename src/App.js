@@ -15,7 +15,6 @@ import { AdminContextContent } from './context/AdminContext';
 
 function App() {
   const { setUser } = React.useContext(UserContext);
-
   const [, setUserLocalStorage] = useLocalStorage('user', null);
 
   React.useEffect(() => {
@@ -30,7 +29,7 @@ function App() {
 
   return (
     <Pane className='app-container'>
-      <Menu></Menu>
+      <Menu />
 
       <Routes>
         <Route exact path='/' element={<Home />} />

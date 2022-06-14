@@ -6,6 +6,7 @@ import { GameContext } from '../context/GameContext';
 import { TeamContext } from '../context/TeamContext';
 import { uppercaseFirstLetter } from '../utils/utils';
 import { Pane, Tablist, Tab, Pagination } from 'evergreen-ui';
+import { useNavigate } from 'react-router-dom';
 
 function ComponentHome() {
   const { sportsData } = React.useContext(TeamContext);
@@ -14,11 +15,18 @@ function ComponentHome() {
     totalPages,
     setPage,
     setSport,
+    sport,
     gameData,
     gameError,
     gameLoading,
   } = React.useContext(GameContext);
+  const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handlePagination = (index) => {
+    setPage(index);
+    navigate(`/all/${sport.name}/${index}`);
+  };
 
   return (
     <Pane className='main-container'>
@@ -73,9 +81,9 @@ function ComponentHome() {
         <Pagination
           page={page || 1}
           totalPages={totalPages}
-          onPreviousPage={() => setPage(page - 1)}
-          onPageChange={(x) => setPage(x)}
-          onNextPage={() => setPage(page + 1)}
+          onPreviousPage={() => handlePagination(page - 1)}
+          onPageChange={(x) => handlePagination(x)}
+          onNextPage={() => handlePagination(page + 1)}
         ></Pagination>
       </Pane>
 

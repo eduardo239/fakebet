@@ -69,7 +69,13 @@ small {
   font-size: 14px;
   font-weight: 500;
 }
-
+.btn-primary {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--light-color);
+  font-family: var(--font-code);
+}
+/* TODO: create button style */
 /* new */
 /* -------------------- bg colors -------------------- */
 .bg-light {
@@ -183,8 +189,16 @@ small {
 .done {
   background-color: var(--primary-color);
 }
-.today {
-  background-color: var(--primary-color);
-  color: var(--primary-contrast);
+.today p {
+  background-color: var(--primary-contrast);
+  color: var(--primary-color);
+}
+.not-today p {
+  color: var(--light-color);
+}
+.today p,
+.not-today p {
   font-family: var(--font-code);
+  font-size: 0.7rem;
+  text-align: center;
 }

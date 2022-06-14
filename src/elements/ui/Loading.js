@@ -6,8 +6,7 @@ function Loading() {
       display='flex'
       alignItems='center'
       justifyContent='center'
-      flex={1}
-      height={370}
+      height={220}
     >
       <Spinner />
     </Pane>

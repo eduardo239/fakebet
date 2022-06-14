@@ -17,11 +17,12 @@ import { GameContext } from '../context/GameContext';
 import { getGamesByType } from '../api/game';
 
 function SignInView() {
+  const navigate = useNavigate();
+
   const { setUser } = React.useContext(UserContext);
   const { setAllGamesByType } = React.useContext(GameContext);
   const [, setUserLocalStorage] = useLocalStorage('user', null);
 
-  const navigate = useNavigate();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState({

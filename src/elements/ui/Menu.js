@@ -1,7 +1,7 @@
 import React from 'react';
 import MyBets from '../user/Bets';
 import MyProfile from '../user/Profile';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GameContext } from '../../context/GameContext';
 import { UserContext } from '../../context/UserContext';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
@@ -11,6 +11,7 @@ import { getBetsByUserId, removeBetById } from '../../api/bet';
 import { INITIAL_STATE_SPORT } from '../../utils/constants';
 
 function Menu() {
+  let navigate = useNavigate();
   const { user, setUser, logout } = React.useContext(UserContext);
   const { setSport } = React.useContext(GameContext);
   const [, setUserLocalStorage] = useLocalStorage('user', null);
@@ -26,6 +27,12 @@ function Menu() {
       setMyBets(response.bets);
     }
     setIsMyBetsShown(true);
+  };
+
+  const handleHomePage = (e) => {
+    e.preventDefault();
+    setSport(INITIAL_STATE_SPORT);
+    navigate('/');
   };
 
   const handleRemoveBet = async (id) => {
@@ -60,11 +67,7 @@ function Menu() {
     <Pane position='relative'>
       <Pane className='menu'>
         <Pane display='flex' gap={4} alignItems='center'>
-          <Link
-            to='/'
-            className='menu-link'
-            onClick={() => setSport(INITIAL_STATE_SPORT)}
-          >
+          <Link to='#' className='menu-link' onClick={handleHomePage}>
             FAKEBET
           </Link>
           {user && (

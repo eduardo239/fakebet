@@ -16,6 +16,7 @@
 }
 
 .game-bet--value {
+  margin-top: 25px;
   width: 100%;
   position: absolute;
   top: 0;
@@ -61,4 +62,12 @@
   text-align: center;
   width: 93px;
   font-size: 0.9rem;
+}
+.game-item {
+  border: 1px dashed var(--dark-alternate-2);
+  margin: 3px;
+}
+
+.game-item:hover {
+  border: 1px dashed #444;
 }
