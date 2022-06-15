@@ -6,7 +6,7 @@ export default function GameLogo({ team }) {
       style={{
         verticalAlign: 'middle',
         background: '#bdbdbd',
-        height: '60px',
+        height: '73px',
         width: '93px',
       }}
     >

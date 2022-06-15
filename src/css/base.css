@@ -69,6 +69,30 @@ small {
   font-size: 14px;
   font-weight: 500;
 }
+
+/* button */
+button {
+  border: none;
+  outline: none;
+}
+button:hover {
+  cursor: pointer;
+  filter: brightness(110%);
+}
+
+.btn {
+  -webkit-font-smoothing: antialiased;
+  -webkit-appearance: none;
+  padding: 0 16px;
+  /* line-height: 32px; */
+  font-weight: 500;
+  font-size: 12px;
+  height: 32px;
+  border-radius: 5px;
+}
+.btn-full {
+  width: 100%;
+}
 .btn-primary {
   background: var(--primary-color);
   border-color: var(--primary-color);
@@ -188,6 +212,10 @@ small {
 }
 .done {
   background-color: var(--primary-color);
+}
+.today,
+.not-today {
+  margin-top: 6px;
 }
 .today p {
   background-color: var(--primary-contrast);

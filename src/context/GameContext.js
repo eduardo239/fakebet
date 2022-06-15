@@ -24,6 +24,7 @@ const GameContextContent = ({ children }) => {
   const [allGamesByType, setAllGamesByType] = useState([]);
   const [allGamesPerPage, setAllGamesPerPage] = useState([]);
   const [isGameUpdating, setGameIsUpdating] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
@@ -103,6 +104,8 @@ const GameContextContent = ({ children }) => {
         gameData,
         gameError,
         gameLoading,
+        setSelectedIndex,
+        selectedIndex,
       }}
     >
       {children}

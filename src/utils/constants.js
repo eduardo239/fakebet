@@ -69,3 +69,7 @@ export const INITIAL_STATE_SPORT = {
   _id: '62a49a0e5bd76e9774316d33',
   name: 'futebol',
 };
+
+export const DRAW_STATE = {
+  name: 'Empate',
+};

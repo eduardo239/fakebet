@@ -9,6 +9,7 @@ import { errorHandler } from '../../utils/error';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { Pane, Alert } from 'evergreen-ui';
 import {
+  DRAW_STATE,
   ERROR_DB_MESSAGE,
   ERROR_INSUFFICIENT_FUNDS,
   ERROR_INVALID_VALUE,
@@ -32,7 +33,6 @@ function ElementGame({ game }) {
   const [odd, setOdd] = React.useState(1);
   const [pick, setPick] = React.useState(null);
   const [showValue, setShowValue] = React.useState(false);
-  const [startAnimation, setStartAnimation] = React.useState(false);
   const [message, setMessage] = React.useState({
     title: '',
     message: '',
@@ -43,7 +43,6 @@ function ElementGame({ game }) {
   const betRef = React.useRef();
 
   const showInput = (e, pick) => {
-    setStartAnimation(true);
     setTimeout(() => {
       setShowValue(true);
     }, 250); // .25 from animation.css
@@ -98,7 +97,6 @@ function ElementGame({ game }) {
           );
 
           setTimeout(() => {
-            setStartAnimation(false);
             setShowValue(false);
             errorHandler(ERROR_RESET, setMessage);
 
@@ -161,11 +159,13 @@ function ElementGame({ game }) {
                     odd={game.teamAOdd}
                     showInput={showInput}
                   />
+
                   <GameButton
-                    team={game.teamBId}
-                    odd={13.13}
+                    team={DRAW_STATE}
+                    odd={game.teamAOdd * game.teamBOdd}
                     showInput={showInput}
                   />
+
                   <GameButton
                     team={game.teamBId}
                     odd={game.teamBOdd}

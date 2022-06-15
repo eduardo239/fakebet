@@ -11,7 +11,6 @@ router.post('/add', (req, res, next) => {
     value: req.body.value,
     odd: req.body.odd,
     profit: req.body.profit,
-    createdAt: new Date(),
     win: req.body.win,
   });
 

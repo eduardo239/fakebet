@@ -13,12 +13,12 @@ import { INITIAL_STATE_SPORT } from '../../utils/constants';
 function Menu() {
   let navigate = useNavigate();
   const { user, setUser, logout } = React.useContext(UserContext);
-  const { setSport } = React.useContext(GameContext);
+  const { setSport, setSelectedIndex } = React.useContext(GameContext);
   const [, setUserLocalStorage] = useLocalStorage('user', null);
 
   const [isMyBetsShown, setIsMyBetsShown] = React.useState(false);
   const [isProfileShown, setIsProfileShown] = React.useState(false);
-  const [isAmountShown, setIsAmountShown] = React.useState(false);
+  const [isAmountShown, setIsAmountShown] = React.useState(true);
   const [myBets, setMyBets] = React.useState([]);
 
   const onMyBetsClick = async () => {
@@ -32,6 +32,7 @@ function Menu() {
   const handleHomePage = (e) => {
     e.preventDefault();
     setSport(INITIAL_STATE_SPORT);
+    setSelectedIndex(0);
     navigate('/');
   };
 
@@ -75,11 +76,6 @@ function Menu() {
               DEPÓSITO
             </Link>
           )}
-          {user && (
-            <Link to='#' onClick={() => getUserInfo()} className='menu-link'>
-              {user && user.username}
-            </Link>
-          )}
         </Pane>
 
         <Pane display='flex' gap={4} alignItems='center'>
@@ -120,13 +116,16 @@ function Menu() {
               SAIR
             </Link>
           )}
-          <Link to='#' onClick={() => setIsProfileShown(!isProfileShown)}>
-            <Avatar
-              src='https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg'
-              name='Alan Turing'
-              size={34}
-            />
-          </Link>
+
+          {user && (
+            <Link
+              to='#'
+              onClick={() => setIsProfileShown(!isProfileShown)}
+              className='menu-link'
+            >
+              {user && user.username}
+            </Link>
+          )}
         </Pane>
       </Pane>
 

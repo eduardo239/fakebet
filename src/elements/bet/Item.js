@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  Heading,
-  IconButton,
-  ListItem,
   Pane,
-  TickCircleIcon,
+  Heading,
+  ListItem,
   TrashIcon,
+  IconButton,
   UnorderedList,
+  TickCircleIcon,
 } from 'evergreen-ui';
-import { convertDateToFormat } from '../../utils/utils';
+import { compareDate, convertDateToFormat } from '../../utils/utils';
 
 function BetItem({ bet, handleRemoveBet }) {
   if (bet)
@@ -19,10 +19,27 @@ function BetItem({ bet, handleRemoveBet }) {
             {bet.gameId?.teamAId?.name} VS {bet.gameId?.teamBId?.name}
           </Heading>
           <UnorderedList>
-            <ListItem icon={TickCircleIcon} iconColor='success'>
-              <b>{bet.pick}</b>, Aposta R${bet?.value}, Odds: {bet.odd}, Ganhos:
-              R$
-              {bet.profit.toFixed(2)}
+            <ListItem
+              icon={TickCircleIcon}
+              iconColor='success'
+              fontFamily='monospace'
+            >
+              <b>{bet.pick}</b>, Aposta R${bet?.value}, Odds:{' '}
+              {bet.odd.toFixed(2)}, Ganhos: R$
+              {bet.profit.toFixed(2)}, Dia:{' '}
+              {convertDateToFormat(bet.gameId.date)}
+            </ListItem>
+            <ListItem
+              icon={TickCircleIcon}
+              iconColor={`${
+                compareDate(bet.createdAt, bet.gameId.date)
+                  ? 'success'
+                  : 'danger'
+              }`}
+            >
+              {compareDate(bet.createdAt, bet.gameId.date)
+                ? 'Aposta Confirmada'
+                : 'Jogo encerrado'}
             </ListItem>
           </UnorderedList>
           <Pane className='flex-between'>
@@ -32,6 +49,7 @@ function BetItem({ bet, handleRemoveBet }) {
         </Pane>
         <Pane display='flex' alignItems='center' gap={8}>
           <IconButton
+            disabled={!compareDate(bet.createdAt, bet.gameId.date)}
             icon={TrashIcon}
             intent='minimal'
             onClick={() => handleRemoveBet(bet._id)}

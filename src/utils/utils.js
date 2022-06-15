@@ -116,3 +116,17 @@ export function isToday(date) {
     d.getFullYear() === today.getFullYear()
   );
 }
+
+/**
+ *
+ * @param {Date} date1 Game date
+ * @param {Date} date2 Bet date
+ * @returns
+ */
+// compare date, return true if game date is after bet date
+export function compareDate(date1, date2) {
+  let d1 = new Date(date1);
+  let d2 = new Date(date2);
+
+  return d2 > d1;
+}

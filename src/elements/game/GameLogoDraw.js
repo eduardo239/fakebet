@@ -5,7 +5,7 @@ export default function GameLogoDraw() {
         verticalAlign: 'middle',
         background: '#1c1c1c',
         color: '#fdfdfd',
-        height: '60px',
+        height: '73px',
         width: '93px',
       }}
     >

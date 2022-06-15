@@ -19,9 +19,10 @@ function ComponentHome() {
     gameData,
     gameError,
     gameLoading,
+    setSelectedIndex,
+    selectedIndex,
   } = React.useContext(GameContext);
   const navigate = useNavigate();
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handlePagination = (index) => {
     setPage(index);
