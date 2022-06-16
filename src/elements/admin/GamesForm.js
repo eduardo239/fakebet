@@ -10,16 +10,17 @@ import {
 import { errorHandler } from '../../utils/error';
 import { GameContext } from '../../context/GameContext';
 import { TeamContext } from '../../context/TeamContext';
-import { getGames, postGame, getGamesByType } from '../../api/game';
+import { getGames, postGame, getGamesByType, updateGame } from '../../api/game';
 import {
   ERROR_RESET,
   ERROR_DB_MESSAGE,
   SUCCESS_GAME_REGISTER,
 } from '../../utils/constants';
+import { convertDateToMongoose } from '../../utils/utils';
 
 function Games() {
   const { teams, sportsData, resetTeam } = React.useContext(TeamContext);
-  const { game, sport, setGame, setAllGames, setAllGamesByType } =
+  const { game, sport, setGame, setAllGames, setAllGamesByType, resetGame } =
     React.useContext(GameContext);
 
   const [error, setError] = React.useState({
@@ -57,8 +58,13 @@ function Games() {
     }
   };
 
-  const handleUpdate = () => {
-    console.warning('update');
+  const handleUpdate = async () => {
+    await updateGame(game);
+    resetGame();
+    let { data: response } = await getGames();
+    if (response.success) {
+      setAllGames(response.games);
+    }
   };
 
   return (
@@ -81,7 +87,7 @@ function Games() {
                 teams.length > 0 &&
                 teams.map((team) => (
                   <option key={team._id} value={team._id}>
-                    {team.name}
+                    {team?.name ? team.name : 'Não informado'}
                   </option>
                 ))}
             </SelectField>
@@ -101,7 +107,7 @@ function Games() {
                 teams.length > 0 &&
                 teams.map((team) => (
                   <option key={team._id} value={team._id}>
-                    {team.name}
+                    {team?.name ? team.name : 'Não definido'}
                   </option>
                 ))}
             </SelectField>
@@ -110,7 +116,7 @@ function Games() {
           <TextInputField
             type='datetime-local'
             label='Data e Hora do Jogo'
-            value={game.date}
+            value={convertDateToMongoose(game.date)}
             onChange={(e) => setGame({ ...game, date: e.target.value })}
           />
 
@@ -126,7 +132,7 @@ function Games() {
               {sportsData?.sports?.length > 0 &&
                 sportsData?.sports?.map((sport) => (
                   <option key={sport._id} value={sport._id}>
-                    {sport.name}
+                    {sport?.name ? sport.name : 'Não definido'}
                   </option>
                 ))}
             </SelectField>
@@ -135,14 +141,14 @@ function Games() {
           <TextInputField
             type='number'
             label='Pontuação Time 1'
-            value={game.team1Result}
+            value={game.teamAScore}
             onChange={(e) => setGame({ ...game, teamAScore: e.target.value })}
           />
 
           <TextInputField
             type='number'
             label='Pontuação Time 2'
-            value={game.team2Result}
+            value={game.teamBScore}
             onChange={(e) => setGame({ ...game, teamBScore: e.target.value })}
           />
 
@@ -163,7 +169,7 @@ function Games() {
           <TextInputField
             label='Vencedor'
             placeholder='Vencedor do Jogo'
-            value={game.winner}
+            value={game?.winner ? game.winner : '---'}
             onChange={(e) => setGame({ ...game, winner: e.target.value })}
           />
         </Pane>

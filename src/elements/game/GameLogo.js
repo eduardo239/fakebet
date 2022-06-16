@@ -12,8 +12,8 @@ export default function GameLogo({ team }) {
     >
       <img
         className='team-logo--small'
-        src={EMBLEM_URL + (team.emblem || 'default-team-logo.png')}
-        alt={team.name}
+        src={EMBLEM_URL + (team?.emblem || 'default-team-logo.png')}
+        alt={team?.name}
       />
     </td>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
-import { getGames, removeGame } from '../../api/game';
 import { GameContext } from '../../context/GameContext';
-import { convertDate, convertDateToMongoose } from '../../utils/utils';
-import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
+import { convertDate, isToday } from '../../utils/utils';
+import { getGames, removeGame } from '../../api/game';
+import { Pane, Dialog, Button, Paragraph } from 'evergreen-ui';
 
 function GamesTable() {
   const { game, setGame, setGames, setAllGames, allGames, setGameIsUpdating } =
@@ -11,10 +11,8 @@ function GamesTable() {
   const [isShownDeleteModal, setIsShownDeleteModal] = React.useState(false);
 
   const handleSelect = (game) => {
-    setGame({
-      ...game,
-      createdAt: convertDateToMongoose(game.createdAt),
-    });
+    console.log(game);
+    setGame(game);
     setGameIsUpdating(true);
   };
 
@@ -32,7 +30,7 @@ function GamesTable() {
 
   React.useEffect(() => {
     let mounted = true;
-
+    // FIXME: 3 times, fetch all games
     if (mounted) {
       (async () => {
         const { data: responseGames } = await getGames();
@@ -42,49 +40,57 @@ function GamesTable() {
         }
       })();
     }
+
     return () => {
       mounted = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return (
-    <Pane
-      display='flex'
-      flexDirection='column'
-      justifyContent='center'
-      width='100%'
-    >
-      <Table className='table'>
-        <Table.Head>
-          <Table.TextHeaderCell>Time 1</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Time 2</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Resultado Time 1</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Resultado Time 2</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Última Atualização</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Vencedor</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Remover</Table.TextHeaderCell>
-        </Table.Head>
-        <Table.Body height={240}>
-          {allGames &&
-            allGames.length > 0 &&
-            allGames.map((item) => (
-              <Table.Row
-                className={`${
-                  game && item._id === game._id ? 'selected' : ''
-                } table-row`}
-                key={item._id}
-                height={40}
-                isSelectable
-                onSelect={() => handleSelect(item)}
-              >
-                <Table.TextCell>{item.teamAId.name}</Table.TextCell>
-                <Table.TextCell>{item.teamBId.name}</Table.TextCell>
-                <Table.TextCell>{item.teamAScore}</Table.TextCell>
-                <Table.TextCell>{item.teamBScore}</Table.TextCell>
-                <Table.TextCell>{convertDate(item.updatedAt)}</Table.TextCell>
-                <Table.TextCell>{item.winner || 'none'}</Table.TextCell>
+  }, [setAllGames]);
 
-                <Table.TextCell>
+  return (
+    <Pane className='flex-column-center-100'>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Home Team</th>
+            <th>HT Score</th>
+            <th>HT ODD</th>
+            <th>Draw Odd</th>
+            <th>Away Team</th>
+            <th>AT Score</th>
+            <th>AT ODD</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allGames.length > 0 &&
+            allGames.map((game) => (
+              <tr key={game._id} onClick={() => handleSelect(game)}>
+                <td
+                  style={{ width: '120px' }}
+                  className={`${isToday(game.date) ? 'today' : 'not-today'}`}
+                >
+                  <p>{convertDate(game.date)}</p>
+                </td>
+                <td style={{ paddingLeft: '8px' }}>
+                  {game.teamAId?.name ? game.teamAId.name : '---'}
+                </td>
+                <td style={{ paddingLeft: '8px' }}>{game.teamAScore}</td>
+                <td style={{ paddingLeft: '8px' }}>{game.teamAOdd}</td>
+                <td style={{ paddingLeft: '8px' }}>
+                  {((game.teamBOdd / game.teamAOdd) * 10).toFixed(2)}
+                </td>
+                <td style={{ paddingLeft: '8px' }}>
+                  {game.teamBId?.name ? game.teamBId.name : '---'}
+                </td>
+                <td style={{ paddingLeft: '8px' }}>{game.teamBScore}</td>
+                <td style={{ paddingLeft: '8px' }}>{game.teamBOdd}</td>
+                <td
+                  style={{
+                    width: '75px',
+                    textAlign: 'center',
+                  }}
+                >
                   <Button
                     appearance='primary'
                     intent='danger'
@@ -92,11 +98,12 @@ function GamesTable() {
                   >
                     Remover
                   </Button>
-                </Table.TextCell>
-              </Table.Row>
+                </td>
+              </tr>
             ))}
-        </Table.Body>
-      </Table>
+        </tbody>
+      </table>
+
       <Dialog
         isShown={isShownDeleteModal}
         title='Remover Time'

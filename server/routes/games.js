@@ -9,8 +9,8 @@ router.post('/add', (req, res, next) => {
   const newGame = new Game({
     teamAId: req.body.teamAId,
     teamBId: req.body.teamBId,
-    teamAScore: req.body.teamAScore,
-    teamBScore: req.body.teamBScore,
+    teamAScore: parseInt(req.body.teamAScore),
+    teamBScore: parseInt(req.body.teamBScore),
     teamAOdd: replaceCommaWithDot('' + req.body.teamAOdd),
     teamBOdd: replaceCommaWithDot('' + req.body.teamBOdd),
     date: req.body.date,
@@ -30,7 +30,7 @@ router.post('/add', (req, res, next) => {
 
 router.put('/edit', (req, res, next) => {
   Game.findByIdAndUpdate(
-    req.body.id,
+    req.body._id,
     { $set: req.body },
     { new: true },
     (err) => {

@@ -161,6 +161,13 @@ button:hover {
   align-items: flex-start;
   justify-content: center;
 }
+
+.flex-column-center-100 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
 /* -------------------- display plus -------------------- */
 .grid--span3 {
   grid-column: span 3;

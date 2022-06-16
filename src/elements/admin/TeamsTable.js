@@ -1,7 +1,8 @@
 import React from 'react';
 import { TeamContext } from '../../context/TeamContext';
 import { getTeams, removeTeam } from '../../api/team';
-import { Pane, Table, Dialog, Button, Paragraph } from 'evergreen-ui';
+import { Pane, Dialog, Button, Paragraph } from 'evergreen-ui';
+import '../../css/table.css';
 
 const URL_IMAGE = 'http://localhost:3003/images/emblems/';
 
@@ -43,61 +44,67 @@ function TeamsTable() {
   }, []);
 
   return (
-    <Pane
-      width='100%'
-      display='flex'
-      flexDirection='column'
-      justifyContent='center'
-    >
-      <Table className='table'>
-        <Table.Head>
-          <Table.TextHeaderCell>Emblema</Table.TextHeaderCell>
-          <Table.TextHeaderCell>id</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Nome</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Esporte</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Abreviação</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Remover</Table.TextHeaderCell>
-        </Table.Head>
-        <Table.Body height={240}>
-          {teams &&
-            teams.length > 0 &&
-            teams.map((item) => (
-              <Table.Row
-                className={`${
-                  team && item._id === team._id ? 'selected' : ''
-                } table-row`}
-                key={item._id}
-                height={40}
-                isSelectable
-                onSelect={() => handleSelect(item)}
+    <Pane className='flex-column-center-100'>
+      <table>
+        <thead>
+          <tr>
+            <th>Emblem</th>
+            <th>Name</th>
+            <th>Short Name</th>
+            <th
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {teams.length > 0 &&
+            teams.map((team) => (
+              <tr
+                onClick={() => handleSelect(team)}
+                key={team._id}
+                style={{ borderBottom: '1px dashed var(--dark-alternate-2)' }}
               >
-                <Table.TextCell>
+                <td
+                  style={{
+                    verticalAlign: 'middle',
+                    background: '#aaa',
+                    width: '60px',
+                    textAlign: 'center',
+                  }}
+                >
                   <img
                     className='table-icon--small'
-                    src={URL_IMAGE + (item.emblem || 'default-team-logo.png')}
-                    alt={item.name}
+                    src={`${URL_IMAGE}${
+                      team?.emblem ? team.emblem : 'default-team-logo.png'
+                    }`}
+                    alt={team.name}
                   />
-                </Table.TextCell>
-                <Table.TextCell>{item._id}</Table.TextCell>
-                <Table.TextCell>{item.name}</Table.TextCell>
-                <Table.TextCell>
-                  {item.type ? item.type.name : 'null'}
-                </Table.TextCell>
-                <Table.TextCell>{item.shortName}</Table.TextCell>
-
-                <Table.TextCell>
+                </td>
+                <td style={{ paddingLeft: '8px' }}>{team.name}</td>
+                <td style={{ paddingLeft: '8px' }}>{team.shortName}</td>
+                <td
+                  style={{
+                    width: '75px',
+                    textAlign: 'center',
+                  }}
+                >
                   <Button
                     appearance='primary'
                     intent='danger'
                     onClick={() => setIsShownDeleteModal(true)}
+                    marginRight={8}
                   >
                     Remover
                   </Button>
-                </Table.TextCell>
-              </Table.Row>
+                </td>
+              </tr>
             ))}
-        </Table.Body>
-      </Table>
+        </tbody>
+      </table>
 
       <Dialog
         isShown={isShownDeleteModal}

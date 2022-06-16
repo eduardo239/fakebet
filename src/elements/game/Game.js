@@ -135,55 +135,54 @@ function ElementGame({ game }) {
         </Pane>
       )}
       {/* new */}
-      <Pane>
-        <Pane className='game-item' paddingBottom={showValue ? '38px' : '0'}>
-          <Pane margin={1} padding={18}>
-            <table width='100%'>
-              <tbody>
-                <tr
-                  style={{ verticalAlign: 'middle', textAlign: 'center' }}
-                  onClick={() => handleMatchClick(game._id)}
-                >
-                  <GameLogo team={game.teamAId} />
-                  <GameLogoDraw />
-                  <GameLogo team={game.teamBId} />
-                </tr>
-                <tr>
-                  <GameName team={game.teamAId} />
-                  <GameNameDraw />
-                  <GameName team={game.teamBId} />
-                </tr>
-                <tr>
-                  <GameButton
-                    team={game.teamAId}
-                    odd={game.teamAOdd}
-                    showInput={showInput}
-                  />
 
-                  <GameButton
-                    team={DRAW_STATE}
-                    odd={game.teamAOdd * game.teamBOdd}
-                    showInput={showInput}
-                  />
+      <Pane className='game-item' paddingBottom={showValue ? '38px' : '0'}>
+        <Pane margin={1} padding={18}>
+          <table width='100%'>
+            <tbody>
+              <tr
+                style={{ verticalAlign: 'middle', textAlign: 'center' }}
+                onClick={() => handleMatchClick(game._id)}
+              >
+                <GameLogo team={game.teamAId} />
+                <GameLogoDraw />
+                <GameLogo team={game.teamBId} />
+              </tr>
+              <tr>
+                <GameName team={game.teamAId} />
+                <GameNameDraw />
+                <GameName team={game.teamBId} />
+              </tr>
+              <tr>
+                <GameButton
+                  team={game.teamAId}
+                  odd={game.teamAOdd}
+                  showInput={showInput}
+                />
 
-                  <GameButton
-                    team={game.teamBId}
-                    odd={game.teamBOdd}
-                    showInput={showInput}
-                  />
-                </tr>
-              </tbody>
-            </table>
+                <GameButton
+                  team={DRAW_STATE}
+                  odd={game.teamAOdd * game.teamBOdd}
+                  showInput={showInput}
+                />
 
-            <BetValue
-              betRef={betRef}
-              showValue={showValue}
-              addBet={addBet}
-              closeBet={closeBet}
-            />
+                <GameButton
+                  team={game.teamBId}
+                  odd={game.teamBOdd}
+                  showInput={showInput}
+                />
+              </tr>
+            </tbody>
+          </table>
 
-            <GameToday game={game} />
-          </Pane>
+          <BetValue
+            betRef={betRef}
+            showValue={showValue}
+            addBet={addBet}
+            closeBet={closeBet}
+          />
+
+          <GameToday game={game} />
         </Pane>
       </Pane>
     </Pane>
