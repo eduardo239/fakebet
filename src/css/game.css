@@ -2,19 +2,16 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
-
 .game-card--team {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  height: 125px;
-  gap: 8px;
+  display: flex;
   flex: 1;
-  margin: 2px;
+  flex-direction: column;
+  gap: 8px;
+  height: 125px;
+  justify-content: flex-end;
+  width: 100%;
 }
-
 .game-bet--value {
   margin-top: 36px;
   width: 100%;
@@ -25,49 +22,23 @@
   padding: 2px;
   border-radius: 3px;
 }
-
-/* Game element */
-.game {
-  background-color: var(--light-color);
-  width: 100%;
-}
-
-/*  */
-.game,
-.game-score {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  padding: 16px;
-}
-
-/* game page */
-.game-container {
-  background-color: var(--light-color);
-}
-
-.game-heading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-  gap: 16px;
-}
-
-/* new */
-/* TODO: continue */
-.game-bet--name {
-  height: 30px;
+/* -------------------- new -------------------- */
+.game-bet--logo {
   vertical-align: middle;
-  text-align: center;
+  background: #8a8a8a;
+  height: 93px;
   width: 93px;
+}
+.game-bet--name {
   font-size: 0.9rem;
+  height: 42px;
+  text-align: center;
+  vertical-align: middle;
+  width: 93px;
+  white-space: break-spaces;
 }
 .game-item {
   border: 1px dashed var(--dark-alternate-2);
   margin: 3px;
 }
 
-.game-item:hover {
-  border: 1px dashed #444;
-}

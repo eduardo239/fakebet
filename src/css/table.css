@@ -23,6 +23,7 @@ td {
   font-family: var(--font-code) !important;
 }
 
-td:not(:first-child) {
+/* td:not(:first-child) {
   border-left: 1px dashed var(--dark-alternate-2);
-}
+} */
+/* FIXME: td not first time */

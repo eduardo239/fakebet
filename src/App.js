@@ -30,7 +30,6 @@ function App() {
   return (
     <Pane className='app-container'>
       <Menu />
-
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/all/:type/:page' element={<Home />} />

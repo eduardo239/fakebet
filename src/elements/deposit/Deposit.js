@@ -20,6 +20,7 @@ import {
 } from '../../utils/constants';
 import { userAddBalance } from '../../api/user';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { postBalance } from '../../api/historyBalance';
 
 function DepositForm() {
   const { user, setUser } = React.useContext(UserContext);
@@ -56,10 +57,16 @@ function DepositForm() {
       },
     });
     if (response.success) {
-      // TODO: registrar metodo de pagamento, e data de pagamento
+      // TODO: registrar método de pagamento, e data de pagamento
       setUserLocalStorage(response.user);
       setUser(response.user);
       setIsDepositDialogShown(false);
+      postBalance({
+        type: 'deposit',
+        amount: parseFloat(value),
+        userId: user._id,
+        paymentMethod: method,
+      });
     } else {
       errorHandler(ERROR_GENERIC, setError);
     }

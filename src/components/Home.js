@@ -4,9 +4,9 @@ import Games from '../elements/game/Games';
 import Banner from '../elements/banner/Banner';
 import { GameContext } from '../context/GameContext';
 import { TeamContext } from '../context/TeamContext';
+import { useNavigate } from 'react-router-dom';
 import { uppercaseFirstLetter } from '../utils/utils';
 import { Pane, Tablist, Tab, Pagination } from 'evergreen-ui';
-import { useNavigate } from 'react-router-dom';
 
 function ComponentHome() {
   const { sportsData } = React.useContext(TeamContext);

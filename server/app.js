@@ -20,6 +20,10 @@ const Bet = require('./models/bet');
 const Team = require('./models/team');
 // eslint-disable-next-line no-unused-vars
 const Sport = require('./models/sport');
+// eslint-disable-next-line no-unused-vars
+const HistoryBalance = require('./models/historyBalance');
+// eslint-disable-next-line no-unused-vars
+const HistoryBet = require('./models/historyBet');
 // - - - - - - ROUTES - - - - - - //
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -27,6 +31,8 @@ const betsRouter = require('./routes/bets');
 const teamsRouter = require('./routes/teams');
 const gamesRouter = require('./routes/games');
 const sportsRouter = require('./routes/sports');
+const historyBalanceRouter = require('./routes/historyBalance');
+const historyBetRouter = require('./routes/historyBet');
 
 const app = express();
 const URL =
@@ -78,6 +84,8 @@ app.use('/bets', betsRouter);
 app.use('/teams', teamsRouter);
 app.use('/games', gamesRouter);
 app.use('/sports', sportsRouter);
+app.use('/history-balance', historyBalanceRouter);
+app.use('/history-bet', historyBetRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

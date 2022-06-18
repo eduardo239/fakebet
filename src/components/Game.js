@@ -28,7 +28,7 @@ function GameView() {
 
         <Pane>
           {data.length > 0 && (
-            <Pane className='game-heading'>
+            <Pane>
               <Heading size={900}>{data[0].team1}</Heading>
               <Heading size={900}>VS</Heading>
               <Heading size={900}>{data[0].team2}</Heading>

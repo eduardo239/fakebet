@@ -1,12 +1,13 @@
 import React from 'react';
+import MyLog from '../user/Log';
 import MyBets from '../user/Bets';
 import MyProfile from '../user/Profile';
-import { Link, useNavigate } from 'react-router-dom';
+import { userEdit } from '../../api/user';
 import { GameContext } from '../../context/GameContext';
 import { UserContext } from '../../context/UserContext';
+import { Dialog, Pane } from 'evergreen-ui';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { Avatar, Dialog, Pane } from 'evergreen-ui';
-import { getUserInfo, userEdit } from '../../api/user';
+import { Link, useNavigate } from 'react-router-dom';
 import { getBetsByUserId, removeBetById } from '../../api/bet';
 import { INITIAL_STATE_SPORT } from '../../utils/constants';
 
@@ -16,6 +17,7 @@ function Menu() {
   const { setSport, setSelectedIndex } = React.useContext(GameContext);
   const [, setUserLocalStorage] = useLocalStorage('user', null);
 
+  const [isLogShown, setIsLogShown] = React.useState(false);
   const [isMyBetsShown, setIsMyBetsShown] = React.useState(false);
   const [isProfileShown, setIsProfileShown] = React.useState(false);
   const [isAmountShown, setIsAmountShown] = React.useState(true);
@@ -27,6 +29,10 @@ function Menu() {
       setMyBets(response.bets);
     }
     setIsMyBetsShown(true);
+  };
+
+  const handleMyLogModal = () => {
+    setIsLogShown(true);
   };
 
   const handleHomePage = (e) => {
@@ -94,6 +100,16 @@ function Menu() {
             </Link>
           )}
 
+          {user && (
+            <Link
+              className='menu-link'
+              to='#'
+              onClick={() => handleMyLogModal()}
+            >
+              HISTÓRICO
+            </Link>
+          )}
+
           <Link to='/admin' className='menu-link'>
             ADMIN
           </Link>
@@ -152,6 +168,17 @@ function Menu() {
         onCloseComplete={() => setIsProfileShown(false)}
       >
         <MyProfile data={user} setIsProfileShown={setIsProfileShown} />
+      </Dialog>
+
+      <Dialog
+        isShown={isLogShown}
+        title='Histórico'
+        confirmLabel='Fechar'
+        hasCancel={false}
+        hasClose={true}
+        onCloseComplete={() => setIsLogShown(false)}
+      >
+        <MyLog data={user} setIsLogShown={setIsProfileShown} />
       </Dialog>
     </Pane>
   );

@@ -1,11 +1,11 @@
 import React from 'react';
 import {
+  Pane,
+  Alert,
   Button,
   Heading,
-  Pane,
   SelectField,
   TextInputField,
-  Alert,
 } from 'evergreen-ui';
 import { errorHandler } from '../../utils/error';
 import { GameContext } from '../../context/GameContext';
@@ -53,7 +53,6 @@ function Games() {
         errorHandler(ERROR_DB_MESSAGE, setError, responseGames.message);
       }
     } else {
-      // handle post game error
       errorHandler(ERROR_DB_MESSAGE, setError, response.message);
     }
   };
@@ -169,7 +168,7 @@ function Games() {
           <TextInputField
             label='Vencedor'
             placeholder='Vencedor do Jogo'
-            value={game?.winner ? game.winner : '---'}
+            value={game.winner}
             onChange={(e) => setGame({ ...game, winner: e.target.value })}
           />
         </Pane>

@@ -26,7 +26,7 @@ function MyBets({ bets, setIsProfileShown, handleRemoveBet, ...props }) {
               handleRemoveBet={handleRemoveBet}
             />
           ))}
-
+        <hr />
         <Pane display='flex' justifyContent='space-between' margin={16}>
           <Heading size={400}>Total Aposta</Heading>
           <Heading size={400} fontFamily='monospace'>
