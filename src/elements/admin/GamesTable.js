@@ -1,19 +1,52 @@
 import React from 'react';
 import { GameContext } from '../../context/GameContext';
 import { convertDate, isToday } from '../../utils/utils';
-import { getGames, removeGame } from '../../api/game';
-import { Pane, Dialog, Button, Paragraph } from 'evergreen-ui';
+import { getGames, removeGame, updateGame } from '../../api/game';
+import {
+  Pane,
+  Dialog,
+  Button,
+  Paragraph,
+  TextInputField,
+  Overlay,
+  Heading,
+} from 'evergreen-ui';
 
 function GamesTable() {
   const { game, setGame, setGames, setAllGames, allGames, setGameIsUpdating } =
     React.useContext(GameContext);
 
   const [isShownDeleteModal, setIsShownDeleteModal] = React.useState(false);
+  const [isShown, setIsShown] = React.useState(false);
+  const [score, setScore] = React.useState({
+    home: '',
+    away: '',
+  });
 
   const handleSelect = (game) => {
-    console.log(game);
     setGame(game);
     setGameIsUpdating(true);
+    setScore({
+      home: game.teamAScore,
+      away: game.teamBScore,
+    });
+    setIsShown(true);
+  };
+
+  const handleUpdate = async () => {
+    const { data: response } = await updateGame({
+      ...game,
+      teamAScore: score.home,
+      teamBScore: score.away,
+    });
+    if (response.success) {
+      const { data: responseGames } = await getGames();
+      if (responseGames.success) {
+        setAllGames(responseGames.games);
+        setGameIsUpdating(false);
+        setIsShown(false);
+      }
+    }
   };
 
   const handleDelete = async () => {
@@ -34,13 +67,11 @@ function GamesTable() {
     if (mounted) {
       (async () => {
         const { data: responseGames } = await getGames();
-
         if (responseGames.success) {
           setAllGames(responseGames.games);
         }
       })();
     }
-
     return () => {
       mounted = false;
     };
@@ -48,6 +79,36 @@ function GamesTable() {
 
   return (
     <Pane className='flex-column-center-100'>
+      <React.Fragment>
+        <Overlay isShown={isShown} onExit={() => setIsShown(false)}>
+          <Pane className='modal-container'>
+            <Pane className='modal'>
+              <Heading size={600} marginBottom={24}>
+                Editar Placar
+              </Heading>
+              <Pane className='flex-start-start' gap={8}>
+                <TextInputField
+                  type='number'
+                  label={`Home ${game.teamAId?.name || '---'}`}
+                  value={score.home}
+                  onChange={(e) => setScore({ ...score, home: e.target.value })}
+                />
+
+                <TextInputField
+                  type='number'
+                  label={`Home ${game.teamBId?.name || '---'}`}
+                  value={score.away}
+                  onChange={(e) => setScore({ ...score, away: e.target.value })}
+                />
+              </Pane>
+              <button className='btn btn-primary' onClick={handleUpdate}>
+                Atualizar
+              </button>
+            </Pane>
+          </Pane>
+        </Overlay>
+      </React.Fragment>
+
       <table>
         <thead>
           <tr>
@@ -62,6 +123,7 @@ function GamesTable() {
             <th>Actions</th>
           </tr>
         </thead>
+        {/* onClick={() => handleSelect(game)} */}
         <tbody>
           {allGames.length > 0 &&
             allGames.map((game) => (

@@ -34,6 +34,8 @@
   grid-gap: 4px;
   padding: 18px;
   background-color: var(--light-alternate);
+  border: 1px solid var(--light-alternate-2);
+  margin-bottom: 10px;
 }
 
 .form-my-profile {

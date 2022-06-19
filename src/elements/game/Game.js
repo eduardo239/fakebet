@@ -7,7 +7,7 @@ import { GameContext } from '../../context/GameContext';
 import { useNavigate } from 'react-router-dom';
 import { errorHandler } from '../../utils/error';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { Pane, Alert } from 'evergreen-ui';
+import { Pane, Alert, Small, Heading } from 'evergreen-ui';
 import {
   DRAW_STATE,
   ERROR_DB_MESSAGE,
@@ -171,6 +171,11 @@ function ElementGame({ game }) {
                   odd={game.teamBOdd}
                   showInput={showInput}
                 />
+              </tr>
+              <tr>
+                <td colSpan={3}>
+                  <Heading size={100}>ID: {game._id.toUpperCase()}</Heading>
+                </td>
               </tr>
             </tbody>
           </table>
